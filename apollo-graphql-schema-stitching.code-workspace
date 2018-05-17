@@ -8,6 +8,9 @@
     },
     {
       "path": "schema-stitcher"
+    },
+    {
+      "path": "talk"
     }
   ],
   "settings": {
