@@ -9,7 +9,7 @@ export const createLinkedSchema = (reviewsSchema: GraphQLSchema) => ({
     reviews: [Review!]!
   }
 `,
-  resolvers: (mergeInfo: MergeInfo) => ({
+  resolvers: {
     Book: {
       reviews: {
         fragment: `fragment BookFragment on Book { id }`,
@@ -17,7 +17,7 @@ export const createLinkedSchema = (reviewsSchema: GraphQLSchema) => ({
           // parent is Book
           const bookId = parent.id;
 
-          return mergeInfo.delegateToSchema({
+          return info.mergeInfo.delegateToSchema({
             schema: reviewsSchema,
             operation: "query",
             fieldName: "reviewsForBook",
@@ -28,5 +28,5 @@ export const createLinkedSchema = (reviewsSchema: GraphQLSchema) => ({
         }
       }
     }
-  })
+  }
 });
