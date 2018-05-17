@@ -17,7 +17,7 @@ const typeDefs = `
     """All reviews stored in our system"""
     reviews: [Review!]! 
     
-    """All Channels that contain the specified Member"""
+    """Return all reviews for the Book with the specified Id"""
     reviewsForBook(bookId: ID!): [Review!]! 
   }
 `;

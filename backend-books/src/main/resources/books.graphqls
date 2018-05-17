@@ -1,9 +1,16 @@
+# Representation of a Book that can be bought in our Shop
 type Book {
+  # Unique, immutable Id, that identifies this Book
   id: ID!
+
+  # The title of the book
   title: String!
+
+  # The Book's price
   price: String!
 }
 
 type Query {
+  # Returns all books in our store
   books: [Book!]!
 }

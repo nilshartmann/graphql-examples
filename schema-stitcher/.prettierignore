@@ -1,0 +1,6 @@
+dist/
+dist-dev/
+lib/
+*.min.js
+.vscode/
+package.json

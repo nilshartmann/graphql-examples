@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "path": "backend-reviews"
+    },
+    {
+      "path": "schema-stitcher"
+    },
+    {
+      "path": "backend-books"
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "node_modules/typescript/lib"
+  }
+}
