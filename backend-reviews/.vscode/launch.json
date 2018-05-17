@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run Main Application",
+      "program": "${workspaceRoot}/dist/main.js",
+      "preLaunchTask": "build",
+      "outFiles": ["${workspaceRoot}/dist/**/*.js"]
+    }
+  ]
+}
