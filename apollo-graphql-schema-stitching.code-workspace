@@ -4,10 +4,10 @@
       "path": "backend-reviews"
     },
     {
-      "path": "schema-stitcher"
+      "path": "backend-books"
     },
     {
-      "path": "backend-books"
+      "path": "schema-stitcher"
     }
   ],
   "settings": {

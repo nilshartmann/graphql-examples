@@ -7,6 +7,8 @@ import { introspectSchema, makeRemoteExecutableSchema, mergeSchemas } from "grap
 import { HttpLink } from "apollo-link-http";
 import fetch from "node-fetch";
 
+import { LinkedSchema, createLinkedResolver } from "./LinkedSchema";
+
 async function createRemoteSchema(uri: string) {
   const link = new HttpLink({ uri, fetch });
   const schema = await introspectSchema(link);
@@ -22,7 +24,8 @@ async function createRemoteSchema(uri: string) {
   const reviewsSchema = await createRemoteSchema("http://localhost:9020/graphql");
 
   const combinedSchema = mergeSchemas({
-    schemas: [booksSchema, reviewsSchema]
+    schemas: [booksSchema, reviewsSchema, LinkedSchema],
+    resolvers: createLinkedResolver(reviewsSchema)
   });
 
   const PORT = 9000;
