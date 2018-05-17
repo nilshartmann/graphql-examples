@@ -25,7 +25,7 @@ export const REVIEWS: Review[] = [
   },
   {
     id: "R4",
-    bookId: "B2",
+    bookId: "B4",
     review:
       "Pretium justo et venenatis quis aliquam sociosqu sagittis lorem non nostra phasellus elementum, conubia at in potenti natoque tortor massa eget nulla accumsan sed."
   },

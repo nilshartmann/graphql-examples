@@ -10,7 +10,17 @@ type Book {
   price: String!
 }
 
+# Information about the running process
+type ProcessInfo {
+  name: String!
+  uptime: String!
+  javaVersion: String!
+}
+
 type Query {
   # Returns all books in our store
   books: [Book!]!
+
+  # Returns some information about the running **Books** process
+  ping: ProcessInfo
 }

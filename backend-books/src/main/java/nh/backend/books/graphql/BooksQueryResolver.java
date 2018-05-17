@@ -14,15 +14,22 @@ import java.util.List;
 @Component
 public class BooksQueryResolver implements GraphQLQueryResolver {
 
+  private final long bootTime;
   private final BookRepository bookRepository;
 
   @Autowired
   public BooksQueryResolver(BookRepository bookRepository) {
     this.bookRepository = bookRepository;
+
+    bootTime = System.currentTimeMillis();
   }
 
   public List<Book> books() {
     return bookRepository.findAll();
+  }
+
+  public ProcessInfo ping() {
+    return new ProcessInfo("The Books Backend", String.format("Up and running for %d s", (System.currentTimeMillis()-this.bootTime) / 1000), "1.8");
   }
 
 }
