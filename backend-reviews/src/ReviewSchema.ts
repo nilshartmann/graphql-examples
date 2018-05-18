@@ -10,13 +10,16 @@ const typeDefs = `
     """The id of the book, this review is written for"""
     bookId: ID!
 
+    """Who has written this review?"""
+    author: String!
+
     """The review itself"""
     review: String!
   }
 
   type ProcessInfo {
     name: String!
-    port: Int!
+    nodeJsVersion: String!
     uptime: String!
   }
 
@@ -29,7 +32,7 @@ const typeDefs = `
     reviewsForBook(bookId: ID!): [Review!]! 
 
     """Returns health information about the running **Review** process"""
-    ping: ProcessInfo
+    ping: ProcessInfo!
   }
 `;
 
@@ -43,7 +46,7 @@ const createReviewSchema = (port: number) => {
       reviewsForBook: (_: any, { bookId }: { bookId: string }): Review[] => REVIEWS.filter(r => r.bookId === bookId),
       ping: () => ({
         name: "Reviews Backend",
-        port,
+        nodeJsVersion: process.versions.node,
         uptime: `${(Date.now() - bootTime) / 1000}s`
       })
     }

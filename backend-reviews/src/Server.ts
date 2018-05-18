@@ -12,5 +12,5 @@ app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" })); // if you wa
 
 app.listen(PORT, () => {
   console.log(`Reviews Backend running on ${PORT}`);
-  console.log(`Reviews Stitcher  GraphiQL http://localhost:${PORT}/graphiql`);
+  console.log(`Reviews         GraphiQL http://localhost:${PORT}/graphiql`);
 });

@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 
@@ -29,10 +30,13 @@ async function createRemoteSchema(uri: string) {
   });
 }
 
-function renameSystemInfo(schema: GraphQLSchema, prefix: String) {
+function renameSystemInfo(schema: GraphQLSchema, systemName: String) {
   return transformSchema(schema, [
-    new RenameTypes((name: string) => (name === "ProcessInfo" ? `${prefix}ProcessInfo` : undefined)),
-    new RenameRootFields((_operation: string, name: string) => (name === "ping" ? `ping${prefix}` : name))
+    new RenameTypes((name: string) => (name === "ProcessInfo" ? `${systemName}Status` : undefined)),
+    new RenameRootFields(
+      (_operation: string, name: string) =>
+        name === "ping" ? `${systemName.substring(0, 1).toLowerCase()}${systemName.substring(1)}Status` : name
+    )
   ]);
 }
 
@@ -42,8 +46,8 @@ async function createCombinedSchema() {
   const reviewsSchema = await createRemoteSchema("http://localhost:9020/graphql");
 
   // STEP 2: Transform the Remote Schemas (optional)
-  const transformedBookSchema = renameSystemInfo(booksSchema, "Books");
-  const transformedReviewsSchema = renameSystemInfo(reviewsSchema, "Reviews");
+  const transformedBookSchema = renameSystemInfo(booksSchema, "BooksService");
+  const transformedReviewsSchema = renameSystemInfo(reviewsSchema, "ReviewsService");
 
   // STEP 3: Create the 'linkedSchema' that connects Books with Reviews
   const { schema: linkedSchema, resolvers: linkedSchemaResolvers } = createLinkedSchema(reviewsSchema);
@@ -64,6 +68,7 @@ async function createCombinedSchema() {
 
   const app = express();
 
+  app.use(cors());
   app.use("/graphql", bodyParser.json(), graphqlExpress({ schema: combinedSchema }));
   app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" })); // if you want GraphiQL enabled
 

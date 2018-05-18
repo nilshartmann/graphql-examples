@@ -6,6 +6,9 @@ type Book {
   # The title of the book
   title: String!
 
+  # Author of the book
+  author: String!
+
   # The Book's price
   price: String!
 }
@@ -22,5 +25,5 @@ type Query {
   books: [Book!]!
 
   # Returns some information about the running **Books** process
-  ping: ProcessInfo
+  ping: ProcessInfo!
 }

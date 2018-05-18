@@ -1,0 +1,28 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "books",
+                "projectName": "books",
+                "workingDirectory": "/Users/nils/develop/javascript/apollo-graphql-schema-stitching/backend-books",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "books",
+                "projectName": "books",
+                "workingDirectory": "/Users/nils/develop/javascript/apollo-graphql-schema-stitching/backend-books",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

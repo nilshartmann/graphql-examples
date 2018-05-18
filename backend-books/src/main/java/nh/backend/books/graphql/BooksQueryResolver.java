@@ -29,7 +29,7 @@ public class BooksQueryResolver implements GraphQLQueryResolver {
   }
 
   public ProcessInfo ping() {
-    return new ProcessInfo("The Books Backend", String.format("Up and running for %d s", (System.currentTimeMillis()-this.bootTime) / 1000), "1.8");
+    return new ProcessInfo("The Books Backend",
+        String.format("%ds", (System.currentTimeMillis() - this.bootTime) / 1000), System.getProperty("java.version"));
   }
-
 }

@@ -4,6 +4,8 @@
     ".idea/": true,
     "build/": true,
     "out/": true,
-    "gradle/": true
+    "gradle/": true,
+    "bin/": true,
+    ".settings/": true
   }
 }
