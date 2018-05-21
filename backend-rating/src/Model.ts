@@ -1,77 +1,202 @@
-export interface Review {
+export interface Rating {
   id: string;
-  bookId: string;
+  beerId: string;
   author: string;
-  review: string;
+  comment: string;
 }
 
-export const REVIEWS: Review[] = [
+export const RATINGS: Rating[] = [
   {
     id: "R1",
-    bookId: "B1",
+    beerId: "B1",
     author: "Waldemar Vasu",
-    review:
-      "Mus elit natoque sem sociis penatibus tellus, magnis lorem hac sagittis nascetur lacus, justo ornare urna himenaeos phasellus. Odio elit dapibus habitasse blandit facilisi ornare justo, litora egestas nostra eu sapien vitae, gravida fusce condimentum curae vulputate faucibus. "
+    comment: "Exceptional!"
   },
   {
     id: "R2",
-    bookId: "B1",
+    beerId: "B2",
     author: "Andrea Gouyen",
-    review:
-      "Nascetur taciti lacus massa pharetra eu rutrum, sodales non ut aliquam euismod netus, facilisis elit leo ridiculus sem."
+    comment: "Very good!"
   },
   {
     id: "R3",
-    bookId: "B2",
+    beerId: "B3",
     author: "Allan Venkat",
-    review:
-      "Placerat cubilia euismod sem urna ligula montes nullam, primis ridiculus magnis facilisi luctus eget, condimentum malesuada semper ipsum justo pretium. "
+    comment: "Great taste!"
   },
   {
     id: "R4",
-    bookId: "B4",
+    beerId: "B4",
     author: "Nebuchadnezzar Voitto",
-    review:
-      "Pretium justo et venenatis quis aliquam sociosqu sagittis lorem non nostra phasellus elementum, conubia at in potenti natoque tortor massa eget nulla accumsan sed."
+    comment: "Try it, you'll love it!"
   },
   {
     id: "R5",
-    bookId: "B1",
+    beerId: "B5",
     author: "Hevel Nubia",
-    review:
-      "Varius malesuada ligula facilisi nibh torquent lectus aliquam himenaeos class vulputate curae, rutrum fames quis sollicitudin eleifend porta cum suscipit neque blandit."
+    comment: "My favorite!"
   },
   {
     id: "R6",
-    bookId: "B2",
+    beerId: "B6",
     author: "Karl Marx",
-    review: "Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi."
+    comment: "✊"
   },
   {
     id: "R7",
-    bookId: "B3",
+    beerId: "B1",
     author: "Madhukar Kareem",
-    review:
-      "Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum."
+    comment: "Awwwesome!"
   },
   {
     id: "R8",
-    bookId: "B2",
+    beerId: "B2",
     author: "Marketta Glaukos",
-    review: "Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo."
+    comment: "phenomenal!"
   },
-  { id: "R9", bookId: "B1", author: "Cecilija Viktoria", review: "Aenean commodo ligula eget dolor. Aenean massa." },
+  { id: "R9", beerId: "B1", author: "Cecilija Viktoria", comment: "Can I order another please?" },
   {
     id: "R10",
-    bookId: "B3",
+    beerId: "B3",
     author: "Ismene Yehonatan",
-    review:
-      "Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim."
+    comment: "Tastes moreish"
   },
   {
     id: "R11",
-    bookId: "B2",
+    beerId: "B4",
     author: "Seong-Hun Cihangir",
-    review: "In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo."
+    comment: "Hmmmm!!!!"
+  },
+  {
+    id: "R12",
+    beerId: "B5",
+    author: "Guillelmina O'Doherty",
+    comment: "Watery mouthfeel and long finish."
+  },
+  {
+    id: "R13",
+    beerId: "B6",
+    author: "Alessa Bradley",
+    comment: "Dense, dense mouthfeel and syrupy finish"
+  },
+  {
+    id: "R14",
+    beerId: "B1",
+    author: "Emily Davis",
+    comment: "Off-putting buttery nose, laced with a touch of caramel and hamster cage."
+  },
+  {
+    id: "R15",
+    beerId: "B2",
+    author: "Lauren Jones",
+    comment: "Delicate buttery flavor, with notes of sherry and old newsprint. "
+  },
+  {
+    id: "R16",
+    beerId: "B3",
+    author: "Jessica Rodriguez",
+    comment: "Lovely piney aroma, with pecans and banana."
+  },
+  {
+    id: "R17",
+    beerId: "B4",
+    author: "Megan Smith",
+    comment: "Hearty yet effervescent mouthfeel and pleasant finish. "
+  },
+  {
+    id: "R18",
+    beerId: "B5",
+    author: "Sophie Garcia",
+    comment: "Beautiful full-bodied nose, punctuated with sherry and old newsprint."
+  },
+  {
+    id: "R19",
+    beerId: "B6",
+    author: "Hannah Miller",
+    comment: "Intense crisp palate, with notes of pine and tartness. "
+  },
+  {
+    id: "R20",
+    beerId: "B1",
+    author: "Lucy Brown",
+    comment: "The faintest hint of lacing."
+  },
+  {
+    id: "R21",
+    beerId: "B2",
+    author: "Lucy Brown",
+    comment: "Creamy mouthfeel and light finish."
+  },
+  {
+    id: "R22",
+    beerId: "B3",
+    author: "Robert Dennis",
+    comment: "Excellent sour nose, with overtones of rosewater and tarragon"
+  },
+  {
+    id: "R23",
+    beerId: "B4",
+    author: "James Hughes",
+    comment: "Amazing!!!!!"
+  },
+  {
+    id: "R24",
+    beerId: "B4",
+    author: "Michael Trebonius",
+    comment: "How could I not tried this one before??"
+  },
+  {
+    id: "R25",
+    beerId: "B5",
+    author: "Matthew Sappho",
+    comment: "Cheers!"
+  },
+  {
+    id: "R26",
+    beerId: "B6",
+    author: "John Rilke",
+    comment: "this make me feel like.... goood!"
+  },
+  {
+    id: "R27",
+    beerId: "B1",
+    author: "Joseph Launce",
+    comment: "Perfect match for a warm summer night!"
+  },
+  {
+    id: "R28",
+    beerId: "B3",
+    author: "Miranda Hicks",
+    comment: "The aroma is basically roasted malts with a touch of chocolate as well."
+  },
+  {
+    id: "R29",
+    beerId: "B2",
+    author: "Haya Storey",
+    comment: "Smooth, clean, sweet tropical fruit flavors dominate in a medium-bodied beer"
+  },
+  {
+    id: "R30",
+    beerId: "B2",
+    author: "Dylon Burks",
+    comment: "malty, some chewing-gum sweetness. Not particularly thrilled by it."
+  },
+  {
+    id: "R31",
+    beerId: "B3",
+    author: "Tim Ireland",
+    comment: "Poured a clear, straw-yellow color with a small, white head of foam. "
+  },
+  {
+    id: "R32",
+    beerId: "B4",
+    author: "Issa Fitzpatrick",
+    comment: "Sweet toasted caramel with a hint of grassy bitterness."
+  },
+  {
+    id: "R33",
+    beerId: "B5",
+    author: "Jeffery Kumar",
+    comment: "Not my favorite example of the style, but it's always fun to try robust beers like this several years in a cellar."
   }
 ];
