@@ -20,11 +20,11 @@ const ServiceStatus = ({ status }: ServiceStatusProps) => {
 
   return isJavaService(status) ? (
     <div>
-      {status.name} running on Java version {status.javaVersion} since {status.uptime}
+      <b>{status.name}</b> Java {status.javaVersion} since <b>{status.uptime}</b>
     </div>
   ) : (
     <div>
-      {status.name} running on NodeJS version {status.nodeJsVersion} since {status.uptime}
+      <b>{status.name}</b> NodeJS {status.nodeJsVersion} since <b>{status.uptime}</b>
     </div>
   );
 };

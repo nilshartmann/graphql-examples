@@ -1,15 +1,16 @@
 import * as React from "react";
 import { gql } from "apollo-boost";
-
 import { Query } from "react-apollo";
 
 import { BeerRatingAppQueryResult } from "./__generated__/BeerRatingAppQuery";
 
+import * as styles from "./BeerRatingApp.scss";
 import BeerList from "./BeerList";
 import ServiceStatus from "./ServiceStatus";
+import Header from "./Header";
 import Footer from "./Footer";
 
-const BOOKS_APP_QUERY = gql`
+const BEER_RATING_APP_QUERY = gql`
   query BeerRatingAppQuery {
     beerServiceStatus {
       name
@@ -38,11 +39,11 @@ const BOOKS_APP_QUERY = gql`
   }
 `;
 
-class BooksAppQuery extends Query<BeerRatingAppQueryResult> {}
+class BeerRatingQuery extends Query<BeerRatingAppQueryResult> {}
 
-const BooksApp = () => (
-  <div>
-    <BooksAppQuery query={BOOKS_APP_QUERY}>
+const BeerRatingApp = () => (
+  <div className={styles.BeerRatingApp}>
+    <BeerRatingQuery query={BEER_RATING_APP_QUERY}>
       {({ loading, error, data }) => {
         if (loading) {
           return <h1>Loading...</h1>;
@@ -58,6 +59,10 @@ const BooksApp = () => (
 
         return (
           <React.Fragment>
+            <Header>
+              <ServiceStatus status={data.beerServiceStatus} />
+              <ServiceStatus status={data.ratingServiceStatus} />
+            </Header>
             <BeerList beers={data.beers} />
             <Footer>
               <ServiceStatus status={data.beerServiceStatus} />
@@ -66,8 +71,8 @@ const BooksApp = () => (
           </React.Fragment>
         );
       }}
-    </BooksAppQuery>
+    </BeerRatingQuery>
   </div>
 );
 
-export default BooksApp;
+export default BeerRatingApp;
