@@ -1,10 +1,7 @@
 {
   "folders": [
     {
-      "path": "backend-beer“
-    },
-    {
-      "path": "backend-reviews"
+      "path": "backend-beer"
     },
     {
       "path": "schema-stitcher"
@@ -14,6 +11,9 @@
     },
     {
       "path": "frontend"
+    },
+    {
+      "path": "backend-rating"
     }
   ],
   "settings": {
