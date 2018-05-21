@@ -4,16 +4,16 @@
       "path": "backend-beer"
     },
     {
-      "path": "schema-stitcher"
+      "path": "backend-rating"
     },
     {
-      "path": "talk"
+      "path": "schema-stitcher"
     },
     {
       "path": "frontend"
     },
     {
-      "path": "backend-rating"
+      "path": "talk"
     }
   ],
   "settings": {
