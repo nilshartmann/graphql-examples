@@ -1,27 +1,27 @@
 import { MergeInfo } from "graphql-tools";
 import { GraphQLSchema } from "graphql";
 
-export const createLinkedSchema = (reviewsSchema: GraphQLSchema) => ({
-  schema: `
-  extend type Book {
+export const createLinkedSchema = (ratingSchema: GraphQLSchema) => ({
+  linkedSchema: `
+  extend type Beer {
 
-    """All Reviews for this book"""
-    reviews: [Review!]!
+    """All Ratings for this Beer"""
+    ratings: [Rating!]!
   }
 `,
-  resolvers: {
-    Book: {
-      reviews: {
-        fragment: `fragment BookFragment on Book { id }`,
+  linkedSchemaResolvers: {
+    Beer: {
+      ratings: {
+        fragment: `fragment BeerFragment on Beer { id }`,
         resolve(parent: any, args: any, context: any, info: any) {
-          // parent is Book
-          const bookId = parent.id;
+          // parent is Beer
+          const beerId = parent.id;
 
           return info.mergeInfo.delegateToSchema({
-            schema: reviewsSchema,
+            schema: ratingSchema,
             operation: "query",
-            fieldName: "reviewsForBook",
-            args: { bookId },
+            fieldName: "ratingsForBeer",
+            args: { beerId },
             context,
             info
           });

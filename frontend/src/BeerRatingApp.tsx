@@ -3,38 +3,42 @@ import { gql } from "apollo-boost";
 
 import { Query } from "react-apollo";
 
-import { BooksAppQueryResult } from "./__generated__/BooksAppQuery";
+import { BeerRatingAppQueryResult } from "./__generated__/BeerRatingAppQuery";
 
-import BookList from "./BookList";
+import BeerList from "./BeerList";
 import ServiceStatus from "./ServiceStatus";
 import Footer from "./Footer";
 
 const BOOKS_APP_QUERY = gql`
-  query BooksAppQuery {
-    booksServiceStatus {
+  query BeerRatingAppQuery {
+    beerServiceStatus {
       name
-      javaVersion
       uptime
+      javaVersion
     }
-    reviewsServiceStatus {
+
+    ratingServiceStatus {
       name
       nodeJsVersion
       uptime
     }
-    books {
+
+    beers {
       id
-      title
-      author
-      reviews {
+      name
+      price
+
+      ratings {
         id
+        beerId
         author
-        review
+        comment
       }
     }
   }
 `;
 
-class BooksAppQuery extends Query<BooksAppQueryResult> {}
+class BooksAppQuery extends Query<BeerRatingAppQueryResult> {}
 
 const BooksApp = () => (
   <div>
@@ -54,10 +58,10 @@ const BooksApp = () => (
 
         return (
           <React.Fragment>
-            <BookList books={data.books} />
+            <BeerList beers={data.beers} />
             <Footer>
-              <ServiceStatus status={data.booksServiceStatus} />
-              <ServiceStatus status={data.reviewsServiceStatus} />
+              <ServiceStatus status={data.beerServiceStatus} />
+              <ServiceStatus status={data.ratingServiceStatus} />
             </Footer>
           </React.Fragment>
         );

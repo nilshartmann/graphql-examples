@@ -52,7 +52,7 @@ module.exports = {
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader", exclude: [/node_modules/, /build/, /__test__/] }
     ]
   },
-  plugins: [new ExtractTextPlugin("books-app.css")],
+  plugins: [new ExtractTextPlugin("beer-rating-app.css")],
   devtool: "source-map",
   devServer: {
     historyApiFallback: true,

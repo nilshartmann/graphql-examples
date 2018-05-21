@@ -42,21 +42,21 @@ function renameSystemInfo(schema: GraphQLSchema, systemName: String) {
 
 async function createCombinedSchema() {
   // STEP 1: Create the Remote Schemas
-  const booksSchema = await createRemoteSchema("http://localhost:9010/graphql");
-  const reviewsSchema = await createRemoteSchema("http://localhost:9020/graphql");
+  const beerSchema = await createRemoteSchema("http://localhost:9010/graphql");
+  const ratingSchema = await createRemoteSchema("http://localhost:9020/graphql");
 
   // STEP 2: Transform the Remote Schemas (optional)
-  const transformedBookSchema = renameSystemInfo(booksSchema, "BooksService");
-  const transformedReviewsSchema = renameSystemInfo(reviewsSchema, "ReviewsService");
+  const transformedBeerSchema = renameSystemInfo(beerSchema, "BeerService");
+  const transformedRatingSchema = renameSystemInfo(ratingSchema, "RatingService");
 
-  // STEP 3: Create the 'linkedSchema' that connects Books with Reviews
-  const { schema: linkedSchema, resolvers: linkedSchemaResolvers } = createLinkedSchema(reviewsSchema);
+  // STEP 3: Create the 'linkedSchema' that connects Beers with Ratings
+  const { linkedSchema, linkedSchemaResolvers } = createLinkedSchema(ratingSchema);
 
   // STEP 4: Merge Schemas
   return mergeSchemas({
     schemas: [
-      transformedBookSchema, //
-      transformedReviewsSchema,
+      transformedBeerSchema, //
+      transformedRatingSchema,
       linkedSchema
     ],
     resolvers: linkedSchemaResolvers
@@ -70,7 +70,7 @@ async function createCombinedSchema() {
 
   app.use(cors());
   app.use("/graphql", bodyParser.json(), graphqlExpress({ schema: combinedSchema }));
-  app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" })); // if you want GraphiQL enabled
+  app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
 
   app.listen(PORT, () => {
     console.log(`Schema Stitcher  running on ${PORT}`);

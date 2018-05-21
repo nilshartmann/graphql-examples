@@ -13,8 +13,8 @@
           "description": null,
           "fields": [
             {
-              "name": "books",
-              "description": "Returns all books in our store",
+              "name": "beers",
+              "description": "Returns all beers in our store",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -27,7 +27,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "OBJECT",
-                      "name": "Book",
+                      "name": "Beer",
                       "ofType": null
                     }
                   }
@@ -37,15 +37,15 @@
               "deprecationReason": null
             },
             {
-              "name": "booksServiceStatus",
-              "description": "Returns some information about the running **Books** process",
+              "name": "beerServiceStatus",
+              "description": "Returns some information about the running **Beer** application",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "BooksServiceStatus",
+                  "name": "BeerServiceStatus",
                   "ofType": null
                 }
               },
@@ -53,8 +53,8 @@
               "deprecationReason": null
             },
             {
-              "name": "reviews",
-              "description": "All reviews stored in our system",
+              "name": "ratings",
+              "description": "All ratings stored in our system",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -67,7 +67,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "OBJECT",
-                      "name": "Review",
+                      "name": "Rating",
                       "ofType": null
                     }
                   }
@@ -77,11 +77,11 @@
               "deprecationReason": null
             },
             {
-              "name": "reviewsForBook",
-              "description": "Return all reviews for the Book with the specified Id",
+              "name": "ratingsForBeer",
+              "description": "Return all ratings for the Beer with the specified Id",
               "args": [
                 {
-                  "name": "bookId",
+                  "name": "beerId",
                   "description": "",
                   "type": {
                     "kind": "NON_NULL",
@@ -106,7 +106,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "OBJECT",
-                      "name": "Review",
+                      "name": "Rating",
                       "ofType": null
                     }
                   }
@@ -116,15 +116,15 @@
               "deprecationReason": null
             },
             {
-              "name": "reviewsServiceStatus",
-              "description": "Returns health information about the running **Review** process",
+              "name": "ratingServiceStatus",
+              "description": "Returns health information about the running **Rating** process",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
                   "kind": "OBJECT",
-                  "name": "ReviewsServiceStatus",
+                  "name": "RatingServiceStatus",
                   "ofType": null
                 }
               },
@@ -139,12 +139,12 @@
         },
         {
           "kind": "OBJECT",
-          "name": "Book",
-          "description": "Representation of a Book that can be bought in our Shop",
+          "name": "Beer",
+          "description": "Representation of a Beer that is in our Store",
           "fields": [
             {
               "name": "id",
-              "description": "Unique, immutable Id, that identifies this Book",
+              "description": "Unique, immutable Id, that identifies this Beer",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -159,24 +159,8 @@
               "deprecationReason": null
             },
             {
-              "name": "title",
-              "description": "The title of the book",
-              "args": [],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "author",
-              "description": "Author of the book",
+              "name": "name",
+              "description": "The name of the beer",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -192,7 +176,7 @@
             },
             {
               "name": "price",
-              "description": "The Book's price",
+              "description": "The Beer's price",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -207,8 +191,8 @@
               "deprecationReason": null
             },
             {
-              "name": "reviews",
-              "description": "All Reviews for this book",
+              "name": "ratings",
+              "description": "All Ratings for this Beer",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -221,7 +205,7 @@
                     "name": null,
                     "ofType": {
                       "kind": "OBJECT",
-                      "name": "Review",
+                      "name": "Rating",
                       "ofType": null
                     }
                   }
@@ -258,7 +242,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "Review",
+          "name": "Rating",
           "description": "",
           "fields": [
             {
@@ -278,8 +262,8 @@
               "deprecationReason": null
             },
             {
-              "name": "bookId",
-              "description": "The id of the book, this review is written for",
+              "name": "beerId",
+              "description": "The id of the beer, this rating is written for",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -295,7 +279,7 @@
             },
             {
               "name": "author",
-              "description": "Who has written this review?",
+              "description": "Who has written this rating?",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -310,8 +294,8 @@
               "deprecationReason": null
             },
             {
-              "name": "review",
-              "description": "The review itself",
+              "name": "comment",
+              "description": "The rating itself",
               "args": [],
               "type": {
                 "kind": "NON_NULL",
@@ -333,7 +317,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "BooksServiceStatus",
+          "name": "BeerServiceStatus",
           "description": "Information about the running process",
           "fields": [
             {
@@ -392,7 +376,7 @@
         },
         {
           "kind": "OBJECT",
-          "name": "ReviewsServiceStatus",
+          "name": "RatingServiceStatus",
           "description": "",
           "fields": [
             {
