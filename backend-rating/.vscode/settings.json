@@ -1,7 +1,4 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "files.exclude": {
-    "dist/**": true,
-    "node_modules/": true
-  }
+  "typescript.tsdk": "node_modules/typescript/lib"
+
 }

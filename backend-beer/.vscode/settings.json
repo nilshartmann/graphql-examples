@@ -6,6 +6,8 @@
     "out/": true,
     "gradle/": true,
     "bin/": true,
-    ".settings/": true
+    ".settings/": true,
+    ".classpath": true,
+    ".project": true
   }
 }
