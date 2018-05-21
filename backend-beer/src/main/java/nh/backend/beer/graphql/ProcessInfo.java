@@ -1,4 +1,4 @@
-package nh.backend.books.graphql;
+package nh.backend.beer.graphql;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

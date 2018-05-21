@@ -1,4 +1,4 @@
-package nh.backend.books.model;
+package nh.backend.beer.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +12,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book {
+public class Beer {
   private String id;
-  private String author;
-  private String title;
+  private String name;
   private String price;
 }

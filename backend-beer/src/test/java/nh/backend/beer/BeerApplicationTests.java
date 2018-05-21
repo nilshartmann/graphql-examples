@@ -1,4 +1,4 @@
-package nh.backend.books;
+package nh.backend.beer;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.assertThat;
@@ -9,18 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import nh.backend.books.model.BookRepository;
+import nh.backend.beer.model.BeerRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BooksApplicationTests {
+public class BeerApplicationTests {
 
   @Autowired
-  private BookRepository bookRepository;
+  private BeerRepository beerRepository;
 
   @Test
   public void contextLoads() {
-    assertThat(this.bookRepository, is(notNullValue()));
+    assertThat(this.beerRepository, is(notNullValue()));
   }
 
 }

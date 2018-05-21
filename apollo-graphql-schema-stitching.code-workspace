@@ -1,10 +1,10 @@
 {
   "folders": [
     {
-      "path": "backend-reviews"
+      "path": "backend-beer“
     },
     {
-      "path": "backend-books"
+      "path": "backend-reviews"
     },
     {
       "path": "schema-stitcher"
