@@ -1,9 +1,6 @@
-# Example: Schema Stitching with Apollo GraphQL
+# Apollo GraphQL Examples
 
-In this example two GraphQL schemas are stitched together to provide a single, consolidated view for the Client.
+This repository contains several Apollo GraphQL examples:
 
-* App 1 (Java, Spring Boot, graphql-java-tools): Books
-* App 2 (JS/TS, graphql-tools): Reviews
-
-Using the schema stitching both schemas are merged together, linked together (Book gets a direct link to its Reviews) and exposed.
-
+* `full-stack`: Backend and frontend app both developed using Apollo
+* `schema-stitching`: merge multiple schemas into one
