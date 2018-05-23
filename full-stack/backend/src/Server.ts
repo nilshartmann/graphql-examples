@@ -2,15 +2,17 @@ import express from "express";
 import bodyParser from "body-parser";
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 
-import createRatingSchema from "./RatingSchema";
+import createBeerRatingSchema from "./Schema";
 
-const PORT = 9020;
+const PORT = 9000;
 const app = express();
 
-app.use("/graphql", bodyParser.json(), graphqlExpress({ schema: createRatingSchema(PORT) }));
-app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" })); // if you want GraphiQL enabled
+const beerRatingSchema = createBeerRatingSchema(PORT);
+
+app.use("/graphql", bodyParser.json(), graphqlExpress({ schema: beerRatingSchema }));
+app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
 
 app.listen(PORT, () => {
-  console.log(`Rating Backend running on ${PORT}`);
-  console.log(`Rating         GraphiQL http://localhost:${PORT}/graphiql`);
+  console.log(`🍺  👍  BeerRating Backend running on ${PORT}`);
+  console.log(`🍺  👍  BeerRating GraphiQL http://localhost:${PORT}/graphiql`);
 });
