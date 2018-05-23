@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "path": "backend"
+    },
+        {
+      "path": "backend-beer"
+    },
+    {
+      "path": "frontend"
+    },
+    {
+      "path": "talk"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "dist/**": true,
+      "node_modules/": true,
+      ".prettier*": true,
+      "yarn.lock": true
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
+  }
+}

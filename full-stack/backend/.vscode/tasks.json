@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "02 - Run Backend 'Rating' (JavaScript)",
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": []
+    },
+  ]
+}

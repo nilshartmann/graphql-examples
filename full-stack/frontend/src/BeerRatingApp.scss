@@ -1,0 +1,21 @@
+:root {
+  --color-one: #e5ab47;
+  --color-text: #573d1c;
+  --color-background: #fffdf9;
+
+  --font-text: AnonymousPro-Bold;
+}
+:global {
+  body,
+  html {
+    font-family: AnonymousPro;
+    color: var(--color-text);
+    background-color: #f2f2f2;
+  }
+}
+
+.BeerRatingApp {
+  background-color: var(--color-background);
+  max-width: 1024px;
+  margin: 0 auto;
+}
