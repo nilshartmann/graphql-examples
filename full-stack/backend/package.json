@@ -20,8 +20,6 @@
     "start": "nodemon",
     "clean": "rimraf dist/",
     "prettier": "prettier --write \"{src}/**/*.{js,jsx,ts,tsx}\"",
-    "gql:schema": "apollo-codegen introspect-schema http://localhost:3000/graphql --output chatapp-schema.json",
-    "gql:codegen": "apollo-codegen generate src/**/*.graphql --schema chatapp-schema.json --target typescript --output operation-result-types.ts"
   },
   "devDependencies": {
     "nodemon": "^1.17.2",

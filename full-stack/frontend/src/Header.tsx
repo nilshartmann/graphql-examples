@@ -4,7 +4,7 @@ import * as styles from "./Header.scss";
 interface HeaderProps {
   children?: React.ReactNode;
 }
-const GITHUB_REPO = "https://github.com/nilshartmann/apollo-graphql-schema-stitching";
+const GITHUB_REPO = "https://github.com/nilshartmann/apollo-graphql-examples";
 
 const Header = ({ children }: HeaderProps) => (
   <header className={styles.Header}>

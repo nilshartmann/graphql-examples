@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import bodyParser from "body-parser";
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 
@@ -9,6 +10,7 @@ const app = express();
 
 const beerRatingSchema = createBeerRatingSchema(PORT);
 
+app.use(cors());
 app.use("/graphql", bodyParser.json(), graphqlExpress({ schema: beerRatingSchema }));
 app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
 

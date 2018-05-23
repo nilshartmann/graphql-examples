@@ -7,13 +7,7 @@
 // GraphQL query operation: BeerRatingAppQuery
 // ====================================================
 
-export interface BeerRatingAppQueryResult_beerServiceStatus {
-  name: string;
-  uptime: string;
-  javaVersion: string;
-}
-
-export interface BeerRatingAppQueryResult_ratingServiceStatus {
+export interface BeerRatingAppQueryResult_backendStatus {
   name: string;
   nodeJsVersion: string;
   uptime: string;
@@ -30,13 +24,12 @@ export interface BeerRatingAppQueryResult_beers {
   id: string;                                   // Unique, immutable Id, that identifies this Beer
   name: string;                                 // The name of the beer
   price: string;                                // The Beer's price
-  ratings: BeerRatingAppQueryResult_beers_ratings[];  // All Ratings for this Beer
+  ratings: BeerRatingAppQueryResult_beers_ratings[];  // All ratings for this Beer
 }
 
 export interface BeerRatingAppQueryResult {
-  beerServiceStatus: BeerRatingAppQueryResult_beerServiceStatus;      // Returns some information about the running **Beer** application
-  ratingServiceStatus: BeerRatingAppQueryResult_ratingServiceStatus;  // Returns health information about the running **Rating** process
-  beers: BeerRatingAppQueryResult_beers[];                            // Returns all beers in our store
+  backendStatus: BeerRatingAppQueryResult_backendStatus;  // Returns health information about the running process
+  beers: BeerRatingAppQueryResult_beers[];                // Returns all beers in our store
 }
 
 //==============================================================

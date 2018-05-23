@@ -12,13 +12,7 @@ import Footer from "./Footer";
 
 const BEER_RATING_APP_QUERY = gql`
   query BeerRatingAppQuery {
-    beerServiceStatus {
-      name
-      uptime
-      javaVersion
-    }
-
-    ratingServiceStatus {
+    backendStatus: ping {
       name
       nodeJsVersion
       uptime
@@ -60,14 +54,9 @@ const BeerRatingApp = () => (
         return (
           <React.Fragment>
             <Header>
-              <ServiceStatus status={data.beerServiceStatus} />
-              <ServiceStatus status={data.ratingServiceStatus} />
+              <ServiceStatus status={data.backendStatus} />
             </Header>
             <BeerList beers={data.beers} />
-            <Footer>
-              <ServiceStatus status={data.beerServiceStatus} />
-              <ServiceStatus status={data.ratingServiceStatus} />
-            </Footer>
           </React.Fragment>
         );
       }}
