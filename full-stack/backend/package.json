@@ -19,7 +19,7 @@
     "compile:watch": "tsc --watch",
     "start": "nodemon",
     "clean": "rimraf dist/",
-    "prettier": "prettier --write \"{src}/**/*.{js,jsx,ts,tsx}\"",
+    "prettier": "prettier --write \"{src}/**/*.{js,jsx,ts,tsx}\""
   },
   "devDependencies": {
     "nodemon": "^1.17.2",
