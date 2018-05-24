@@ -1,12 +1,14 @@
 const Stylish = require("webpack-stylish");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
+const path = require("path");
 module.exports = {
   entry: "./src/main.tsx",
   mode: "development",
   output: {
     path: __dirname + "/public/dist/",
-    filename: "main.js",
+    filename: "[name].[chunkhash].js",
     publicPath: "/dist"
   },
   resolve: {
@@ -54,9 +56,14 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "[name].[chunkhash].css"
     }),
+    new HtmlWebpackPlugin({
+      alwaysWriteToDisk: true,
+      filename: path.resolve("./public/index.html"),
+      template: "public/index-template.html"
+    }),
+    new HtmlWebpackHarddiskPlugin(),
     new Stylish()
   ],
   devtool: "source-map",
