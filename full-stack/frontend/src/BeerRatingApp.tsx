@@ -47,16 +47,12 @@ const BeerRatingApp = () => (
           return <h1>Error! {error.message}</h1>;
         }
 
-        if (!data) {
-          return <h1>No data !??!!</h1>;
-        }
-
         return (
           <React.Fragment>
             <Header>
-              <ServiceStatus status={data.backendStatus} />
+              <ServiceStatus status={data!.backendStatus} />
             </Header>
-            <BeerList beers={data.beers} />
+            <BeerList beers={data!.beers} />
           </React.Fragment>
         );
       }}

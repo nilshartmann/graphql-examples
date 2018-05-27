@@ -12,6 +12,18 @@
     color: var(--color-text);
     background-color: #f2f2f2;
   }
+
+  button {
+    cursor: pointer;
+
+    &:disabled {
+      cursor: default;
+    }
+  }
+
+  *:focus {
+    outline: none;
+  }
 }
 
 .BeerRatingApp {

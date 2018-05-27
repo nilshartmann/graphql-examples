@@ -4,32 +4,22 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: BeerRatingAppQuery
+// GraphQL mutation operation: AddRatingMutation
 // ====================================================
 
-export interface BeerRatingAppQueryResult_backendStatus {
-  name: string;
-  nodeJsVersion: string;
-  uptime: string;
-}
-
-export interface BeerRatingAppQueryResult_beers_ratings {
+export interface AddRatingMutationResult_addRating {
   id: string;       // An immutable unique Id
   beerId: string;   // The id of the beer, this rating is written for
   author: string;   // Who has written this rating?
   comment: string;  // The rating itself
 }
 
-export interface BeerRatingAppQueryResult_beers {
-  id: string;                                   // Unique, immutable Id, that identifies this Beer
-  name: string;                                 // The name of the beer
-  price: string;                                // The Beer's price
-  ratings: BeerRatingAppQueryResult_beers_ratings[];  // All ratings for this Beer
+export interface AddRatingMutationResult {
+  addRating: AddRatingMutationResult_addRating;  // Add a new Rating to a Beer and returns the new Rating
 }
 
-export interface BeerRatingAppQueryResult {
-  backendStatus: BeerRatingAppQueryResult_backendStatus;  // Returns health information about the running process
-  beers: BeerRatingAppQueryResult_beers[];                // Returns all beers in our store
+export interface AddRatingMutationVariables {
+  input: AddRatingInput;
 }
 
 //==============================================================
