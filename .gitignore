@@ -2,3 +2,11 @@ node_modules/
 npm-debug.log
 .idea/
 dist/
+out/
+build/
+bin/
+.gradle
+.classpath
+.project
+.settings/
+
