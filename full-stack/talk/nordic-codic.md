@@ -4,7 +4,16 @@ GraphQL ist eine Sprache zur Abfrage von Daten, die häufig als "Alternative zu 
 
 In diesem Talk werde ich Euch eine kurze Einführung in die Konzepte von GraphQL geben und dann an Hand des Apollo Frameworks zeigen, wie man einen GraphQL Server implementiert und wie man darauf exemplarisch aus einem React/TypeScript Frontend zugreifen kann.
 
+*Länge:* 45 Minuten zzgl Q&A
+
 # Vorbereitung
+
+1. IDEA starten:
+
+```
+idea /Users/nils/develop/javascript/apollo-graphql-schema-stitching/full-stack/frontend/
+```
+
 
 1.  Server starten: `cd /Users/nils/develop/javascript/apollo-graphql-chatapp/server && yarn start`
 
