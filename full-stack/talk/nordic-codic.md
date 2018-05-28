@@ -14,9 +14,16 @@ In diesem Talk werde ich Euch eine kurze Einführung in die Konzepte von GraphQL
 idea /Users/nils/develop/javascript/apollo-graphql-schema-stitching/full-stack/frontend/
 ```
 
+# Ablauf
 
-1.  Server starten: `cd /Users/nils/develop/javascript/apollo-graphql-chatapp/server && yarn start`
-
-2.  Client starten: `cd /Users/nils/develop/javascript/apollo-graphql-chatapp/client && yarn start`
-
-3.  GraphiQL: http://localhost:3000/graphiql
+* Intro Folien
+* Beispiel zeigen, Model erklären
+* GraphiQL zeigen um API zu explorieren
+* Warum geht sowas wie GraphiQL => Schema und Typ-Beschreibungen sind PFLICHT
+* Queries mit GraphiQL
+* Mutation mit GraphiQL
+* Nach GraphiQL nochmal Anwendung zeigen, um zu zeigen, dass neues Rating da ist
+* Was geht außerdem? Tooling in der Entwicklung!
+  * IDEA zum Entwickeln von Abfragen => BeerRatingApp.tsx
+  * Eventuell TypeScript, ebenfalls BeerRatingApp
+* *
