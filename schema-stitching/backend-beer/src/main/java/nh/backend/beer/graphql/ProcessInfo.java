@@ -13,4 +13,5 @@ public class ProcessInfo {
   private String name;
   private String uptime;
   private String javaVersion;
+  private String graphiQL;
 }

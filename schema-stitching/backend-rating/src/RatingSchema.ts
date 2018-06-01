@@ -20,7 +20,8 @@ const typeDefs = `
   type ProcessInfo {
     name: String!
     nodeJsVersion: String!
-    uptime: String!
+    uptime: String!,
+    graphiQL: String
   }
 
 
@@ -65,9 +66,10 @@ const createRatingSchema = (port: number) => {
       ratings: (): Rating[] => ratingStore.all(),
       ratingsForBeer: (_: any, { beerId }: { beerId: string }): Rating[] => ratingStore.all().filter(r => r.beerId === beerId),
       ping: () => ({
-        name: "Rating Backend",
+        name: "👍 Rating Backend",
         nodeJsVersion: process.versions.node,
-        uptime: `${(Date.now() - bootTime) / 1000}s`
+        uptime: `${(Date.now() - bootTime) / 1000}s`,
+        graphiQL: `http://localhost:${port}/graphiql`
       })
     },
     Mutation: {

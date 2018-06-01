@@ -10,7 +10,8 @@ import {
   mergeSchemas,
   transformSchema,
   RenameTypes,
-  RenameRootFields
+  RenameRootFields,
+  makeExecutableSchema
 } from "graphql-tools";
 import { HttpLink } from "apollo-link-http";
 import fetch from "node-fetch";
@@ -40,6 +41,36 @@ function renameSystemInfo(schema: GraphQLSchema, systemName: String) {
   ]);
 }
 
+/** Own, "local" schema of the Stitcher */
+function createStitcherSchema() {
+  const bootTime = Date.now();
+  const stitcherSchema = makeExecutableSchema({
+    typeDefs: `
+      type StitcherStatus {
+        name: String!
+        nodeJsVersion: String!
+        uptime: String!
+        graphiQL: String
+      }
+  
+      type Query {
+        stitcherStatus: StitcherStatus!
+      }
+    `,
+    resolvers: {
+      Query: {
+        stitcherStatus: () => ({
+          name: "🖇 Stitcher",
+          nodeJsVersion: process.versions.node,
+          uptime: `${(Date.now() - bootTime) / 1000}s`,
+          graphiQL: `http://localhost:${PORT}/graphiql`
+        })
+      }
+    }
+  });
+  return stitcherSchema;
+}
+
 async function createCombinedSchema() {
   // STEP 1: Create the Remote Schemas
   const beerSchema = await createRemoteSchema("http://localhost:9010/graphql");
@@ -57,7 +88,8 @@ async function createCombinedSchema() {
     schemas: [
       transformedBeerSchema, //
       transformedRatingSchema,
-      linkedSchema
+      linkedSchema,
+      createStitcherSchema()
     ],
     resolvers: linkedSchemaResolvers
   });

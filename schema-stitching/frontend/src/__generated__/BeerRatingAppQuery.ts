@@ -11,12 +11,21 @@ export interface BeerRatingAppQueryResult_beerServiceStatus {
   name: string;
   uptime: string;
   javaVersion: string;
+  graphiQL: string | null;
 }
 
 export interface BeerRatingAppQueryResult_ratingServiceStatus {
   name: string;
   nodeJsVersion: string;
   uptime: string;
+  graphiQL: string | null;
+}
+
+export interface BeerRatingAppQueryResult_stitcherStatus {
+  name: string;
+  nodeJsVersion: string;
+  uptime: string;
+  graphiQL: string | null;
 }
 
 export interface BeerRatingAppQueryResult_beers_ratings {
@@ -36,6 +45,7 @@ export interface BeerRatingAppQueryResult_beers {
 export interface BeerRatingAppQueryResult {
   beerServiceStatus: BeerRatingAppQueryResult_beerServiceStatus;      // Returns some information about the running **Beer** application
   ratingServiceStatus: BeerRatingAppQueryResult_ratingServiceStatus;  // Returns health information about the running **Rating** process
+  stitcherStatus: BeerRatingAppQueryResult_stitcherStatus;
   beers: BeerRatingAppQueryResult_beers[];                            // Returns all beers in our store
 }
 

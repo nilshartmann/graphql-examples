@@ -15,6 +15,7 @@ type ProcessInfo {
   name: String!
   uptime: String!
   javaVersion: String!
+  graphiQL: String
 }
 
 type Query {

@@ -16,12 +16,21 @@ const BEER_RATING_APP_QUERY = gql`
       name
       uptime
       javaVersion
+      graphiQL
     }
 
     ratingServiceStatus {
       name
       nodeJsVersion
       uptime
+      graphiQL
+    }
+
+    stitcherStatus {
+      name
+      nodeJsVersion
+      uptime
+      graphiQL
     }
 
     beers {
@@ -62,12 +71,9 @@ const BeerRatingApp = () => (
             <Header>
               <ServiceStatus status={data.beerServiceStatus} />
               <ServiceStatus status={data.ratingServiceStatus} />
+              <ServiceStatus status={data.stitcherStatus} />
             </Header>
             <BeerList beers={data.beers} />
-            <Footer>
-              <ServiceStatus status={data.beerServiceStatus} />
-              <ServiceStatus status={data.ratingServiceStatus} />
-            </Footer>
           </React.Fragment>
         );
       }}
