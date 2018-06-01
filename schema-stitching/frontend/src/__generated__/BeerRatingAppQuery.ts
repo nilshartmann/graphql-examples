@@ -46,6 +46,13 @@ export interface BeerRatingAppQueryResult {
 // TODO: Link to issue to fix this.
 //==============================================================
 
+// 
+interface AddRatingInput {
+  beerId: string;
+  author: string;
+  comment: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

@@ -1,6 +1,6 @@
 const { makeExecutableSchema } = require("graphql-tools");
 
-import { Rating, RATINGS } from "./Model";
+import { RatingDB, RatingStore } from "./RatingStore";
 
 const typeDefs = `
   type Rating {
@@ -34,21 +34,47 @@ const typeDefs = `
     """Returns health information about the running **Rating** process"""
     ping: ProcessInfo!
   }
+
+  input AddRatingInput {
+    beerId: String!
+    author: String!
+    comment: String!
+  }
+
+  type Mutation {
+    """Add a new Rating to a Beer and returns the new Rating"""
+    addRating(ratingInput: AddRatingInput): Rating!
+  }
 `;
+
+type Rating = RatingDB;
+
+interface AddRatingInput {
+  beerId: string;
+  author: string;
+  comment: string;
+}
 
 const createRatingSchema = (port: number) => {
   const bootTime = Date.now();
 
+  const ratingStore = new RatingStore();
   // The resolvers
   const resolvers = {
     Query: {
-      ratings: (): Rating[] => RATINGS,
-      ratingsForBeer: (_: any, { beerId }: { beerId: string }): Rating[] => RATINGS.filter(r => r.beerId === beerId),
+      ratings: (): Rating[] => ratingStore.all(),
+      ratingsForBeer: (_: any, { beerId }: { beerId: string }): Rating[] => ratingStore.all().filter(r => r.beerId === beerId),
       ping: () => ({
         name: "Rating Backend",
         nodeJsVersion: process.versions.node,
         uptime: `${(Date.now() - bootTime) / 1000}s`
       })
+    },
+    Mutation: {
+      addRating: (_: any, { ratingInput }: { ratingInput: AddRatingInput }): Rating => {
+        const { beerId, author, comment } = ratingInput;
+        return ratingStore.newRating(beerId, author, comment);
+      }
     }
   };
 

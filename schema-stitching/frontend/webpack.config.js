@@ -1,10 +1,14 @@
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
+const Stylish = require("webpack-stylish");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
+const path = require("path");
 module.exports = {
   entry: "./src/main.tsx",
+  mode: "development",
   output: {
     path: __dirname + "/public/dist/",
-    filename: "main.js",
+    filename: "[name].[chunkhash].js",
     publicPath: "/dist"
   },
   resolve: {
@@ -15,26 +19,24 @@ module.exports = {
       {
         test: /\.scss$/,
         exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: [
-            {
-              loader: "css-loader",
-              options: {
-                importLoaders: 1,
-                modules: true,
-                sourceMap: true,
-                localIdentName: "[path]__[name]___[local]"
-              }
-            },
-            {
-              loader: "sass-loader",
-              options: {
-                sourceMap: true
-              }
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              importLoaders: 1,
+              modules: true,
+              sourceMap: true,
+              localIdentName: "[path]__[name]___[local]"
             }
-          ]
-        })
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: true
+            }
+          }
+        ]
       },
       {
         test: /\.svg/,
@@ -52,10 +54,22 @@ module.exports = {
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader", exclude: [/node_modules/, /build/, /__test__/] }
     ]
   },
-  plugins: [new ExtractTextPlugin("beer-rating-app.css")],
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "[name].[chunkhash].css"
+    }),
+    new HtmlWebpackPlugin({
+      alwaysWriteToDisk: true,
+      filename: path.resolve("./public/index.html"),
+      template: "public/index-template.html"
+    }),
+    new HtmlWebpackHarddiskPlugin(),
+    new Stylish()
+  ],
   devtool: "source-map",
   devServer: {
     historyApiFallback: true,
-    port: 9080
+    port: 9080,
+    stats: "none"
   }
 };
