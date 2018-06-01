@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Express } from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 
@@ -102,7 +102,7 @@ async function createCombinedSchema() {
 
   app.use(cors());
   app.use("/graphql", bodyParser.json(), graphqlExpress({ schema: combinedSchema }));
-  app.get("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
+  app.use("/graphiql", express.static(`${__dirname}/graphiql`));
 
   app.listen(PORT, () => {
     console.log(`Schema Stitcher  running on ${PORT}`);

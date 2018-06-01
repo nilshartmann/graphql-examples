@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "03 - Run Schema Stitcher",
+      "label": "03 - 🖇  Schema Stitcher",
       "type": "npm",
       "script": "start",
       "problemMatcher": []
