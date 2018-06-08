@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "01 - Run Backend 'BeerRating'",
+      "type": "npm",
+      "script": "start",
+      "problemMatcher": []
+    },
+  ]
+}
