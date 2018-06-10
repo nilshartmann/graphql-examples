@@ -1,0 +1,14 @@
+mutation {
+  setDraftRatingForBeer(beerId:"B1", author:"X", comment:"C") @client {id }
+}
+
+query {
+  draftRatings @client {
+    id comment author
+  }
+}
+
+
+mutation {
+  setDraftRatingForBeer(beerId:"B2", author:"X", comment:"C") @client {id }
+}
