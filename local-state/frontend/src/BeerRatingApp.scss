@@ -11,6 +11,12 @@
     font-family: Anonymous Pro;
     color: var(--color-text);
     background-color: #f2f2f2;
+
+    height: 100%;
+  }
+
+  body {
+    overflow-y: scroll;
   }
 
   button {
@@ -24,10 +30,20 @@
   *:focus {
     outline: none;
   }
+
+  #app {
+    min-height: 100%;
+  }
 }
 
 .BeerRatingApp {
   background-color: var(--color-background);
   max-width: 1024px;
   margin: 0 auto;
+  height: 100%;
+}
+
+.Main {
+  padding-left: 5rem;
+  padding-right: 5rem;
 }

@@ -17,6 +17,6 @@
       ".prettier*": true,
       "yarn.lock": true
     },
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "backend/node_modules/typescript/lib"
   }
 }

@@ -1,0 +1,33 @@
+.RatingForm {
+  h1 {
+    font-family: Anton;
+    line-height: 1;
+    letter-spacing: 3px;
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-transform: lowercase;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.RatingForm {
+  font-size: 1.5rem;
+
+  fieldset div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    justify-content: flex-end;
+  }
+
+  label {
+    order: 1;
+    width: 8em;
+    padding-right: 0.5em;
+  }
+
+  input {
+    order: 2;
+    flex: 1 1 auto;
+  }
+}

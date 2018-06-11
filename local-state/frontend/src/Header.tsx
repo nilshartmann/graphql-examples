@@ -8,7 +8,7 @@ const GITHUB_REPO = "https://github.com/nilshartmann/apollo-graphql-examples";
 
 const Header = ({ children }: HeaderProps) => (
   <header className={styles.Header}>
-    <div className={styles.UpperHeader}>{children}</div>
+    {/* <div className={styles.UpperHeader}>{children}</div> */}
     <div className={styles.MainHeader}>
       <h1>Beer Rating</h1>
       <h2>

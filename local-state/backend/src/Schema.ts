@@ -46,7 +46,7 @@ type Beer {
     beers: [Beer!]!
 
     """Returns the Beer with the specified Id"""
-    beer(beerId: String): Beer
+    beer(beerId: ID!): Beer
   
     """All ratings stored in our system"""
     ratings: [Rating!]! 
@@ -57,7 +57,7 @@ type Beer {
   }
 
   input AddRatingInput {
-    beerId: String!
+    beerId: ID!
     author: String!
     comment: String!
   }
