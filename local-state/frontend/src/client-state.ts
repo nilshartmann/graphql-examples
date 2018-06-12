@@ -31,20 +31,19 @@ const defaults = {
       id: "B1",
       author: "Klaus-Dieter",
       comment: "Not bad at all"
-    },
-    {
-      __typename: "DraftRating",
-      id: "B2",
-      author: "Nils",
-      comment: "So-la-la"
     }
+    // {
+    //   __typename: "DraftRating",
+    //   id: "B2",
+    //   author: "Nils",
+    //   comment: "So-la-la"
+    // }
   ]
 };
 
 const resolvers = {
   Query: {
     draftRatingForBeer: (_: any, args: any, { cache }: { cache: ApolloCache<any> }) => {
-      console.log("localRatingForBeer", args.beerId);
       const id = `DraftRating:${args.beerId}`;
 
       const fragment = gql`
@@ -54,18 +53,14 @@ const resolvers = {
           comment
         }
       `;
-      return cache.readFragment({ fragment, id });
+      const rating = cache.readFragment({ fragment, id });
+      console.log(`draftRatingForBeer Resolver for beerId '${args.beerId}' returned `, rating);
+      return rating;
     }
   },
   Mutation: {
     setCurrentBeerId: (_: any, { beerId }: { beerId: string }, { cache }: { cache: ApolloCache<any> }) => {
-      console.log("setCurrentBeerId", beerId);
-
-      const data = {
-        currentBeerId: beerId
-      };
-      cache.writeData({ data });
-
+      cache.writeData({ data: { currentBeerId: beerId } });
       return beerId;
     },
     setDraftRatingForBeer: (
@@ -75,28 +70,69 @@ const resolvers = {
     ) => {
       console.log(`Writing draftRating for beer '${beerId}', author: '${author}', comment: '${comment}'`);
 
-      const draftRating = {
+      interface DraftRating {
+        id: string;
+        author: string;
+        comment: string;
+      }
+
+      const query = gql`
+        query GetDraftRatings {
+          draftRatings @client {
+            id
+            author
+            comment
+          }
+        }
+      `;
+      const previous = cache.readQuery({ query }) as { draftRatings: DraftRating[] };
+      console.log("previous", previous);
+
+      let found = false;
+      const newDraftRating = {
         __typename: "DraftRating",
         id: beerId,
         author,
         comment
       };
 
-      const fragment = gql`
-        fragment draftRating on DraftRating {
-          id
-          author
-          comment
+      const newDraftRatings = previous.draftRatings.map(prevDraft => {
+        if (prevDraft.id === beerId) {
+          found = true;
+          return newDraftRating;
         }
-      `;
 
-      cache.writeFragment({
-        fragment,
-        data: draftRating,
-        id: `DraftRating:${beerId}`
+        return prevDraft;
       });
 
-      return draftRating;
+      if (!found) {
+        newDraftRatings.push(newDraftRating);
+      }
+      const data = {
+        draftRatings: newDraftRatings
+      };
+
+      console.log(data);
+      console.log("======");
+
+      cache.writeData({ data });
+      return newDraftRating;
+
+      // const fragment = gql`
+      //   fragment draftRating on DraftRating {
+      //     id
+      //     author
+      //     comment
+      //   }
+      // `;
+
+      // cache.writeFragment({
+      //   fragment,
+      //   data: draftRating,
+      //   id: `DraftRating:${beerId}`
+      // });
+
+      // return draftRating;
     }
   }
 };
