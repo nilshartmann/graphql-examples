@@ -11,7 +11,7 @@
 }
 
 .MainHeader {
-  height: 10rem;
+  height: 8rem;
   background-color: rgba(0, 0, 0, 0.15);
   text-align: center;
   padding-top: 2rem;
@@ -27,15 +27,5 @@
     font-family: Anton;
     text-transform: uppercase;
     line-height: 1;
-  }
-
-  h2 {
-    font-weight: normal;
-    font-size: 1rem;
-    margin-top: 1rem;
-    line-height: 1;
-    a {
-      color: var(--color-text);
-    }
   }
 }
