@@ -87,39 +87,39 @@ class RatingForm extends React.Component<RatingFormProps> {
   authorElement: HTMLInputElement | null = null;
   commentElement: HTMLInputElement | null = null;
 
+  getCurrentFormValues() {
+    return {
+      beerId: this.props,
+      author: this.authorElement!.value,
+      comment: this.commentElement!.value
+    };
+  }
+
+  setAuthorElementRef = (ref: HTMLInputElement | null) => (this.authorElement = ref);
+  setCommentElementRef = (ref: HTMLInputElement | null) => (this.commentElement = ref);
+
   onFormChange() {
-    const { beerId, onRatingChange } = this.props;
-    const author = this.authorElement!.value;
-    const comment = this.commentElement!.value;
+    const { onRatingChange } = this.props;
+    const { author, comment } = this.getCurrentFormValues();
 
     onRatingChange(author, comment);
   }
 
   onAuthorChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     this.onFormChange();
-    // console.log("uathorEleent", this.authorElement!.value);
-    // // this.setState({ author: e.currentTarget.value });
   };
 
   onCommentChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
     this.onFormChange();
-    // this.setState({ comment: e.currentTarget.value });
   };
-
-  setAuthorElementRef = (ref: HTMLInputElement | null) => (this.authorElement = ref);
-  setCommentElementRef = (ref: HTMLInputElement | null) => (this.commentElement = ref);
 
   onLeaveRatingClick = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    // // const { author, comment } = this.state;
-    // const { onNewRating } = this.props;
+    this.props.onNewRating(this.getCurrentFormValues());
 
-    // onNewRating({ author, comment });
-    // this.setState({
-    //   author: "",
-    //   comment: ""
-    // });
+    // reset form
+    this.props.onRatingChange("", "");
   };
 
   render() {
