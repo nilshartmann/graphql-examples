@@ -26,12 +26,12 @@ const typeDefs = `
 const defaults = {
   currentBeerId: "B1",
   draftRatings: [
-    {
-      __typename: "DraftRating",
-      id: "B1",
-      author: "Klaus-Dieter",
-      comment: "Not bad at all"
-    }
+    // {
+    //   __typename: "DraftRating",
+    //   id: "B1",
+    //   author: "Klaus-Dieter",
+    //   comment: "Not bad at all"
+    // }
     // {
     //   __typename: "DraftRating",
     //   id: "B2",

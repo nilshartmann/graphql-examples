@@ -12,9 +12,11 @@ interface RatingFormControllerProps {
   onNewRating: (rating: NewRating) => void;
 }
 
+// without fetching the id in the query below, the refetchQueries does not work?!
 const GET_DRAFT_RATING_QUERY = gql`
   query GetDraftRatingQuery($beerId: ID!) {
     draft: draftRatingForBeer(beerId: $beerId) @client {
+      id
       author
       comment
     }
@@ -35,7 +37,7 @@ export default class RatingFormController extends React.Component<RatingFormCont
     const { beerId } = this.props;
     return (
       <Query<GetDraftRatingQueryResult> query={GET_DRAFT_RATING_QUERY} variables={{ beerId }}>
-        {({ loading, error, data, client }) => {
+        {({ loading, error, data, client, refetch }) => {
           if (loading) {
             return <h1>Loading></h1>;
           }
@@ -54,7 +56,10 @@ export default class RatingFormController extends React.Component<RatingFormCont
                     beerId,
                     author,
                     comment
-                  }
+                  },
+                  // without refetchQuery the Query doesn't get updated, if
+                  // the first execution of the query returns null
+                  refetchQueries: [{ query: GET_DRAFT_RATING_QUERY, variables: { beerId } }]
                 });
               }}
               onNewRating={this.props.onNewRating}
