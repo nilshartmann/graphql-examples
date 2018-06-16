@@ -37,7 +37,7 @@ export default class RatingFormController extends React.Component<RatingFormCont
     const { beerId } = this.props;
     return (
       <Query<GetDraftRatingQueryResult> query={GET_DRAFT_RATING_QUERY} variables={{ beerId }}>
-        {({ loading, error, data, client, refetch }) => {
+        {({ loading, error, data, client }) => {
           if (loading) {
             return <h1>Loading></h1>;
           }
@@ -98,19 +98,11 @@ class RatingForm extends React.Component<RatingFormProps> {
   setAuthorElementRef = (ref: HTMLInputElement | null) => (this.authorElement = ref);
   setCommentElementRef = (ref: HTMLInputElement | null) => (this.commentElement = ref);
 
-  onFormChange() {
+  onFormChange = () => {
     const { onRatingChange } = this.props;
     const { author, comment } = this.getCurrentFormValues();
 
     onRatingChange(author, comment);
-  }
-
-  onAuthorChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    this.onFormChange();
-  };
-
-  onCommentChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
-    this.onFormChange();
   };
 
   onLeaveRatingClick = (e: React.SyntheticEvent<HTMLButtonElement>) => {
@@ -140,7 +132,7 @@ class RatingForm extends React.Component<RatingFormProps> {
                 type="text"
                 id={`ratingform-name-${beerId}`}
                 value={author}
-                onChange={this.onAuthorChange}
+                onChange={this.onFormChange}
               />
             </div>
             <div>
@@ -150,7 +142,7 @@ class RatingForm extends React.Component<RatingFormProps> {
                 type="text"
                 id={`ratingform-comment-${beerId}`}
                 value={comment}
-                onChange={this.onCommentChange}
+                onChange={this.onFormChange}
               />
             </div>
             <div>
