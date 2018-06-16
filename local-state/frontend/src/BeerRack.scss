@@ -5,17 +5,29 @@
   justify-content: space-between;
 }
 .Thumbnail {
-  border: 1px solid var(--color-text);
   cursor: pointer;
+  // box-sizing: border-box;
 
   // http://jsfiddle.net/webtiki/MpXYr/2/
-  width: 12%;
-  padding-bottom: 12%;
+  // width: 12%; // calc(12% - 1px);
+  // padding-bottom: 12%; // calc(12% - 1px);
+  width: 100px;
+  height: 100px;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
 
-  &:hover {
-    border: 1px solid var(--color-one);
+  .ThumbnailBorder {
+    height: 100%;
+    width: 100%;
+
+    border: 0.5px solid var(--color-text);
+    background-color: rgba(var(--color-background-rgb), 0.4);
+
+    &.Active,
+    &:hover {
+      background-color: transparent;
+      border: 3px solid var(--color-one);
+    }
   }
 }

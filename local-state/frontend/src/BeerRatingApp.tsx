@@ -36,7 +36,7 @@ const BeerRatingApp = () => (
 
           return (
             <>
-              <BeerRack beerIds={data!.beers} />
+              <BeerRack beerIds={data!.beers} currentBeerId={data!.currentBeerId} />
               <BeerPage beerId={data!.currentBeerId} />
             </>
           );
