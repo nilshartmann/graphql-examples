@@ -40,9 +40,7 @@ const resolvers = {
           comment
         }
       `;
-      const rating = cache.readFragment({ fragment, id });
-      console.log(`draftRatingForBeer Resolver for beerId '${args.beerId}' returned `, rating);
-      return rating;
+      return cache.readFragment({ fragment, id });
     }
   },
   Mutation: {
