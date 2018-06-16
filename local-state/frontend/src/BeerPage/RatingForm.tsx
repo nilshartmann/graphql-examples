@@ -1,8 +1,8 @@
 import * as React from "react";
 import * as styles from "./RatingForm.scss";
 import { NewRating } from "../types";
-import gql from "graphql-tag";
-import { Mutation, Query } from "react-apollo";
+import gql, { default as clientGql } from "graphql-tag";
+import { Query } from "react-apollo";
 import { GetDraftRatingQueryResult } from "./__generated__/GetDraftRatingQuery";
 import { UpdateDraftRatingMutationResult } from "./__generated__/UpdateDraftRatingMutation";
 
@@ -19,6 +19,15 @@ const GET_DRAFT_RATING_QUERY = gql`
       id
       author
       comment
+    }
+  }
+`;
+
+const BEERS_QUERY = gql`
+  query BeersQuery {
+    beers {
+      id
+      hasDraftRating @client
     }
   }
 `;
@@ -59,7 +68,8 @@ export default class RatingFormController extends React.Component<RatingFormCont
                   },
                   // without refetchQuery the Query doesn't get updated, if
                   // the first execution of the query returns null
-                  refetchQueries: [{ query: GET_DRAFT_RATING_QUERY, variables: { beerId } }]
+                  // see: https://www.apollographql.com/docs/react/advanced/caching.html#after-mutations
+                  refetchQueries: [{ query: GET_DRAFT_RATING_QUERY, variables: { beerId } }, { query: BEERS_QUERY }]
                 });
               }}
               onNewRating={this.props.onNewRating}

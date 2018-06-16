@@ -13,6 +13,8 @@ const BEER_RATING_APP_QUERY = gql`
   query BeerRatingAppQuery {
     beers {
       id
+
+      hasDraftRating @client
     }
 
     currentBeerId @client
@@ -36,7 +38,7 @@ const BeerRatingApp = () => (
 
           return (
             <>
-              <BeerRack beerIds={data!.beers} currentBeerId={data!.currentBeerId} />
+              <BeerRack beers={data!.beers} currentBeerId={data!.currentBeerId} />
               <BeerPage beerId={data!.currentBeerId} />
             </>
           );

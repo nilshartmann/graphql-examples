@@ -9,6 +9,7 @@
 
 export interface BeerRatingAppQueryResult_beers {
   id: string;  // Unique, immutable Id, that identifies this Beer
+  hasDraftRating: boolean;
 }
 
 export interface BeerRatingAppQueryResult {

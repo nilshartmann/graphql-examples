@@ -5,6 +5,10 @@ type DraftRating {
   comment: String!
 }
 
+type Beer {
+  hasDraftRating: Boolean!
+}
+
 type Query {
   draftRatings: [DraftRating]!
   draftRatingForBeer(beerId: ID!): DraftRating

@@ -9,6 +9,10 @@ const typeDefs = `
       comment: String!
     }
 
+    type Beer {
+      hasDraftRating: Boolean!
+    }
+
     type Query {
       draftRatings: [DraftRating]!
       draftRatingForBeer(beerId: ID!): DraftRating
@@ -29,6 +33,28 @@ const defaults = {
 };
 
 const resolvers = {
+  Beer: {
+    hasDraftRating: ({ id }: { id: string }, _: any, { cache }: { cache: ApolloCache<any> }) => {
+      // console.log("READ DRAFT RATING FO RBEER ", id);
+      const cacheKey = `DraftRating:${id}`;
+
+      const fragment = gql`
+        fragment hasDraftRatingFragment on DraftRating {
+          id
+        }
+      `;
+      const res = cache.readFragment({ fragment, id: cacheKey }) as any;
+      if (res === null) {
+        return false;
+      }
+
+      console.log("RES", res);
+      if (res.comment || res.author) {
+        return true;
+      }
+      return false;
+    }
+  },
   Query: {
     draftRatingForBeer: (_: any, args: any, { cache }: { cache: ApolloCache<any> }) => {
       const id = `DraftRating:${args.beerId}`;
