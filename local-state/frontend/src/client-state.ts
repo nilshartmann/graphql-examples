@@ -39,8 +39,10 @@ const resolvers = {
       const cacheKey = `DraftRating:${id}`;
 
       const fragment = gql`
-        fragment hasDraftRatingFragment on DraftRating {
+        fragment draftRating on DraftRating {
           id
+          author
+          comment
         }
       `;
       const res = cache.readFragment({ fragment, id: cacheKey }) as any;
