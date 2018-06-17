@@ -69,6 +69,8 @@ export default class RatingFormController extends React.Component<RatingFormCont
                   // without refetchQuery the Query doesn't get updated, if
                   // the first execution of the query returns null
                   // see: https://www.apollographql.com/docs/react/advanced/caching.html#after-mutations
+                  // NOTE: ATTENTION: Refetching BEERS_QUERY leads to server request,
+                  // as the query contains also remote fields! Not a valid solutions for 'real' apps
                   refetchQueries: [{ query: GET_DRAFT_RATING_QUERY, variables: { beerId } }, { query: BEERS_QUERY }]
                 });
               }}
