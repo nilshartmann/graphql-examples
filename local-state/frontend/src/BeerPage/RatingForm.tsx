@@ -138,21 +138,19 @@ class RatingForm extends React.Component<RatingFormProps> {
         <form>
           <fieldset>
             <div>
-              <label htmlFor={`ratingform-name-${beerId}`}>Your name:</label>{" "}
+              <label>Your name:</label>{" "}
               <input
                 ref={this.setAuthorElementRef}
                 type="text"
-                id={`ratingform-name-${beerId}`}
                 value={author}
                 onChange={this.onFormChange}
               />
             </div>
             <div>
-              <label htmlFor={`ratingform-comment-${beerId}`}>Your rating:</label>{" "}
+              <label>Your rating:</label>{" "}
               <input
                 ref={this.setCommentElementRef}
                 type="text"
-                id={`ratingform-comment-${beerId}`}
                 value={comment}
                 onChange={this.onFormChange}
               />

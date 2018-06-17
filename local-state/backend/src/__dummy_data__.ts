@@ -79,13 +79,7 @@ export const RATINGS = [
     id: "R13",
     beerId: "B6",
     author: "Alessa Bradley",
-    comment: "Dense, dense mouthfeel and syrupy finish"
-  },
-  {
-    id: "R14",
-    beerId: "B1",
-    author: "Emily Davis",
-    comment: "Off-putting buttery nose, laced with a touch of caramel and hamster cage."
+    commefnft: "Dense, dense mouthfeel and syrupy finish"
   },
   {
     id: "R15",
