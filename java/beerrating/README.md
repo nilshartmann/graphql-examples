@@ -25,7 +25,11 @@ or
 
 For "testing" the JPA/hibernate behaviour, there are three HTTP endpoints (all GET):
 
-* `http://localhost:9000/gql`: runs a simple GraphQL query
+* `http://localhost:9000/gql`: runs GraphQL query that needs all three domain objects
+
+* `http:localhost:9000/gql/ratings`: GraphQL query that only needs beer and ratings, the JPA query is optimized to only fetch those two entities from DB
+
+* `http:localhost:9000/gql/beers`: GraphQL query that only needs beer, the JPA query is optimized to only fetch the Beer entity from DB
 
 * `http://localhost:9000/beers`: runs a simple "findAll" JPA Query (without optimizations, i.e. all Relations are LAZY) (n DB Queries needed for all requested objects)
 

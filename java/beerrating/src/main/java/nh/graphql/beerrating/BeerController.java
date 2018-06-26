@@ -75,14 +75,68 @@ public class BeerController {
     return result;
   }
 
-  @GetMapping("/gql")
+  /**
+   * "Complete" Query => requests all three domain objects
+   *
+   * @return
+   */
+  @GetMapping("/gql/all")
   @ResponseBody
   public Object gql() {
     // Create GraphQL Instance
     GraphQL graphQL = GraphQL.newGraphQL(schema).build();
 
     // Build Query
-    ExecutionInput executionInput = ExecutionInput.newExecutionInput().query("query { beers { name ratings { author { name } } } }")
+    // Hibernate: select beer0_.id as id1_2_0_, rating2_.id as id1_4_1_, author3_.id as id1_0_2_, beer0_.name as name2_2_0_, beer0_.price as price3_2_0_, rating2_.author_id as author_i4_4_1_, rating2_.beer_id as beer_id5_4_1_, rating2_.comment as comment2_4_1_, rating2_.stars as stars3_4_1_, ratings1_.beer_id as beer_id1_3_0__, ratings1_.ratings_id as ratings_2_3_0__, author3_.name as name2_0_2_ from beer beer0_ left outer join beer_ratings ratings1_ on beer0_.id=ratings1_.beer_id left outer join rating rating2_ on ratings1_.ratings_id=rating2_.id left outer join author author3_ on rating2_.author_id=author3_.id
+    ExecutionInput executionInput = ExecutionInput.newExecutionInput().query("query { beers { id name ratings { stars author { name } } } }")
+        .build();
+
+    // Run Query
+    ExecutionResult executionResult = graphQL.execute(executionInput);
+
+    final Object data = executionResult.getData();
+
+    return data;
+  }
+
+  /**
+   * "partial" query 1 => requests one beer + rating, but no author
+   *
+   * @return
+   */
+  @GetMapping("/gql/ratings")
+  @ResponseBody
+  public Object gqlratings() {
+    // Create GraphQL Instance
+    GraphQL graphQL = GraphQL.newGraphQL(schema).build();
+
+    // Build Query
+    // Hibernate: select beer0_.id as id1_2_0_, rating2_.id as id1_4_1_, beer0_.name as name2_2_0_, beer0_.price as price3_2_0_, rating2_.author_id as author_i4_4_1_, rating2_.beer_id as beer_id5_4_1_, rating2_.comment as comment2_4_1_, rating2_.stars as stars3_4_1_, ratings1_.beer_id as beer_id1_3_0__, ratings1_.ratings_id as ratings_2_3_0__ from beer beer0_ left outer join beer_ratings ratings1_ on beer0_.id=ratings1_.beer_id left outer join rating rating2_ on ratings1_.ratings_id=rating2_.id
+    ExecutionInput executionInput = ExecutionInput.newExecutionInput().query("query { beers { id name ratings { stars } } }")
+        .build();
+
+    // Run Query
+    ExecutionResult executionResult = graphQL.execute(executionInput);
+
+    final Object data = executionResult.getData();
+
+    return data;
+  }
+
+  /**
+   * "partial" query 1 => requests one beer + rating, but no author
+   *
+   * @return
+   */
+  @GetMapping("/gql/beers")
+  @ResponseBody
+  public Object gqlbeers() {
+    // Create GraphQL Instance
+    GraphQL graphQL = GraphQL.newGraphQL(schema).build();
+
+    // Build Query
+    // Hibernate: select beer0_.id as id1_2_, beer0_.name as name2_2_, beer0_.price as price3_2_ from beer beer0_
+    ExecutionInput executionInput = ExecutionInput.newExecutionInput().query("query { beers { id price } }")
         .build();
 
     // Run Query
