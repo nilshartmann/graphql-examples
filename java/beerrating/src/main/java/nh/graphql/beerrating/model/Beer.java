@@ -1,9 +1,7 @@
 package nh.graphql.beerrating.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.Arrays;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,22 +13,30 @@ public class Beer {
 
   @Id
   private String id;
+
+  @NotNull
   private String name;
+
+  @NotNull
   private String price;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<Rating> ratings = new LinkedList<>();
 
   protected Beer() {
 
   }
 
-  public Beer(String id, String name, String price, Rating... ratings) {
+  public Beer(String id, String name, String price) {
     this.id = id;
     this.name = name;
     this.price = price;
+  }
 
-    this.ratings = new LinkedList<>(Arrays.asList(ratings));
+  public Beer addRating(Author author, String ratingId, String comment, int stars) {
+    Rating rating = new Rating(this, author, ratingId, comment, stars);
+    this.ratings.add(rating);
+    return this;
   }
 
   public String getId() {
@@ -43,5 +49,9 @@ public class Beer {
 
   public String getPrice() {
     return price;
+  }
+
+  public List<Rating> getRatings() {
+    return ratings;
   }
 }

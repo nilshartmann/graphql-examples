@@ -2,6 +2,8 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
+db-data/
+
 ### STS ###
 .apt_generated
 .classpath
@@ -18,10 +20,3 @@
 *.ipr
 /out/
 
-### NetBeans ###
-/nbproject/private/
-/build/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
