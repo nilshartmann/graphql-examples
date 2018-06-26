@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class Rating {
 
   @Id
-  private  String id;
+  private String id;
 
   @NotNull
   private String comment;
@@ -24,12 +24,12 @@ public class Rating {
   private int stars;
 
   @NotNull
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   @JsonIgnore
   private Beer beer;
 
   @NotNull
-  @ManyToOne(fetch = FetchType.EAGER)
+  @ManyToOne(fetch = FetchType.LAZY)
   private Author author;
 
   protected Rating() {

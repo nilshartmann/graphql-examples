@@ -1,6 +1,9 @@
 package nh.graphql.beerrating.model;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,10 +23,11 @@ public class Beer {
   @NotNull
   private String price;
 
-  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @OneToMany(cascade = CascadeType.ALL)
   private List<Rating> ratings = new LinkedList<>();
 
   protected Beer() {
+
 
   }
 

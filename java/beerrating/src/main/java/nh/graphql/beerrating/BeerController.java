@@ -3,12 +3,10 @@ package nh.graphql.beerrating;
 import nh.graphql.beerrating.model.Beer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +18,11 @@ public class BeerController {
   @Autowired
   private BeerRepository beerRepository;
 
+  /**
+   * EXAMPLE: runs n queries in database (beer + ratings)
+   *
+   * @return
+   */
   @GetMapping("/beers")
   @ResponseBody
   public Map<String, Object> beers() {
@@ -30,9 +33,44 @@ public class BeerController {
 
     return result;
   }
+
+  /**
+   * EXAMPLE: runs only a single query due to the entitygraph in the repository
+   *
+   * @return
+   */
+  @GetMapping("/fetchbeers")
+  @ResponseBody
+  public Map<String, Object> fetchbeers() {
+    Beer b = beerRepository.findAllFetchGraph(false).get(0);
+    Map<String, Object> result = new Hashtable<>();
+    result.put("name", b.getName());
+    result.put("ratings", b.getRatings().size());
+
+    return result;
+  }
+
+  /**
+   * EXAMPLE: runs only a single query due to the entitygraph in the repository,
+   * even the referenced author is configured as lazy-loading in mapping
+   *
+   * @return
+   */
+  @GetMapping("/fetchall")
+  @ResponseBody
+  public Map<String, Object> fetchall() {
+    Beer b = beerRepository.findAllFetchGraph(true).get(0);
+    Map<String, Object> result = new Hashtable<>();
+    result.put("name", b.getName());
+    result.put("ratings", b.getRatings().size());
+    result.put("author", b.getRatings().get(0).getAuthor().getName());
+
+    return result;
+  }
+
   @GetMapping("/beer")
   @ResponseBody
-  public Map<String, Object>  beer() {
+  public Map<String, Object> beer() {
     Beer b = beerRepository.getBeer("B1");
     Map result = new Hashtable<String, String>();
     result.put("name", b.getName());

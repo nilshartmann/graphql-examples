@@ -3,7 +3,6 @@ package nh.graphql.beerrating.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -21,7 +20,7 @@ public class Author {
   @NotNull
   private String name;
 
-  private @OneToMany(fetch = FetchType.EAGER)
+  private @OneToMany
   List<Rating> ratings;
 
   protected Author() {

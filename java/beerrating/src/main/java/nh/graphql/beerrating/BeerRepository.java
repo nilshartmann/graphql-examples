@@ -3,8 +3,8 @@ package nh.graphql.beerrating;
 import nh.graphql.beerrating.model.Beer;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -21,6 +21,19 @@ public class BeerRepository {
 
   public List<Beer> findAll() {
     final TypedQuery<Beer> query = em.createQuery("SELECT b FROM Beer b", Beer.class);
+    return query.getResultList();
+  }
+
+  public List<Beer> findAllFetchGraph(boolean withAuthor) {
+    EntityGraph entityGraph = em.createEntityGraph(Beer.class);
+    entityGraph.addAttributeNodes("ratings");
+    if (withAuthor) {
+      entityGraph.addSubgraph("ratings").addAttributeNodes("author");
+    }
+
+    final TypedQuery<Beer> query = em.createQuery("SELECT b FROM Beer b", Beer.class);
+    query.setHint("javax.persistence.fetchgraph", entityGraph);
+
     return query.getResultList();
   }
 
