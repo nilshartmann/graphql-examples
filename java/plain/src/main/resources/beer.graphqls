@@ -1,0 +1,17 @@
+type Rating {
+  id: ID!
+  author: String!
+  comment: String!
+}
+
+type Beer {
+  id: ID!
+  name: String!
+  price: String!
+
+  ratings: [Rating!]!
+}
+
+type Query {
+  beers: [Beer!]!
+}
