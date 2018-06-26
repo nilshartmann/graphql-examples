@@ -1,0 +1,24 @@
+# https://github.com/graphql-java/graphql-java/releases/tag/v9.0
+
+type Author {
+  id: ID!
+  name: String!
+}
+
+type Rating {
+  id: ID!
+  author: Author!
+  stars: Int!
+}
+
+type Beer {
+  id: ID!
+  name: String!
+  price: String!
+
+  ratings: [Rating!]!
+}
+
+type Query {
+  beers: [Beer!]!
+}

@@ -1,5 +1,9 @@
 package nh.graphql.beerrating;
 
+import graphql.ExecutionInput;
+import graphql.ExecutionResult;
+import graphql.GraphQL;
+import graphql.schema.GraphQLSchema;
 import nh.graphql.beerrating.model.Beer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,9 @@ public class BeerController {
 
   @Autowired
   private BeerRepository beerRepository;
+
+  @Autowired
+  private GraphQLSchema schema;
 
   /**
    * EXAMPLE: runs n queries in database (beer + ratings)
@@ -68,6 +75,24 @@ public class BeerController {
     return result;
   }
 
+  @GetMapping("/gql")
+  @ResponseBody
+  public Object gql() {
+    // Create GraphQL Instance
+    GraphQL graphQL = GraphQL.newGraphQL(schema).build();
+
+    // Build Query
+    ExecutionInput executionInput = ExecutionInput.newExecutionInput().query("query { beers { name ratings { author { name } } } }")
+        .build();
+
+    // Run Query
+    ExecutionResult executionResult = graphQL.execute(executionInput);
+
+    final Object data = executionResult.getData();
+
+    return data;
+  }
+
   @GetMapping("/beer")
   @ResponseBody
   public Map<String, Object> beer() {
@@ -78,4 +103,5 @@ public class BeerController {
 
     return result;
   }
+
 }
