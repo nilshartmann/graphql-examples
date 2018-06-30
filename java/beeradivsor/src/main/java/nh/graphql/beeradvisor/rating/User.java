@@ -1,4 +1,4 @@
-package nh.graphql.beerrating.model;
+package nh.graphql.beeradvisor.rating;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

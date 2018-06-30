@@ -1,4 +1,4 @@
-package nh.graphql.beerrating;
+package nh.graphql.beeradvisor;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

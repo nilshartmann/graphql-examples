@@ -1,10 +1,11 @@
-package nh.graphql.beerrating;
+package nh.graphql.beeradvisor;
 
 import graphql.ExecutionInput;
 import graphql.ExecutionResult;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
-import nh.graphql.beerrating.model.Beer;
+import nh.graphql.beeradvisor.rating.BeerRepository;
+import nh.graphql.beeradvisor.rating.Beer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import java.util.Map;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Controller
-public class BeerController {
+public class ExampleController {
 
   @Autowired
   private BeerRepository beerRepository;

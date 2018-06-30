@@ -1,9 +1,12 @@
-package nh.graphql.beerrating;
+package nh.graphql.beeradvisor;
 
-import nh.graphql.beerrating.model.Address;
-import nh.graphql.beerrating.model.Shop;
-import nh.graphql.beerrating.model.User;
-import nh.graphql.beerrating.model.Beer;
+import nh.graphql.beeradvisor.rating.BeerRepository;
+import nh.graphql.beeradvisor.rating.UserRepository;
+import nh.graphql.beeradvisor.shop.Address;
+import nh.graphql.beeradvisor.shop.Shop;
+import nh.graphql.beeradvisor.rating.User;
+import nh.graphql.beeradvisor.rating.Beer;
+import nh.graphql.beeradvisor.shop.ShopRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,6 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**

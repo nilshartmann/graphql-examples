@@ -1,4 +1,4 @@
-package nh.graphql.beerrating.model;
+package nh.graphql.beeradvisor.shop;
 
 import javax.persistence.*;
 import java.util.Arrays;

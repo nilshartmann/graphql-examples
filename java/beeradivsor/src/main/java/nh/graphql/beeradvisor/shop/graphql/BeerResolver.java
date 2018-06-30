@@ -1,8 +1,8 @@
-package nh.graphql.beerrating.graphql;
+package nh.graphql.beeradvisor.shop.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
-import nh.graphql.beerrating.model.Beer;
-import nh.graphql.beerrating.model.Shop;
+import nh.graphql.beeradvisor.rating.Beer;
+import nh.graphql.beeradvisor.shop.Shop;
 import org.springframework.stereotype.Component;
 
 /**

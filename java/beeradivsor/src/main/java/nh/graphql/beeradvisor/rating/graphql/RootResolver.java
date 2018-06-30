@@ -1,17 +1,15 @@
-package nh.graphql.beerrating.graphql;
+package nh.graphql.beeradvisor.rating.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import graphql.language.Field;
-import graphql.language.FieldDefinition;
 import graphql.schema.*;
-import nh.graphql.beerrating.BeerRepository;
-import nh.graphql.beerrating.model.Beer;
+import nh.graphql.beeradvisor.rating.BeerRepository;
+import nh.graphql.beeradvisor.rating.Beer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityGraph;
 import java.util.*;
 
 /**

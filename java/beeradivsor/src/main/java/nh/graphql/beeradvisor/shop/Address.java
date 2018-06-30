@@ -1,7 +1,6 @@
-package nh.graphql.beerrating.model;
+package nh.graphql.beeradvisor.shop;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 import javax.validation.constraints.NotNull;
 
 /**

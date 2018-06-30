@@ -1,6 +1,6 @@
-package nh.graphql.beerrating;
+package nh.graphql.beeradvisor.shop;
 
-import nh.graphql.beerrating.model.Shop;
+import nh.graphql.beeradvisor.shop.Shop;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
