@@ -48,7 +48,9 @@ public class RootResolver implements GraphQLQueryResolver {
       logger.info(" field " + fieldPath + " -> unwrapped type: " + (type != null ? type.getName() + "(" + type.getClass().getName() + ")" : " no fieldDefinition"));
     }
 
-    return beerRepository.findAllWithEntityGraph(allRequestedRelations);
+    //return beerRepository.findAllWithEntityGraph(allRequestedRelations);
+
+    return beerRepository.findAll();
   }
 
   private GraphQLType getUnwrappedType(GraphQLType type) {

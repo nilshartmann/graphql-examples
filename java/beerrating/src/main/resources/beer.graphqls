@@ -19,6 +19,8 @@ type Beer {
   ratings: [Rating!]!
 }
 
+
+
 type Query {
   beers: [Beer!]!
 }

@@ -15,11 +15,15 @@ public class BeerSchema {
   @Autowired
   private RootResolver rootResolver;
 
+  @Autowired
+  private BeerResolver beerResolver;
+
   @Bean
   public GraphQLSchema graphQLSchema() {
     final GraphQLSchema graphQLSchema = SchemaParser.newParser()
         .file("beer.graphqls")
-        .resolvers(this.rootResolver).build()
+        .file("shop.graphqls")
+        .resolvers(this.rootResolver, this.beerResolver).build()
         .makeExecutableSchema();
 
     return graphQLSchema;

@@ -1,5 +1,7 @@
 package nh.graphql.beerrating;
 
+import nh.graphql.beerrating.model.Address;
+import nh.graphql.beerrating.model.Shop;
 import nh.graphql.beerrating.model.User;
 import nh.graphql.beerrating.model.Beer;
 import org.slf4j.Logger;
@@ -9,6 +11,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)
@@ -22,12 +32,16 @@ public class DbImporter {
   private BeerRepository beerRepository;
 
   @Autowired
+  private ShopRepository shopRepository;
+
+  @Autowired
   private UserRepository userRepository;
 
   @PostConstruct
   @Transactional
   public void importDb() {
     logger.info("Importing Database");
+
 
     final User U1 = userRepository.newUser("U1", "Waldemar Vasu");
     final User U2 = userRepository.newUser("U2", "Karl Marx");
@@ -73,6 +87,28 @@ public class DbImporter {
     beerRepository.addBeer(b4);
     beerRepository.addBeer(b5);
     beerRepository.addBeer(b6);
+
+    try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/shops.csv")))) {
+      String line = null;
+      int index = 1;
+      while ((line = br.readLine()) != null) {
+        String[] parts = line.trim().split("\\|");
+        Shop shop = new Shop("S" + index++, parts[0], new Address(parts[1], parts[2], parts[3], parts[4]), parts[5].split(","));
+        shopRepository.addShop(shop);
+      }
+    } catch (IOException ioe) {
+      ioe.printStackTrace();
+    }
+
+  }
+
+  private static String[] randomBeerIds() {
+    final List<String> allBeerIds = Arrays.asList("B1", "B2", "B3", "B4", "B5", "B6");
+    Collections.shuffle(allBeerIds);
+
+    int max = ThreadLocalRandom.current().nextInt(2, allBeerIds.size());
+
+    return allBeerIds.subList(0, max).toArray(new String[0]);
 
   }
 
