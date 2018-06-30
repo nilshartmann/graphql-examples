@@ -1,4 +1,4 @@
-package nh.graphql.beeradvisor.rating.graphql;
+package nh.graphql.beeradvisor;
 
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;

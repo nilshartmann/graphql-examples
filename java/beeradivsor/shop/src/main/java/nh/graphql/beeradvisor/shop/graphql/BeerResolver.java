@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BeerResolver implements GraphQLResolver<Beer> {
-
   public Shop shops(Beer beer) {
     return null;
   }

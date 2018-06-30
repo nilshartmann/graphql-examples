@@ -1,0 +1,16 @@
+dependencies {
+  runtime('org.postgresql:postgresql')
+  runtime('com.h2database:h2')
+
+  compile 'com.graphql-java:graphql-java-servlet:5.0.1'
+
+  // GraphiQL
+  compile 'com.graphql-java:graphiql-spring-boot-starter:4.2.0'
+
+  // BeerAdvisor
+  compile project(':beerrating')
+  compile project(':shop')
+
+
+}
+
