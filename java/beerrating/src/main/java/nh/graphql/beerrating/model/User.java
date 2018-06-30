@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -12,7 +13,8 @@ import java.util.List;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Entity
-public class Author {
+@Table(name="user_")
+public class User {
 
   @Id
   private String id;
@@ -23,10 +25,10 @@ public class Author {
   private @OneToMany
   List<Rating> ratings;
 
-  protected Author() {
+  protected User() {
   }
 
-  public Author(String id, String name) {
+  public User(String id, String name) {
     this.id = id;
     this.name = name;
   }

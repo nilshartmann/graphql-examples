@@ -1,13 +1,13 @@
 # https://github.com/graphql-java/graphql-java/releases/tag/v9.0
 
-type Author {
+type User {
   id: ID!
   name: String!
 }
 
 type Rating {
   id: ID!
-  author: Author!
+  user: User!
   stars: Int!
 }
 

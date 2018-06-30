@@ -1,6 +1,6 @@
 package nh.graphql.beerrating;
 
-import nh.graphql.beerrating.model.Author;
+import nh.graphql.beerrating.model.User;
 import nh.graphql.beerrating.model.Beer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,17 +22,17 @@ public class DbImporter {
   private BeerRepository beerRepository;
 
   @Autowired
-  private AuthorRepository authorRepository;
+  private UserRepository userRepository;
 
   @PostConstruct
   @Transactional
   public void importDb() {
     logger.info("Importing Database");
 
-    Author klaus = authorRepository.newAuthor("U1", "Klaus");
-    Author susi = authorRepository.newAuthor("U2", "Susi");
-    Author alessa = authorRepository.newAuthor("U3", "Alessa Bradley");
-    Author lauren = authorRepository.newAuthor("U4", "Lauren Jones");
+    User klaus = userRepository.newUser("U1", "Klaus");
+    User susi = userRepository.newUser("U2", "Susi");
+    User alessa = userRepository.newUser("U3", "Alessa Bradley");
+    User lauren = userRepository.newUser("U4", "Lauren Jones");
 
     Beer b1 = new Beer("B1", "Barfüßer", "5.60 EUR") //
         .addRating(klaus, "R1", "jawoll!", 3) //

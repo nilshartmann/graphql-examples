@@ -2,16 +2,14 @@ package nh.graphql.beerrating.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Entity
+@Table(name="rating_")
 public class Rating {
 
   @Id
@@ -30,15 +28,15 @@ public class Rating {
 
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private Author author;
+  private User user;
 
   protected Rating() {
 
   }
 
-  public Rating(Beer beer, Author author, String id, String comment, int stars) {
+  public Rating(Beer beer, User user, String id, String comment, int stars) {
     this.beer = beer;
-    this.author = author;
+    this.user = user;
     this.id = id;
     this.comment = comment;
     this.stars = stars;
@@ -56,8 +54,8 @@ public class Rating {
     return beer;
   }
 
-  public Author getAuthor() {
-    return author;
+  public User getUser() {
+    return user;
   }
 
   public int getStars() {
