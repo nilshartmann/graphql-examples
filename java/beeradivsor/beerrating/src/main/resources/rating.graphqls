@@ -14,11 +14,7 @@ type Rating {
   stars: Int!
 }
 
-interface BeerNode {
-  id: ID!
-}
-
-type Beer implements BeerNode{
+type Beer {
   id: ID!
   name: String!
   price: String!

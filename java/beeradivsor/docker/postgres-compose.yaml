@@ -2,7 +2,7 @@ version: '3'
 services:
   postgres:
     image: 'postgres:10'
-    container_name: beerrating-db
+    container_name: beeradvisor-db
     ports:
       - '8432:5432'
     environment:
@@ -11,4 +11,4 @@ services:
       - POSTGRES_DB=beerrating_db
     volumes:
 #      - ./init-greeting-db.sql:/docker-entrypoint-initdb.d/init-greeting-db.sql
-      - ./db-data:/var/lib/postgresql/data
+      - ./beeradvisor-db-data:/var/lib/postgresql/data

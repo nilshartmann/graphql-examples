@@ -1,4 +1,4 @@
 rootProject.name = 'beeradvisor'
+include 'app'
 include 'beerrating'
 include 'shop'
-include 'app'

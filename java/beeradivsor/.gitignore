@@ -3,6 +3,7 @@
 !gradle/wrapper/gradle-wrapper.jar
 
 db-data/
+beeradvisor-db-data/
 
 ### IntelliJ IDEA ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
