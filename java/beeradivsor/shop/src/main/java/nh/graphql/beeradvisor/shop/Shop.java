@@ -21,8 +21,7 @@ public class Shop {
   @Embedded
   private Address address;
 
-  // TODO
-  @ElementCollection(fetch = FetchType.EAGER)
+  @ElementCollection
   private List<String> beers;
 
   protected Shop() {

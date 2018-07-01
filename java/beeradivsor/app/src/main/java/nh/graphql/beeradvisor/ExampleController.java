@@ -15,6 +15,7 @@ import java.util.Hashtable;
 import java.util.Map;
 
 /**
+ * JUST AN EXAMPLE: RUN GRAPHQL QUERIES VIA API
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Controller
