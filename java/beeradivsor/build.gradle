@@ -1,13 +1,13 @@
 buildscript {
-	ext {
-		springBootVersion = '2.0.3.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+  ext {
+    springBootVersion = '2.0.3.RELEASE'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
 }
 
 subprojects {
@@ -31,5 +31,14 @@ subprojects {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 
     compile 'com.graphql-java:graphql-java-tools:5.1.0'
+  }
+
+  // https://stackoverflow.com/a/47673098/6134498
+  bootJar {
+    enabled = false
+  }
+
+  jar {
+    enabled = true
   }
 }

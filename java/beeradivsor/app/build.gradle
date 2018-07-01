@@ -10,7 +10,13 @@ dependencies {
   // BeerAdvisor
   compile project(':beerrating')
   compile project(':shop')
+}
 
+bootJar {
+    enabled = true
+}
 
+jar {
+    enabled = false
 }
 
