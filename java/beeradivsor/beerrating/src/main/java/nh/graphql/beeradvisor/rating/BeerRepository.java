@@ -20,6 +20,12 @@ public class BeerRepository {
     return query.getResultList();
   }
 
+  public List<Beer> findWithIds(List<String> beerIds) {
+    final TypedQuery<Beer> query = em.createQuery("SELECT b FROM Beer b WHERE b.id IN :beerIds", Beer.class);
+    query.setParameter("beerIds", beerIds);
+    return query.getResultList();
+  }
+
   public List<Beer> findAllFetchGraph(boolean withAuthor) {
     EntityGraph entityGraph = em.createEntityGraph(Beer.class);
     entityGraph.addAttributeNodes("ratings");

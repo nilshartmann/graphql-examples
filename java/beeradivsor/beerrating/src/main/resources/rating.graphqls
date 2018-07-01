@@ -1,5 +1,8 @@
 # https://github.com/graphql-java/graphql-java/releases/tag/v9.0
 
+directive @BLA on FIELD_DEFINITION
+
+
 type User {
   id: ID!
   name: String!
@@ -11,12 +14,16 @@ type Rating {
   stars: Int!
 }
 
-type Beer {
+interface BeerNode {
+  id: ID!
+}
+
+type Beer implements BeerNode{
   id: ID!
   name: String!
   price: String!
 
-  ratings: [Rating!]!
+  ratings: [Rating!]! @BLA
 }
 
 

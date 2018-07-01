@@ -16,9 +16,9 @@ import java.util.*;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Component
-public class RootResolver implements GraphQLQueryResolver {
+public class RatingRootResolver implements GraphQLQueryResolver {
 
-  private static Logger logger = LoggerFactory.getLogger(RootResolver.class);
+  private static Logger logger = LoggerFactory.getLogger(RatingRootResolver.class);
 
   @Autowired
   private BeerRepository beerRepository;
@@ -35,10 +35,10 @@ public class RootResolver implements GraphQLQueryResolver {
       logger.info("Field '" + fieldPath + "'");
       final Field field = stringListEntry.getValue().get(0);
       GraphQLFieldDefinition fieldDefinition = selectionSet.getDefinitions().get(fieldPath);
+      logger.info("Field '" + fieldPath + "' -> Directives: " + fieldDefinition.getDefinition().getDirectives());
       GraphQLType type = fieldDefinition.getType();
       logger.info(" field " + fieldPath + " -> Definition: " + (fieldDefinition != null ? type : " no fieldDefinition"));
 
-      type = getUnwrappedType(type);
       if (type instanceof GraphQLObjectType) {
         allRequestedRelations.add(fieldPath);
       }

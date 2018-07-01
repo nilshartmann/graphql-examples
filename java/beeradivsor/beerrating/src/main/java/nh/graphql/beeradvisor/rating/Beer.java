@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="beer_")
-public class Beer {
+public class Beer implements BeerNode {
 
   @Id
   private String id;

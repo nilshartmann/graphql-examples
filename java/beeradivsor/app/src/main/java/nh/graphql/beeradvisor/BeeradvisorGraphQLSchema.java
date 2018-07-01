@@ -2,8 +2,10 @@ package nh.graphql.beeradvisor;
 
 import com.coxautodev.graphql.tools.SchemaParser;
 import graphql.schema.GraphQLSchema;
-import nh.graphql.beeradvisor.rating.graphql.RootResolver;
-import nh.graphql.beeradvisor.shop.graphql.BeerResolver;
+import nh.graphql.beeradvisor.rating.graphql.RatingRootResolver;
+import nh.graphql.beeradvisor.shop.graphql.ShopBeerResolver;
+import nh.graphql.beeradvisor.shop.graphql.ShopResolver;
+import nh.graphql.beeradvisor.shop.graphql.ShopRootResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,17 +17,23 @@ import org.springframework.context.annotation.Configuration;
 public class BeeradvisorGraphQLSchema {
 
   @Autowired
-  private RootResolver rootResolver;
+  private RatingRootResolver ratingRootResolver;
 
   @Autowired
-  private BeerResolver beerResolver;
+  private ShopRootResolver shopRootResolver;
+
+  @Autowired
+  private ShopBeerResolver shopBeerResolver;
+
+  @Autowired
+  private ShopResolver shopResolver;
 
   @Bean
   public GraphQLSchema graphQLSchema() {
     final GraphQLSchema graphQLSchema = SchemaParser.newParser()
-        .file("beer.graphqls")
+        .file("rating.graphqls")
         .file("shop.graphqls")
-        .resolvers(this.rootResolver, this.beerResolver).build()
+        .resolvers(this.ratingRootResolver, this.shopRootResolver, shopResolver, this.shopBeerResolver).build()
         .makeExecutableSchema();
 
     return graphQLSchema;

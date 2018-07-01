@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -19,7 +21,8 @@ public class Shop {
   @Embedded
   private Address address;
 
-  @ElementCollection
+  // TODO
+  @ElementCollection(fetch = FetchType.EAGER)
   private List<String> beers;
 
   protected Shop() {
@@ -29,7 +32,7 @@ public class Shop {
     this.id = id;
     this.name = name;
     this.address = address;
-    this.beers = new LinkedList<>(Arrays.asList(beerIds));
+    this.beers = Arrays.asList(beerIds).stream().map(String::trim).collect(toList());
   }
 
   public String getId() {

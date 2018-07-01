@@ -1,0 +1,38 @@
+# Represents a postal address, used to find Shops that sell Beer
+type Address {
+  # The street
+  street: String!
+
+  # Postal code
+  postalCode: String!
+
+  # Name of the city
+  city: String!
+
+  # Country of this Address
+  country: String!
+}
+
+# A registered Shop that sells Beer
+type Shop {
+  # Unique ID of this shop
+  id: ID!
+
+  # The name of the shop
+  name: String!
+
+  # Address of the shop
+  address: Address!
+
+  # All Beers this shop sells
+  beers: [Beer!]!
+}
+
+extend type Beer {
+  shops: [Shop!]!
+}
+
+extend type Query {
+  shops: [Shop!]!
+  shop(shopId: ID!): Shop
+}

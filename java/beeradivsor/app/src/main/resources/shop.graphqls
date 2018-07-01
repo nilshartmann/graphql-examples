@@ -1,6 +1,0 @@
-type Shop {
-  name: String!
-}
-extend type Beer {
-  shops: Shop
-}
