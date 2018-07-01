@@ -3,7 +3,8 @@ package nh.graphql.beeradvisor;
 import com.coxautodev.graphql.tools.SchemaParser;
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;
-import nh.graphql.beeradvisor.rating.graphql.RatingRootResolver;
+import nh.graphql.beeradvisor.rating.graphql.RatingMutationResolver;
+import nh.graphql.beeradvisor.rating.graphql.RatingQueryResolver;
 import nh.graphql.beeradvisor.shop.graphql.ShopBeerResolver;
 import nh.graphql.beeradvisor.shop.graphql.ShopResolver;
 import nh.graphql.beeradvisor.shop.graphql.ShopRootResolver;
@@ -19,7 +20,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ExampleGraphQLConfiguration {
   @Autowired
-  private RatingRootResolver ratingRootResolver;
+  private RatingQueryResolver ratingQueryResolver;
+
+  @Autowired
+  private RatingMutationResolver ratingMutationResolver;
 
   @Autowired
   private ShopRootResolver shopRootResolver;
@@ -35,7 +39,7 @@ public class ExampleGraphQLConfiguration {
     final GraphQLSchema graphQLSchema = SchemaParser.newParser()
         .file("rating.graphqls")
         .file("shop.graphqls")
-        .resolvers(this.ratingRootResolver, this.shopRootResolver, shopResolver, this.shopBeerResolver).build()
+        .resolvers(this.ratingQueryResolver, this.ratingMutationResolver, this.shopRootResolver, shopResolver, this.shopBeerResolver).build()
         .makeExecutableSchema();
 
     return graphQLSchema;

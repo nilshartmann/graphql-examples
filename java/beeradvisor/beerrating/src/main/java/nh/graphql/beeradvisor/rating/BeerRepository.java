@@ -2,6 +2,7 @@ package nh.graphql.beeradvisor.rating;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.List;
@@ -43,8 +44,8 @@ public class BeerRepository {
     return em.find(Beer.class, beerId);
   }
 
-  @org.springframework.transaction.annotation.Transactional(propagation = Propagation.REQUIRES_NEW)
-  public void addBeer(Beer beer) {
+  @Transactional
+  public void saveBeer(Beer beer) {
     em.persist(beer);
   }
 

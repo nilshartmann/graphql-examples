@@ -66,12 +66,12 @@ public class BeerRatingDbImporter {
         .addRating(U2, "R13", "✊...", 5) //
         ;
 
-    beerRepository.addBeer(b1);
-    beerRepository.addBeer(b2);
-    beerRepository.addBeer(b3);
-    beerRepository.addBeer(b4);
-    beerRepository.addBeer(b5);
-    beerRepository.addBeer(b6);
+    beerRepository.saveBeer(b1);
+    beerRepository.saveBeer(b2);
+    beerRepository.saveBeer(b3);
+    beerRepository.saveBeer(b4);
+    beerRepository.saveBeer(b5);
+    beerRepository.saveBeer(b6);
   }
 
 }

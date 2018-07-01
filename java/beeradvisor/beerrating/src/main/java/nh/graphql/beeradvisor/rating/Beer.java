@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)
@@ -40,6 +41,13 @@ public class Beer {
     this.ratings.add(rating);
     return this;
   }
+
+  public Rating addRating(User user, String comment, int stars) {
+    Rating rating = new Rating(this, user, UUID.randomUUID().toString(), comment, stars);
+    this.ratings.add(rating);
+    return rating;
+  }
+
 
   public String getId() {
     return id;

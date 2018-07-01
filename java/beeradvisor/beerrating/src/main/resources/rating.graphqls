@@ -11,6 +11,7 @@ type User {
 type Rating {
   id: ID!
   user: User!
+  comment: String!
   stars: Int!
 }
 
@@ -22,8 +23,18 @@ type Beer {
   ratings: [Rating!]! @BLA
 }
 
-
-
 type Query {
   beers: [Beer!]!
+}
+
+input AddRatingInput {
+  beerId: ID!
+  userId: ID!
+  comment: String!
+  stars: Int!
+}
+
+type Mutation {
+  # Add a new Rating to a Beer and returns the new Rating
+  addRating(ratingInput: AddRatingInput): Rating!
 }

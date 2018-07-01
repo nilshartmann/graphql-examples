@@ -3,13 +3,11 @@ package nh.graphql.beeradvisor.shop.graphql;
 import com.coxautodev.graphql.tools.GraphQLResolver;
 import nh.graphql.beeradvisor.rating.Beer;
 import nh.graphql.beeradvisor.rating.BeerRepository;
-import nh.graphql.beeradvisor.rating.graphql.RatingRootResolver;
 import nh.graphql.beeradvisor.shop.Shop;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

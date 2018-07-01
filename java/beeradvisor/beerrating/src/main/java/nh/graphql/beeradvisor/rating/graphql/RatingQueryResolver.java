@@ -16,9 +16,9 @@ import java.util.*;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Component
-public class RatingRootResolver implements GraphQLQueryResolver {
+public class RatingQueryResolver implements GraphQLQueryResolver {
 
-  private static Logger logger = LoggerFactory.getLogger(RatingRootResolver.class);
+  private static Logger logger = LoggerFactory.getLogger(RatingQueryResolver.class);
 
   @Autowired
   private BeerRepository beerRepository;

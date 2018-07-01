@@ -16,12 +16,17 @@ public class UserRepository {
   @PersistenceContext
   private EntityManager em;
 
-  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  @Transactional
   public User newUser(String id, String name) {
     User user = new User(id, name);
     em.persist(user);
 
     return user;
+  }
+
+  @Transactional
+  public User getUser(String userId) {
+    return em.find(User.class, userId);
   }
 
 }
