@@ -30,4 +30,8 @@ public class ShopResolver implements GraphQLResolver<Shop> {
     return beers;
   }
 
+	public AddressField address(Shop shop) {
+		return new AddressField(shop);
+	}
+
 }

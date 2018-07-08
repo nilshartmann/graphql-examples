@@ -1,10 +1,9 @@
-package nh.graphql.beeradvisor.shop;
+package nh.example.shopservice;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.io.BufferedReader;
@@ -24,7 +23,6 @@ public class ShopDbImporter {
   private ShopRepository shopRepository;
 
   @PostConstruct
-  @Transactional
   public void importDb() {
     logger.info("Importing Shop Database");
 
@@ -33,7 +31,7 @@ public class ShopDbImporter {
       int index = 1;
       while ((line = br.readLine()) != null) {
         String[] parts = line.trim().split("\\|");
-        Shop shop = new Shop("S" + index++, parts[0], new Address(parts[1], parts[2], parts[3], parts[4]), parts[5].split(","));
+        Shop shop = new Shop("S" + index++, parts[0], parts[1], parts[2], parts[3], parts[4], parts[5].split(","));
         shopRepository.addShop(shop);
       }
     } catch (IOException ioe) {
