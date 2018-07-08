@@ -22,16 +22,11 @@ public class ShopResolver implements GraphQLResolver<Shop> {
   private BeerRepository beerRepository;
 
   public List<Beer> beers(Shop shop) {
-    logger.info("Reading Beers for Shop " + shop.getId());
     final List<String> beerIds = shop.getBeers();
-    logger.info("beers found " + beerIds);
-    final List<Beer> beers = beerRepository.findWithIds(beerIds);
-    logger.info("beers found " + beers);
-    return beers;
+		return beerRepository.findWithIds(beerIds);
   }
 
 	public AddressField address(Shop shop) {
 		return new AddressField(shop);
 	}
-
 }

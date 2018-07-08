@@ -25,7 +25,7 @@ public class ShopService {
 
 	public Shop findShop(String shopId) {
 		Shop shop = restTemplate.getForObject(
-				this.shopApiUrl + shopId, Shop.class);
+				this.shopApiUrl + "/{shopId}", Shop.class, shopId);
 
 		return shop;
 	}
@@ -43,11 +43,13 @@ public class ShopService {
 
 	public List<Shop> findShopsForBeer(String beerId) {
 		ResponseEntity<List<Shop>> response = restTemplate.exchange(
-				this.shopApiUrl + "?beerId=" + beerId,
+				this.shopApiUrl + "?beerId={beerId}",
 				HttpMethod.GET,
 				null,
 				new ParameterizedTypeReference<List<Shop>>() {
-				});
+				},
+				beerId
+		);
 		List<Shop> shops = response.getBody();
 		return shops;
 	}
