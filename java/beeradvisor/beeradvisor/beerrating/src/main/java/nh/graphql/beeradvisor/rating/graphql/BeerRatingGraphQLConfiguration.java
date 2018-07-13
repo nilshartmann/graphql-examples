@@ -1,6 +1,7 @@
 package nh.graphql.beeradvisor.rating.graphql;
 
 import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.observables.ConnectableObservable;
 import nh.graphql.beeradvisor.rating.Rating;
@@ -21,8 +22,8 @@ public class BeerRatingGraphQLConfiguration {
   private final Logger logger = LoggerFactory.getLogger(BeerRatingGraphQLConfiguration.class);
 
   @Bean
-  public Publisher<Rating> counter() {
-    Observable<Rating> counterObservable = Observable.create(emitter -> {
+  public Publisher<Rating> ratingPublisher() {
+    Observable<Rating> ratingObservable = Observable.create(emitter -> {
       AtomicInteger counter = new AtomicInteger(0);
 
       Thread thread = new Thread(() -> {
@@ -42,9 +43,10 @@ public class BeerRatingGraphQLConfiguration {
       thread.start();
     });
 
-    ConnectableObservable<Rating> connectableObservable = counterObservable.share().publish();
+    ConnectableObservable<Rating> connectableObservable = ratingObservable.share().publish();
     connectableObservable.connect();
 
-    return connectableObservable.toFlowable(BackpressureStrategy.BUFFER);
+    final Flowable<Rating> flowable = connectableObservable.toFlowable(BackpressureStrategy.BUFFER);
+    return flowable;
   }
 }

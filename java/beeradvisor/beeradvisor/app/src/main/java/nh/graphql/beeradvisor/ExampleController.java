@@ -125,38 +125,42 @@ public class ExampleController {
     GraphQL graphQL = GraphQL.newGraphQL(schema).build();
 
     ExecutionInput executionInput = ExecutionInput.newExecutionInput()
-        .query("subscription { " + "onNewRating {" + "  id" + "}}").build();
+        .query("subscription NewRatings { onNewRating { id } }").build();
 
     // Run Query
     ExecutionResult executionResult = graphQL.execute(executionInput);
-    Object data = executionResult.getData();
-
-    logger.info("RESULT" + data);
-    Publisher<Rating> publisher = (Publisher<Rating>) data;
-    logger.info("publisher" + publisher);
-    publisher.subscribe(new Subscriber<Rating>() {
-      private Subscription s;
+    Publisher<ExecutionResult> msgStream = executionResult.getData();
+    logger.info("msgStream" + msgStream);
+    msgStream.subscribe(new Subscriber<ExecutionResult>() {
+      private Subscription theSubscription;
 
       @Override
       public void onSubscribe(Subscription s) {
-        logger.info("On subscription" + s);
+        this.theSubscription = s;
+        logger.info("On subscription   ==> " + s);
         s.request(1);
       }
 
       @Override
-      public void onNext(Rating rating) {
-        logger.info("GraphQL Subscriber - NEW RATING arrived: " + rating.getId());
-        s.request(1);
+      public void onNext(ExecutionResult result) {
+        logger.info(" =====> onNext NEW ExecutionResult arrived: " + result);
+        try {
+          Object rating = result.getData();
+          logger.info("                                    rating: " + rating);
+        } catch (Exception e) {
+          logger.error("Error in getData: " + e, e);
+        }
+        theSubscription.request(1);
       }
 
       @Override
       public void onError(Throwable t) {
-        logger.warn("ON ERROR", t);
+        logger.warn(" =====> ON ERROR", t);
       }
 
       @Override
       public void onComplete() {
-
+        logger.info(" =====> onComplete" + theSubscription);
       }
     });
     return "";
@@ -165,38 +169,38 @@ public class ExampleController {
   @Autowired
   private Publisher<Rating> ratingPublisher;
 
-  @GetMapping("/rating/subscribe")
-  @ResponseBody
-  public String ratingSubscribe() {
-    ratingPublisher.subscribe(new Subscriber<Rating>() {
-      private Subscription s;
+  // @GetMapping("/rating/subscribe")
+  // @ResponseBody
+  // public String ratingSubscribe() {
+  // ratingPublisher.subscribe(new Subscriber<Rating>() {
+  // private Subscription theSubscription;
 
-      @Override
-      public void onSubscribe(Subscription s) {
-        this.s = s;
+  // @Override
+  // public void onSubscribe(Subscription s) {
+  // this.theSubscription = s;
 
-        logger.info("On subscription" + s);
-        s.request(1);
-      }
+  // logger.info("On subscription" + s);
+  // s.request(1);
+  // }
 
-      @Override
-      public void onNext(Rating rating) {
-        logger.info("Rating Subscriber " + rating.getId());
-        s.request(1);
-      }
+  // @Override
+  // public void onNext(Rating rating) {
+  // logger.info("Rating Subscriber " + rating.getId());
+  // theSubscription.request(1);
+  // }
 
-      @Override
-      public void onError(Throwable t) {
-        logger.warn("ON ERROR", t);
-      }
+  // @Override
+  // public void onError(Throwable t) {
+  // logger.warn("ON ERROR", t);
+  // }
 
-      @Override
-      public void onComplete() {
+  // @Override
+  // public void onComplete() {
 
-      }
-    });
-    return "";
-  }
+  // }
+  // });
+  // return "";
+  // }
 
   @GetMapping("/gql/shops")
   @ResponseBody
