@@ -1,8 +1,5 @@
 # https://github.com/graphql-java/graphql-java/releases/tag/v9.0
 
-directive @BLA on FIELD_DEFINITION
-
-
 type User {
   id: ID!
   name: String!
@@ -20,7 +17,7 @@ type Beer {
   name: String!
   price: String!
 
-  ratings: [Rating!]! @BLA
+  ratings: [Rating!]!
 }
 
 type Query {
@@ -37,4 +34,8 @@ input AddRatingInput {
 type Mutation {
   # Add a new Rating to a Beer and returns the new Rating
   addRating(ratingInput: AddRatingInput): Rating!
+}
+
+type Subscription {
+  onNewRating: Rating!
 }
