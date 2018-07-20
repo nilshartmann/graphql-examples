@@ -17,7 +17,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * JUST AN EXAMPLE: HOW TO CONFIGURE GRAPHQL (SCHEMA AND SERVLET) "MANUALLY" WITHOUT SPRING BOOT STARTER
+ * JUST AN EXAMPLE: HOW TO CONFIGURE GRAPHQL (SCHEMA AND SERVLET) "MANUALLY"
+ * WITHOUT SPRING BOOT STARTER
  *
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
@@ -43,11 +44,10 @@ public class ExampleGraphQLConfiguration {
 
   @Bean
   public GraphQLSchema graphQLSchema() {
-    final GraphQLSchema graphQLSchema = SchemaParser.newParser()
-        .file("rating.graphqls")
-        .file("shop.graphqls")
-        .resolvers(this.ratingQueryResolver, this.ratingMutationResolver, this.ratingSubscriptionResolver, this.shopRootResolver, shopResolver, this.shopBeerResolver).build()
-        .makeExecutableSchema();
+    final GraphQLSchema graphQLSchema = SchemaParser.newParser().file("rating.graphqls").file("shop.graphqls")
+        .resolvers(this.ratingQueryResolver, this.ratingMutationResolver, this.ratingSubscriptionResolver,
+            this.shopRootResolver, shopResolver, this.shopBeerResolver)
+        .build().makeExecutableSchema();
 
     return graphQLSchema;
 
@@ -56,7 +56,8 @@ public class ExampleGraphQLConfiguration {
   @Bean
   ServletRegistrationBean<SimpleGraphQLServlet> graphQLServletRegistrationBean(GraphQLSchema schema) {
     final DefaultGraphQLSchemaProvider schemaProvider = new DefaultGraphQLSchemaProvider(schema);
-    final DefaultExecutionStrategyProvider executionStrategyProvider = new DefaultExecutionStrategyProvider(new AsyncExecutionStrategy(), new AsyncExecutionStrategy(), new SubscriptionExecutionStrategy());
+    final DefaultExecutionStrategyProvider executionStrategyProvider = new DefaultExecutionStrategyProvider(
+        new AsyncExecutionStrategy(), new AsyncExecutionStrategy(), new SubscriptionExecutionStrategy());
     SimpleGraphQLServlet.Builder builder = SimpleGraphQLServlet.builder(schemaProvider)
         .withExecutionStrategyProvider(executionStrategyProvider);
 

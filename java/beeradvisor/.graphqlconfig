@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "beer": {
+      "schemaPath": "schema.graphql",
+      "extensions": {
+        "endpoints": {
+          "default": {
+            "url": "http://localhost:9000/graphql",
+            "subscription": "ws://localhost:9000/subscriptions"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,7 @@
 package nh.graphql.beeradvisor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,14 +13,15 @@ import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 public class BeeradvisorApplication {
 
   /**
-   * Keeps the session open until the end of a request. Allows us to use lazy-loading with Hibernate.
+   * Keeps the session open until the end of a request. Allows us to use
+   * lazy-loading with Hibernate.
    */
   @Bean
   public OpenEntityManagerInViewFilter openEntityManagerInViewFilter() {
     return new OpenEntityManagerInViewFilter();
   }
 
-	public static void main(String[] args) {
-		SpringApplication.run(BeeradvisorApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(BeeradvisorApplication.class, args);
+  }
 }

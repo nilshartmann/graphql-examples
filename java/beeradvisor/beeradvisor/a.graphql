@@ -1,0 +1,6 @@
+subscription  {
+    onNewRating {
+        id
+        comment
+    }
+}
