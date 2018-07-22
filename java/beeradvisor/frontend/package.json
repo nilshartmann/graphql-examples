@@ -1,0 +1,72 @@
+{
+  "name": "graphql-java-beeradvisor-example-frontend",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "email": "nils@nilshartmann.net",
+    "name": "Nils Hartmann",
+    "url": "https://nilshartmann.net"
+  },
+  "description": "Frontend for Java GraphQL-based BeerAdvisor App",
+  "keywords": [
+    "react",
+    "javascript",
+    "typescript",
+    "starter-kit"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nilshartmann/apollo-graphql-schema-stitching.git"
+  },
+  "scripts": {
+    "start": "yarn devserver",
+    "clean": "rimraf -rf public/dist/",
+    "dist": "webpack",
+    "webpack": "webpack --watch",
+    "devserver": "webpack-dev-server --content-base public/",
+    "prettier": "prettier --print-width 130 --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "_unused_gql:schema": "apollo-codegen introspect-schema http://localhost:9000/graphql --output beerrating-schema.json",
+    "gql:build-schema": "node scripts/buildSchema.js",
+    "gql:codegen": "apollo-codegen generate 'src/**/*.tsx' --schema server-and-client-schema.json --target ts-modern --output src",
+    "gql:transform": "jscodeshift src --extensions ts -t scripts/transform.js",
+    "gql": "yarn gql:build-schema && yarn gql:codegen && yarn gql:transform"
+  },
+  "devDependencies": {
+    "@types/webpack-env": "1.13.2",
+    "apollo-codegen": "^0.19.0",
+    "awesome-typescript-loader": "^5.0.0",
+    "babylon": "7.0.0-beta.46",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "graphql-tools": "^3.0.2",
+    "html-webpack-harddisk-plugin": "^0.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jscodeshift": "^0.5.0",
+    "merge-graphql-schemas": "^1.5.1",
+    "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.1.5",
+    "prettier": "^1.13.5",
+    "rimraf": "2.6.2",
+    "sass-loader": "^7.0.1",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.21.0",
+    "tslint": "5.8.0",
+    "typescript": "^2.9.1",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-stylish": "^0.1.8"
+  },
+  "dependencies": {
+    "@types/graphql": "^0.12.5",
+    "@types/prop-types": "^15.5.2",
+    "@types/react": "^16.3.13",
+    "@types/react-dom": "^16.0.5",
+    "apollo-boost": "^0.1.9",
+    "graphql": "^0.13.2",
+    "react": "^16.3.1",
+    "react-apollo": "^2.1.5",
+    "react-dom": "^16.3.1"
+  }
+}

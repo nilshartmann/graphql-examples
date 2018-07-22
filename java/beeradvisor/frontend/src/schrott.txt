@@ -1,0 +1,109 @@
+mutation {
+  setDraftRatingForBeer(beerId:"B1", author:"X", comment:"C") @client {id }
+}
+
+query {
+  draftRatings @client {
+    id comment author
+  }
+}
+
+
+mutation {
+  setDraftRatingForBeer(beerId:"B4", author:"X", comment:"C") @client {id }
+}
+
+Mutation: {
+        setDraftRatingForBeer: (
+          _: any,
+          { beerId, author, comment }: { beerId: string; author: string; comment: string },
+          { cache }: { cache: ApolloCache<any> }
+        ) => {
+          console.log(`Writing draftRating for beer '${beerId}', author: '${author}', comment: '${comment}'`);
+          const draftBefore = cache.readQuery({
+            query: gql`
+              query {
+                draftRatings @client {
+                  id
+                  comment
+                  author
+                }
+              }
+            `
+          });
+
+          console.log("DraftRatings BEFORE", draftBefore);
+
+          const cacheId = `DraftRating:${beerId}`;
+
+          const draftRating = {
+            __typename: "DraftRating",
+            id: beerId,
+            author,
+            comment
+          };
+
+          console.log("draftRating", draftRating);
+
+          const fragment = gql`
+            fragment draftRating on DraftRating {
+              id
+              author
+              comment
+            }
+          `;
+
+          cache.writeFragment({
+            fragment,
+            data: draftRating,
+            id: cacheId
+          });
+
+          const x = cache.readQuery({
+            query: gql`
+              query {
+                draftRatings @client {
+                  id
+                  comment
+                  author
+                }
+              }
+            `
+          });
+
+          console.log("DraftRatings AFTER", x);
+
+          return draftRating;
+        }
+      }
+
+
+
+
+
+
+  query BeerQuery($beerId: ID!){
+    beer(beerId:$beerId) { 
+      id 
+      name
+      price
+      ratings {
+        id
+        beerId
+        author
+        comment
+      }
+    }
+  
+  draftRatingForBeer(beerId: $beerId) @client {
+    id
+    author
+    comment
+  }
+}
+
+    <Mutation<SetCurrentBeerIdMutationResult> mutation={SET_CURRENT_BEER_ID_MUTATION}>
+    { (setCurrentBeerId) => {
+      return <h1>Jo</h1>
+    }}
+    </Mutation>
