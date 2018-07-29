@@ -1,10 +1,7 @@
 :root {
-  // https://coolors.co/d741a7-3a1772-e5ab47-573d1c-5398be
   --color-one: #e5ab47;
-  --color-one-rgb: 229, 171, 71;
   --color-text: #573d1c;
-  --color-background: rgb(255, 253, 249);
-  --color-background-rgb: 255, 253, 249;
+  --color-background: #fffdf9;
 
   --font-text: AnonymousPro-Bold;
 }
@@ -14,12 +11,6 @@
     font-family: Anonymous Pro;
     color: var(--color-text);
     background-color: #f2f2f2;
-
-    height: 100%;
-  }
-
-  body {
-    overflow-y: scroll;
   }
 
   button {
@@ -34,8 +25,11 @@
     outline: none;
   }
 
-  #app {
-    min-height: 100%;
+  a,
+  a:active,
+  a:hover,
+  a:visited {
+    color: var(--color-text);
   }
 }
 
@@ -43,10 +37,4 @@
   background-color: var(--color-background);
   max-width: 1024px;
   margin: 0 auto;
-  height: 100%;
-}
-
-.Main {
-  padding-left: 5rem;
-  padding-right: 5rem;
 }

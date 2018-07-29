@@ -4,22 +4,16 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: UpdateDraftRatingMutation
+// GraphQL fragment: ratings
 // ====================================================
 
-export interface UpdateDraftRatingMutationResult_setDraftRatingForBeer {
-  author: string;
-  comment: string;
+export interface ratingsResult_ratings {
+  id: string;  // An immutable unique Id
 }
 
-export interface UpdateDraftRatingMutationResult {
-  setDraftRatingForBeer: UpdateDraftRatingMutationResult_setDraftRatingForBeer;
-}
-
-export interface UpdateDraftRatingMutationVariables {
-  beerId: string;
-  author: string;
-  comment: string;
+export interface ratingsResult {
+  id: string;                  // Unique, immutable Id, that identifies this Beer
+  ratingsResult: ratingsResult_ratings[];  // All Ratings for this Beer
 }
 
 //==============================================================

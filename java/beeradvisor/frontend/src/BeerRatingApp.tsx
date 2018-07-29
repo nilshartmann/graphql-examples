@@ -1,51 +1,83 @@
 import * as React from "react";
 import { gql } from "apollo-boost";
-import { Query, Mutation } from "react-apollo";
+import { Query } from "react-apollo";
+
+import { BeerRatingAppQueryResult } from "./__generated__/BeerRatingAppQuery";
 
 import * as styles from "./BeerRatingApp.scss";
+import BeerList from "./BeerList";
+import ServiceStatus from "./ServiceStatus";
 import Header from "./Header";
-import BeerPage from "./BeerPage";
-import { BeerRatingAppQueryResult } from "./__generated__/BeerRatingAppQuery";
-import BeerRack from "./BeerRack";
 import Footer from "./Footer";
 
 const BEER_RATING_APP_QUERY = gql`
   query BeerRatingAppQuery {
-    beers {
-      id
-
-      hasDraftRating @client
+    beerServiceStatus {
+      name
+      uptime
+      javaVersion
+      graphiQL
     }
 
-    currentBeerId @client
+    ratingServiceStatus {
+      name
+      nodeJsVersion
+      uptime
+      graphiQL
+    }
+
+    stitcherStatus {
+      name
+      nodeJsVersion
+      uptime
+      graphiQL
+    }
+
+    beers {
+      id
+      name
+      price
+
+      ratings {
+        id
+        beerId
+        author
+        comment
+      }
+    }
   }
 `;
 
-// TypeScript 2.9:
+class BeerRatingQuery extends Query<BeerRatingAppQueryResult> {}
+
 const BeerRatingApp = () => (
   <div className={styles.BeerRatingApp}>
-    <Header />
-    <div className={styles.Main}>
-      <Query<BeerRatingAppQueryResult> query={BEER_RATING_APP_QUERY}>
-        {({ loading, error, data, client }) => {
-          if (loading) {
-            return <h1>Loading...</h1>;
-          }
+    <BeerRatingQuery query={BEER_RATING_APP_QUERY}>
+      {({ loading, error, data }) => {
+        if (loading) {
+          return <h1>Loading...</h1>;
+        }
+        if (error) {
+          console.error(error);
+          return <h1>Error! {error.message}</h1>;
+        }
 
-          if (error) {
-            return <h1>Error...</h1>;
-          }
+        if (!data) {
+          return <h1>No data !??!!</h1>;
+        }
 
-          return (
-            <>
-              <BeerRack beers={data!.beers} currentBeerId={data!.currentBeerId} />
-              <BeerPage beerId={data!.currentBeerId} />
-            </>
-          );
-        }}
-      </Query>
-    </div>
-    <Footer />
+        return (
+          <React.Fragment>
+            <Header>
+              <ServiceStatus status={data.beerServiceStatus} />
+              <ServiceStatus status={data.ratingServiceStatus} />
+              <ServiceStatus status={data.stitcherStatus} />
+            </Header>
+            <BeerList beers={data.beers} />
+          </React.Fragment>
+        );
+      }}
+    </BeerRatingQuery>
   </div>
 );
 
