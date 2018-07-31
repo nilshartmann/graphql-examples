@@ -1,59 +1,51 @@
 import * as React from "react";
-import { Query } from "react-apollo";
-
-import { BeerRatingAppQueryResult } from "./__generated__/BeerRatingAppQuery";
+import { gql } from "apollo-boost";
+import { Query, Mutation } from "react-apollo";
 
 import * as styles from "./BeerRatingApp.scss";
-import BeerList from "./BeerList";
 import Header from "./Header";
-
-import gql from "graphql-tag";
+import BeerPage from "./BeerPage";
+import { BeerRatingAppQueryResult } from "./__generated__/BeerRatingAppQuery";
+import BeerRack from "./BeerRack";
+import Footer from "./Footer";
 
 const BEER_RATING_APP_QUERY = gql`
   query BeerRatingAppQuery {
     beers {
       id
-      price
-      name
 
-      ratings {
-        id
-        author {
-          id
-          name
-        }
-        comment
-      }
+      hasDraftRating @client
     }
+
+    currentBeerId @client
   }
 `;
 
-class BeerRatingQuery extends Query<BeerRatingAppQueryResult> {}
-
+// TypeScript 2.9:
 const BeerRatingApp = () => (
   <div className={styles.BeerRatingApp}>
-    <BeerRatingQuery query={BEER_RATING_APP_QUERY}>
-      {({ loading, error, data }) => {
-        if (loading) {
-          return <h1>Loading...</h1>;
-        }
-        if (error) {
-          console.error(error);
-          return <h1>Error! {error.message}</h1>;
-        }
+    <Header />
+    <div className={styles.Main}>
+      <Query<BeerRatingAppQueryResult> query={BEER_RATING_APP_QUERY}>
+        {({ loading, error, data, client }) => {
+          if (loading) {
+            return <h1>Loading...</h1>;
+          }
 
-        if (!data) {
-          return <h1>No data !??!!</h1>;
-        }
+          if (error) {
+            return <h1>Error...</h1>;
+          }
 
-        return (
-          <React.Fragment>
-            <Header />
-            <BeerList beers={data.beers} />
-          </React.Fragment>
-        );
-      }}
-    </BeerRatingQuery>
+          return (
+            <>
+              <BeerRack beers={data!.beers} currentBeerId={data!.currentBeerId} />
+              <BeerPage beerId={data!.currentBeerId} />
+            </>
+          );
+        }}
+      </Query>
+    </div>
+    <Footer />
   </div>
 );
 

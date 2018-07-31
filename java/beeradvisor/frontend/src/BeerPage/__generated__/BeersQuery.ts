@@ -4,17 +4,16 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: BeerRatingAppQuery
+// GraphQL query operation: BeersQuery
 // ====================================================
 
-export interface BeerRatingAppQueryResult_beers {
+export interface BeersQueryResult_beers {
   id: string;  // Unique, immutable Id, that identifies this Beer
   hasDraftRating: boolean;
 }
 
-export interface BeerRatingAppQueryResult {
-  beers: BeerRatingAppQueryResult_beers[];  // Returns all beers in our store
-  currentBeerId: string;
+export interface BeersQueryResult {
+  beers: BeersQueryResult_beers[];  // Returns all beers in our store
 }
 
 //==============================================================

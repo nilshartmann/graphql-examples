@@ -4,17 +4,15 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: BeerRatingAppQuery
+// GraphQL mutation operation: SetCurrentBeerIdMutation
 // ====================================================
 
-export interface BeerRatingAppQueryResult_beers {
-  id: string;  // Unique, immutable Id, that identifies this Beer
-  hasDraftRating: boolean;
+export interface SetCurrentBeerIdMutationResult {
+  setCurrentBeerId: string;
 }
 
-export interface BeerRatingAppQueryResult {
-  beers: BeerRatingAppQueryResult_beers[];  // Returns all beers in our store
-  currentBeerId: string;
+export interface SetCurrentBeerIdMutationVariables {
+  newBeerId: string;
 }
 
 //==============================================================
