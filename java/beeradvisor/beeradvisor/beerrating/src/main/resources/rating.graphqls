@@ -6,21 +6,41 @@ type User {
 }
 
 type Rating {
+  # An immutable unique Id
   id: ID!
-  user: User!
+
+  # The  beer, this rating is written for
+  beer: Beer!
+
+  # Who has written this rating?
+  author: User!
+
+  # The rating itself
   comment: String!
+
   stars: Int!
 }
 
+# Representation of a Beer that has been rated
 type Beer {
+  # Unique, immutable Id, that identifies this Beer
   id: ID!
+
+  # The name of the beer
   name: String!
+
+  # The Beer's price
   price: String!
 
+  # List of all Ratings for this Beer
   ratings: [Rating!]!
 }
 
 type Query {
+  # Returns a specific beer, identified by its id
+  beer(beerId: ID!): Beer
+
+  # Returns all beers in our system
   beers: [Beer!]!
 }
 

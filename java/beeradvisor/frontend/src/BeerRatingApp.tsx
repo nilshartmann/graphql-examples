@@ -1,47 +1,27 @@
 import * as React from "react";
-import { gql } from "apollo-boost";
 import { Query } from "react-apollo";
 
 import { BeerRatingAppQueryResult } from "./__generated__/BeerRatingAppQuery";
 
 import * as styles from "./BeerRatingApp.scss";
 import BeerList from "./BeerList";
-import ServiceStatus from "./ServiceStatus";
 import Header from "./Header";
-import Footer from "./Footer";
+
+import gql from "graphql-tag";
 
 const BEER_RATING_APP_QUERY = gql`
   query BeerRatingAppQuery {
-    beerServiceStatus {
-      name
-      uptime
-      javaVersion
-      graphiQL
-    }
-
-    ratingServiceStatus {
-      name
-      nodeJsVersion
-      uptime
-      graphiQL
-    }
-
-    stitcherStatus {
-      name
-      nodeJsVersion
-      uptime
-      graphiQL
-    }
-
     beers {
       id
-      name
       price
+      name
 
       ratings {
         id
-        beerId
-        author
+        author {
+          id
+          name
+        }
         comment
       }
     }
@@ -68,11 +48,7 @@ const BeerRatingApp = () => (
 
         return (
           <React.Fragment>
-            <Header>
-              <ServiceStatus status={data.beerServiceStatus} />
-              <ServiceStatus status={data.ratingServiceStatus} />
-              <ServiceStatus status={data.stitcherStatus} />
-            </Header>
+            <Header />
             <BeerList beers={data.beers} />
           </React.Fragment>
         );

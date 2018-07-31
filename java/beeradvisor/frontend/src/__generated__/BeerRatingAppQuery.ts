@@ -7,46 +7,26 @@
 // GraphQL query operation: BeerRatingAppQuery
 // ====================================================
 
-export interface BeerRatingAppQueryResult_beerServiceStatus {
+export interface BeerRatingAppQueryResult_beers_ratings_author {
+  id: string;
   name: string;
-  uptime: string;
-  javaVersion: string;
-  graphiQL: string | null;
-}
-
-export interface BeerRatingAppQueryResult_ratingServiceStatus {
-  name: string;
-  nodeJsVersion: string;
-  uptime: string;
-  graphiQL: string | null;
-}
-
-export interface BeerRatingAppQueryResult_stitcherStatus {
-  name: string;
-  nodeJsVersion: string;
-  uptime: string;
-  graphiQL: string | null;
 }
 
 export interface BeerRatingAppQueryResult_beers_ratings {
-  id: string;       // An immutable unique Id
-  beerId: string;   // The id of the beer, this rating is written for
-  author: string;   // Who has written this rating?
-  comment: string;  // The rating itself
+  id: string;                                       // An immutable unique Id
+  author: BeerRatingAppQueryResult_beers_ratings_author;  // Who has written this rating?
+  comment: string;                                  // The rating itself
 }
 
 export interface BeerRatingAppQueryResult_beers {
   id: string;                                   // Unique, immutable Id, that identifies this Beer
-  name: string;                                 // The name of the beer
   price: string;                                // The Beer's price
-  ratings: BeerRatingAppQueryResult_beers_ratings[];  // All Ratings for this Beer
+  name: string;                                 // The name of the beer
+  ratings: BeerRatingAppQueryResult_beers_ratings[];  // List of all Ratings for this Beer
 }
 
 export interface BeerRatingAppQueryResult {
-  beerServiceStatus: BeerRatingAppQueryResult_beerServiceStatus;      // Returns some information about the running **Beer** application
-  ratingServiceStatus: BeerRatingAppQueryResult_ratingServiceStatus;  // Returns health information about the running **Rating** process
-  stitcherStatus: BeerRatingAppQueryResult_stitcherStatus;
-  beers: BeerRatingAppQueryResult_beers[];                            // Returns all beers in our store
+  beers: BeerRatingAppQueryResult_beers[];  // Returns all beers in our system
 }
 
 //==============================================================
@@ -59,8 +39,9 @@ export interface BeerRatingAppQueryResult {
 // 
 interface AddRatingInput {
   beerId: string;
-  author: string;
+  userId: string;
   comment: string;
+  stars: number;
 }
 
 //==============================================================

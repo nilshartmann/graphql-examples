@@ -81,7 +81,7 @@ public class ExampleController {
     Map<String, Object> result = new Hashtable<>();
     result.put("name", b.getName());
     result.put("ratings", b.getRatings().size());
-    result.put("user", b.getRatings().get(0).getUser().getName());
+    result.put("user", b.getRatings().get(0).getAuthor().getName());
 
     return result;
   }

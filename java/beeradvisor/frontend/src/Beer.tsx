@@ -17,7 +17,7 @@ interface RatingProps {
 
 const Rating = ({ rating: { id, author, comment } }: RatingProps) => (
   <div className={styles.Rating}>
-    <span className={styles.Author}>{author}</span>: <span className={styles.Comment}>„{comment}“</span>
+    <span className={styles.Author}>{author.name}</span>: <span className={styles.Comment}>„{comment}“</span>
   </div>
 );
 
@@ -29,14 +29,16 @@ const ADD_RATING_MUTATION = gql`
   mutation AddRatingMutation($input: AddRatingInput!) {
     addRating(ratingInput: $input) {
       id
-      beerId
-      author
+      beer {
+        id
+      }
+      author {
+        id
+      }
       comment
     }
   }
 `;
-
-class AddNewRatingMutation extends Mutation<AddRatingMutationResult, AddRatingMutationVariables> {}
 
 export default function Beer({ beer: { id, name, price, ratings } }: BeerProps) {
   return (
@@ -51,9 +53,11 @@ export default function Beer({ beer: { id, name, price, ratings } }: BeerProps) 
         </div>
         <div className={styles.Ratings}>
           <h1>What customers say:</h1>
-          {ratings.map(rating => <Rating key={rating.id} rating={rating} />)}
+          {ratings.map(rating => (
+            <Rating key={rating.id} rating={rating} />
+          ))}
         </div>
-        <AddNewRatingMutation
+        <Mutation<AddRatingMutationResult, AddRatingMutationVariables>
           mutation={ADD_RATING_MUTATION}
           update={(cache, { data }) => {
             if (!data) {
@@ -94,7 +98,8 @@ export default function Beer({ beer: { id, name, price, ratings } }: BeerProps) 
                   addNewRating({
                     variables: {
                       input: {
-                        author,
+                        userId: "U1",
+                        stars: 3,
                         comment,
                         beerId: id
                       }
@@ -104,7 +109,7 @@ export default function Beer({ beer: { id, name, price, ratings } }: BeerProps) 
               />
             );
           }}
-        </AddNewRatingMutation>
+        </Mutation>
       </div>
     </div>
   );

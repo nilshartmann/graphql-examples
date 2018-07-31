@@ -23,6 +23,10 @@ public class RatingQueryResolver implements GraphQLQueryResolver {
   @Autowired
   private BeerRepository beerRepository;
 
+  public Beer beer(String beerId) {
+    return beerRepository.getBeer(beerId);
+  }
+
   public List<Beer> beers(DataFetchingEnvironment dfe) {
     final DataFetchingFieldSelectionSet selectionSet = dfe.getSelectionSet();
     final Map<String, List<Field>> selectedFields = selectionSet.get();
@@ -35,18 +39,22 @@ public class RatingQueryResolver implements GraphQLQueryResolver {
       logger.info("Field '" + fieldPath + "'");
       final Field field = stringListEntry.getValue().get(0);
       GraphQLFieldDefinition fieldDefinition = selectionSet.getDefinitions().get(fieldPath);
-      logger.info("Field '" + fieldPath + "' -> Directives: " + fieldDefinition.getDefinition().getDirectives());
+      // if (fieldDefinition != null && fieldDefinition.getD)
+      // logger.info("Field '" + fieldPath + "' -> Directives: " +
+      // fieldDefinition.getDefinition().getDirectives());
       GraphQLType type = fieldDefinition.getType();
-      logger.info(" field " + fieldPath + " -> Definition: " + (fieldDefinition != null ? type : " no fieldDefinition"));
+      logger
+          .info(" field " + fieldPath + " -> Definition: " + (fieldDefinition != null ? type : " no fieldDefinition"));
 
       if (type instanceof GraphQLObjectType) {
         allRequestedRelations.add(fieldPath);
       }
 
-      logger.info(" field " + fieldPath + " -> unwrapped type: " + (type != null ? type.getName() + "(" + type.getClass().getName() + ")" : " no fieldDefinition"));
+      logger.info(" field " + fieldPath + " -> unwrapped type: "
+          + (type != null ? type.getName() + "(" + type.getClass().getName() + ")" : " no fieldDefinition"));
     }
 
-    //return beerRepository.findAllWithEntityGraph(allRequestedRelations);
+    // return beerRepository.findAllWithEntityGraph(allRequestedRelations);
 
     return beerRepository.findAll();
   }

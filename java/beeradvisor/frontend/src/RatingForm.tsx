@@ -39,7 +39,8 @@ export default class RatingForm extends React.Component<RatingFormProps, RatingF
 
   render() {
     const { beerName, beerId } = this.props;
-    const { author, comment } = this.state;
+    const { /*author, */ comment } = this.state;
+    const author = "AUTHOR";
 
     const buttonEnabled = !!author && !!comment;
 

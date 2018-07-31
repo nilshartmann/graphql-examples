@@ -7,11 +7,19 @@
 // GraphQL mutation operation: AddRatingMutation
 // ====================================================
 
+export interface AddRatingMutationResult_addRating_beer {
+  id: string;  // Unique, immutable Id, that identifies this Beer
+}
+
+export interface AddRatingMutationResult_addRating_author {
+  id: string;
+}
+
 export interface AddRatingMutationResult_addRating {
-  id: string;       // An immutable unique Id
-  beerId: string;   // The id of the beer, this rating is written for
-  author: string;   // Who has written this rating?
-  comment: string;  // The rating itself
+  id: string;                                  // An immutable unique Id
+  beer: AddRatingMutationResult_addRating_beer;      // The  beer, this rating is written for
+  author: AddRatingMutationResult_addRating_author;  // Who has written this rating?
+  comment: string;                             // The rating itself
 }
 
 export interface AddRatingMutationResult {
@@ -32,8 +40,9 @@ export interface AddRatingMutationVariables {
 // 
 interface AddRatingInput {
   beerId: string;
-  author: string;
+  userId: string;
   comment: string;
+  stars: number;
 }
 
 //==============================================================

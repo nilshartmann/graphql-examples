@@ -2,6 +2,9 @@ package nh.graphql.beeradvisor.rating;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -9,8 +12,9 @@ import javax.validation.constraints.NotNull;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Entity
-@Table(name="rating_")
+@Table(name = "rating_")
 public class Rating {
+  private static Logger logger = LoggerFactory.getLogger(Rating.class);
 
   @Id
   private String id;
@@ -28,7 +32,7 @@ public class Rating {
 
   @NotNull
   @ManyToOne(fetch = FetchType.LAZY)
-  private User user;
+  private User author;
 
   protected Rating() {
 
@@ -36,7 +40,7 @@ public class Rating {
 
   public Rating(Beer beer, User user, String id, String comment, int stars) {
     this.beer = beer;
-    this.user = user;
+    this.author = user;
     this.id = id;
     this.comment = comment;
     this.stars = stars;
@@ -54,8 +58,9 @@ public class Rating {
     return beer;
   }
 
-  public User getUser() {
-    return user;
+  public User getAuthor() {
+    logger.info("Retunring author " + author);
+    return author;
   }
 
   public int getStars() {

@@ -13,7 +13,7 @@ import java.util.List;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Entity
-@Table(name="user_")
+@Table(name = "user_")
 public class User {
 
   @Id
@@ -22,8 +22,7 @@ public class User {
   @NotNull
   private String name;
 
-  private @OneToMany
-  List<Rating> ratings;
+  private @OneToMany List<Rating> ratings;
 
   protected User() {
   }
@@ -31,6 +30,13 @@ public class User {
   public User(String id, String name) {
     this.id = id;
     this.name = name;
+  }
+
+  /**
+   * @return the id
+   */
+  public String getId() {
+    return id;
   }
 
   public String getName() {
