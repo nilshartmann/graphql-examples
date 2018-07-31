@@ -13,7 +13,7 @@ export interface ratingsResult_ratings {
 
 export interface ratingsResult {
   id: string;                  // Unique, immutable Id, that identifies this Beer
-  ratingsResult: ratingsResult_ratings[];  // All ratings for this Beer
+  ratingsResult: ratingsResult_ratings[];  // List of all Ratings for this Beer
 }
 
 //==============================================================
@@ -26,8 +26,9 @@ export interface ratingsResult {
 // 
 interface AddRatingInput {
   beerId: string;
-  author: string;
+  userId: string;
   comment: string;
+  stars: number;
 }
 
 //==============================================================

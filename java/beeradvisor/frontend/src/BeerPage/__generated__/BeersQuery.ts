@@ -13,7 +13,7 @@ export interface BeersQueryResult_beers {
 }
 
 export interface BeersQueryResult {
-  beers: BeersQueryResult_beers[];  // Returns all beers in our store
+  beers: BeersQueryResult_beers[];  // Returns all beers in our system
 }
 
 //==============================================================
@@ -26,8 +26,9 @@ export interface BeersQueryResult {
 // 
 interface AddRatingInput {
   beerId: string;
-  author: string;
+  userId: string;
   comment: string;
+  stars: number;
 }
 
 //==============================================================

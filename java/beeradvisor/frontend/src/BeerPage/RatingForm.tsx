@@ -1,133 +1,46 @@
 import * as React from "react";
 import * as styles from "./RatingForm.scss";
 import { NewRating } from "../types";
-import gql, { default as clientGql } from "graphql-tag";
-import { Query } from "react-apollo";
-import { GetDraftRatingQueryResult } from "./__generated__/GetDraftRatingQuery";
-import { UpdateDraftRatingMutationResult } from "./__generated__/UpdateDraftRatingMutation";
-
-interface RatingFormControllerProps {
-  beerName: string;
-  beerId: string;
-  onNewRating: (rating: NewRating) => void;
-}
-
-// without fetching the id in the query below, the refetchQueries does not work?!
-const GET_DRAFT_RATING_QUERY = gql`
-  query GetDraftRatingQuery($beerId: ID!) {
-    draft: draftRatingForBeer(beerId: $beerId) @client {
-      id
-      author
-      comment
-    }
-  }
-`;
-
-const BEERS_QUERY = gql`
-  query BeersQuery {
-    beers {
-      id
-      hasDraftRating @client
-    }
-  }
-`;
-
-const UPDATE_DRAFT_RATING = gql`
-  mutation UpdateDraftRatingMutation($beerId: ID!, $author: String!, $comment: String!) {
-    setDraftRatingForBeer(beerId: $beerId, author: $author, comment: $comment) @client {
-      author
-      comment
-    }
-  }
-`;
-
-export default class RatingFormController extends React.Component<RatingFormControllerProps> {
-  render() {
-    const { beerId } = this.props;
-    return (
-      <Query<GetDraftRatingQueryResult> query={GET_DRAFT_RATING_QUERY} variables={{ beerId }}>
-        {({ loading, error, data, client }) => {
-          if (loading) {
-            return <h1>Loading></h1>;
-          }
-          if (error) {
-            return <h1>Error</h1>;
-          }
-
-          const { author = "", comment = "" } = data!.draft || { author: "", comment: "" };
-
-          return (
-            <RatingForm
-              onRatingChange={(author, comment) => {
-                client.mutate<UpdateDraftRatingMutationResult>({
-                  mutation: UPDATE_DRAFT_RATING,
-                  variables: {
-                    beerId,
-                    author,
-                    comment
-                  },
-                  // without refetchQuery the Query doesn't get updated, if
-                  // the first execution of the query returns null
-                  // see: https://www.apollographql.com/docs/react/advanced/caching.html#after-mutations
-                  // NOTE: ATTENTION: Refetching BEERS_QUERY leads to server request,
-                  // as the query contains also remote fields! Not a valid solutions for 'real' apps
-                  refetchQueries: [{ query: GET_DRAFT_RATING_QUERY, variables: { beerId } }, { query: BEERS_QUERY }]
-                });
-              }}
-              onNewRating={this.props.onNewRating}
-              beerId={this.props.beerId}
-              beerName={this.props.beerName}
-              author={author}
-              comment={comment}
-            />
-          );
-        }}
-      </Query>
-    );
-  }
-}
 
 interface RatingFormProps {
   beerName: string;
   beerId: string;
-  author: string;
-  comment: string;
-  onRatingChange: (author: string, comment: string) => void;
   onNewRating: (rating: NewRating) => void;
 }
-class RatingForm extends React.Component<RatingFormProps> {
-  authorElement: HTMLInputElement | null = null;
-  commentElement: HTMLInputElement | null = null;
 
-  getCurrentFormValues() {
-    return {
-      beerId: this.props,
-      author: this.authorElement!.value,
-      comment: this.commentElement!.value
-    };
-  }
+interface RatingFormState extends NewRating {}
 
-  setAuthorElementRef = (ref: HTMLInputElement | null) => (this.authorElement = ref);
-  setCommentElementRef = (ref: HTMLInputElement | null) => (this.commentElement = ref);
+export default class RatingForm extends React.Component<RatingFormProps, RatingFormState> {
+  readonly state: RatingFormState = {
+    author: "",
+    comment: ""
+  };
 
-  onFormChange = () => {
-    const { onRatingChange } = this.props;
-    const { author, comment } = this.getCurrentFormValues();
+  onAuthorChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    this.setState({ author: e.currentTarget.value });
+  };
 
-    onRatingChange(author, comment);
+  onCommentChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    this.setState({ comment: e.currentTarget.value });
   };
 
   onLeaveRatingClick = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    this.props.onNewRating(this.getCurrentFormValues());
+    const { author, comment } = this.state;
+    const { onNewRating } = this.props;
 
-    // reset form
-    this.props.onRatingChange("", "");
+    onNewRating({ author, comment });
+    this.setState({
+      author: "",
+      comment: ""
+    });
   };
 
   render() {
-    const { beerName, beerId, author, comment } = this.props;
+    const { beerName, beerId } = this.props;
+    const { author, comment } = this.state;
+
     const buttonEnabled = !!author && !!comment;
 
     return (
@@ -138,22 +51,12 @@ class RatingForm extends React.Component<RatingFormProps> {
         <form>
           <fieldset>
             <div>
-              <label>Your name:</label>{" "}
-              <input
-                ref={this.setAuthorElementRef}
-                type="text"
-                value={author}
-                onChange={this.onFormChange}
-              />
+              <label htmlFor={`ratingform-name-${beerId}`}>Your name:</label>{" "}
+              <input type="text" id={`ratingform-name-${beerId}`} value={author} onChange={this.onAuthorChange} />
             </div>
             <div>
-              <label>Your rating:</label>{" "}
-              <input
-                ref={this.setCommentElementRef}
-                type="text"
-                value={comment}
-                onChange={this.onFormChange}
-              />
+              <label htmlFor={`ratingform-comment-${beerId}`}>Your rating:</label>{" "}
+              <input type="text" id={`ratingform-comment-${beerId}`} value={comment} onChange={this.onCommentChange} />
             </div>
             <div>
               <button disabled={!buttonEnabled} onClick={this.onLeaveRatingClick}>

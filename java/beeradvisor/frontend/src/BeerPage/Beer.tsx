@@ -17,7 +17,7 @@ interface RatingProps {
 
 const Rating = ({ rating: { id, author, comment } }: RatingProps) => (
   <div className={styles.Rating}>
-    <span className={styles.Author}>{author}</span>: <span className={styles.Comment}>„{comment}“</span>
+    <span className={styles.Author}>{author.name}</span>: <span className={styles.Comment}>„{comment}“</span>
   </div>
 );
 
@@ -29,8 +29,12 @@ const ADD_RATING_MUTATION = gql`
   mutation AddRatingMutation($input: AddRatingInput!) {
     addRating(ratingInput: $input) {
       id
-      beerId
-      author
+      beer {
+        id
+      }
+      author {
+        name
+      }
       comment
     }
   }
@@ -95,7 +99,8 @@ export default function Beer({ beer: { id, name, price, ratings } }: BeerProps) 
                     addNewRating({
                       variables: {
                         input: {
-                          author,
+                          userId: "U1",
+                          stars: 3,
                           comment,
                           beerId: id
                         }

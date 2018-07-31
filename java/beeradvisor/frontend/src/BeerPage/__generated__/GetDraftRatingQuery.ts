@@ -31,8 +31,9 @@ export interface GetDraftRatingQueryVariables {
 // 
 interface AddRatingInput {
   beerId: string;
-  author: string;
+  userId: string;
   comment: string;
+  stars: number;
 }
 
 //==============================================================

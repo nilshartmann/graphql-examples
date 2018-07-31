@@ -7,18 +7,26 @@
 // GraphQL query operation: BeerPageQuery
 // ====================================================
 
+export interface BeerPageQueryResult_beer_ratings_beer {
+  id: string;  // Unique, immutable Id, that identifies this Beer
+}
+
+export interface BeerPageQueryResult_beer_ratings_author {
+  name: string;
+}
+
 export interface BeerPageQueryResult_beer_ratings {
-  id: string;       // An immutable unique Id
-  beerId: string;   // The id of the beer, this rating is written for
-  author: string;   // Who has written this rating?
-  comment: string;  // The rating itself
+  id: string;                                 // An immutable unique Id
+  beer: BeerPageQueryResult_beer_ratings_beer;      // The  beer, this rating is written for
+  author: BeerPageQueryResult_beer_ratings_author;  // Who has written this rating?
+  comment: string;                            // The rating itself
 }
 
 export interface BeerPageQueryResult_beer {
   id: string;                             // Unique, immutable Id, that identifies this Beer
   name: string;                           // The name of the beer
   price: string;                          // The Beer's price
-  ratings: BeerPageQueryResult_beer_ratings[];  // All ratings for this Beer
+  ratings: BeerPageQueryResult_beer_ratings[];  // List of all Ratings for this Beer
 }
 
 export interface BeerPageQueryResult_draftRating {
@@ -28,7 +36,7 @@ export interface BeerPageQueryResult_draftRating {
 }
 
 export interface BeerPageQueryResult {
-  beer: BeerPageQueryResult_beer | null;  // Returns the Beer with the specified Id
+  beer: BeerPageQueryResult_beer | null;  // Returns a specific beer, identified by its id
   draftRating: BeerPageQueryResult_draftRating | null;
 }
 
@@ -46,8 +54,9 @@ export interface BeerPageQueryVariables {
 // 
 interface AddRatingInput {
   beerId: string;
-  author: string;
+  userId: string;
   comment: string;
+  stars: number;
 }
 
 //==============================================================

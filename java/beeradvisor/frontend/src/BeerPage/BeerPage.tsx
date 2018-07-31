@@ -12,8 +12,12 @@ const BEER_PAGE_QUERY = gql`
       price
       ratings {
         id
-        beerId
-        author
+        beer {
+          id
+        }
+        author {
+          name
+        }
         comment
       }
     }
