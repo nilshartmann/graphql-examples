@@ -1,4 +1,11 @@
 {
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "email": "nils@nilshartmann.net",
+    "name": "Nils Hartmann",
+    "url": "https://nilshartmann.net"
+  },
   "devDependencies": {
     "@divyenduz/ts-graphql-plugin": "^0.1.0"
   }
