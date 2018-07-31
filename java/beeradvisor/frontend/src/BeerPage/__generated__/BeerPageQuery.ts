@@ -29,15 +29,8 @@ export interface BeerPageQueryResult_beer {
   ratings: BeerPageQueryResult_beer_ratings[];  // List of all Ratings for this Beer
 }
 
-export interface BeerPageQueryResult_draftRating {
-  id: string;  // Must match beerId in Beer
-  author: string;
-  comment: string;
-}
-
 export interface BeerPageQueryResult {
   beer: BeerPageQueryResult_beer | null;  // Returns a specific beer, identified by its id
-  draftRating: BeerPageQueryResult_draftRating | null;
 }
 
 export interface BeerPageQueryVariables {

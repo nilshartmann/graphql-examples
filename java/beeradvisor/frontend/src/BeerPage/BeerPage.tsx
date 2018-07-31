@@ -21,12 +21,6 @@ const BEER_PAGE_QUERY = gql`
         comment
       }
     }
-
-    draftRating: draftRatingForBeer(beerId: $beerId) @client {
-      id
-      author
-      comment
-    }
   }
 `;
 
@@ -48,7 +42,7 @@ const BeerPage = ({ beerId }: BeerPageProps) => (
           return <h1>Error! {error.message}</h1>;
         }
 
-        const { beer, draftRating } = data!;
+        const { beer } = data!;
 
         if (beer === null) {
           //

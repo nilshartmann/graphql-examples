@@ -7,9 +7,8 @@ interface HeaderProps {
 
 const Header = ({ children }: HeaderProps) => (
   <header className={styles.Header}>
-    {/* <div className={styles.UpperHeader}>{children}</div> */}
     <div className={styles.MainHeader}>
-      <h1>Beer Rating</h1>
+      <h1>Beer Advisor</h1>
       <h2 />
     </div>
   </header>

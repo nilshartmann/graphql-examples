@@ -4,21 +4,15 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetDraftRatingQuery
+// GraphQL query operation: BeerRackQuery
 // ====================================================
 
-export interface GetDraftRatingQueryResult_draft {
-  id: string;  // Must match beerId in Beer
-  author: string;
-  comment: string;
+export interface BeerRackQueryResult_beers {
+  id: string;  // Unique, immutable Id, that identifies this Beer
 }
 
-export interface GetDraftRatingQueryResult {
-  draft: GetDraftRatingQueryResult_draft | null;
-}
-
-export interface GetDraftRatingQueryVariables {
-  beerId: string;
+export interface BeerRackQueryResult {
+  beers: BeerRackQueryResult_beers[];  // Returns all beers in our system
 }
 
 //==============================================================
