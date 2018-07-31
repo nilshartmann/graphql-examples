@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@divyenduz/ts-graphql-plugin": "^0.1.0"
+  }
+}
