@@ -85,7 +85,7 @@ async function introspectSchema(remoteURL, clientURL, output, insecure) {
 
 const remoteSchema = "http://localhost:9000/graphql";
 const clientSchema = path.resolve(".", "src/*.graphql");
-const output = path.resolve(".", "server-and-client-schema.json");
+const output = path.resolve(".", "beerrating-schema.json");
 
 console.log(`clientSchema: ${clientSchema}`);
 console.log(`output: ${output}`);

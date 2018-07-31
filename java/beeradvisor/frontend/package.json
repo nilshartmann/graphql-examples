@@ -27,7 +27,7 @@
     "prettier": "prettier --print-width 130 --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "_unused_gql:schema": "apollo-codegen introspect-schema http://localhost:9000/graphql --output beerrating-schema.json",
     "gql:build-schema": "node scripts/buildSchema.js",
-    "gql:codegen": "apollo-codegen generate 'src/**/*.tsx' --schema server-and-client-schema.json --target ts-modern --output src",
+    "gql:codegen": "apollo-codegen generate 'src/**/*.tsx' --schema beerrating-schema.json --target ts-modern --output src",
     "gql:transform": "jscodeshift src --extensions ts -t scripts/transform.js",
     "gql": "yarn gql:build-schema && yarn gql:codegen && yarn gql:transform"
   },
