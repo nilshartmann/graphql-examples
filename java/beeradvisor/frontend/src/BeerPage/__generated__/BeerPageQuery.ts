@@ -22,11 +22,17 @@ export interface BeerPageQueryResult_beer_ratings {
   comment: string;                            // The rating itself
 }
 
+export interface BeerPageQueryResult_beer_shops {
+  id: string;    // Unique ID of this shop
+  name: string;  // The name of the shop
+}
+
 export interface BeerPageQueryResult_beer {
   id: string;                             // Unique, immutable Id, that identifies this Beer
   name: string;                           // The name of the beer
   price: string;                          // The Beer's price
   ratings: BeerPageQueryResult_beer_ratings[];  // List of all Ratings for this Beer
+  shops: BeerPageQueryResult_beer_shops[];
 }
 
 export interface BeerPageQueryResult {

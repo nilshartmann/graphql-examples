@@ -41,6 +41,7 @@
   }
 }
 
+.Shops,
 .Ratings {
   h1 {
     font-family: Anton;
@@ -51,6 +52,10 @@
     text-transform: lowercase;
     margin-bottom: 1.5rem;
   }
+}
+
+.Shops {
+  margin-bottom: 1.5rem;
 }
 
 .Rating {
@@ -65,4 +70,10 @@
   .Comment {
     font-style: italic;
   }
+}
+
+.Shop {
+  display: inline-block;
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
 }

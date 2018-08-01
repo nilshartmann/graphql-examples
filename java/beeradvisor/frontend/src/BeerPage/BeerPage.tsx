@@ -20,11 +20,13 @@ const BEER_PAGE_QUERY = gql`
         }
         comment
       }
+      shops {
+        id
+        name
+      }
     }
   }
 `;
-
-class BeerPageQuery extends Query<BeerPageQueryResult> {}
 
 interface BeerPageProps {
   beerId: string;

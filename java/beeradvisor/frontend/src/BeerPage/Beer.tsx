@@ -5,7 +5,8 @@ import RatingForm from "./RatingForm";
 
 import {
   BeerPageQueryResult_beer as BeerData,
-  BeerPageQueryResult_beer_ratings as BeerRatingData
+  BeerPageQueryResult_beer_ratings as BeerRatingData,
+  BeerPageQueryResult_beer_shops as ShopData
 } from "./__generated__/BeerPageQuery";
 import { AddRatingMutationResult, AddRatingMutationVariables } from "./__generated__/AddRatingMutation";
 import { NewRating } from "../types";
@@ -18,6 +19,16 @@ interface RatingProps {
 const Rating = ({ rating: { id, author, comment } }: RatingProps) => (
   <div className={styles.Rating}>
     <span className={styles.Author}>{author.name}</span>: <span className={styles.Comment}>„{comment}“</span>
+  </div>
+);
+
+interface ShopProps {
+  shop: ShopData;
+}
+
+const Shop = ({ shop: { id, name } }: ShopProps) => (
+  <div className={styles.Shop}>
+    <span className={styles.Name}>{name}</span>
   </div>
 );
 
@@ -42,7 +53,7 @@ const ADD_RATING_MUTATION = gql`
 
 class AddNewRatingMutation extends Mutation<AddRatingMutationResult, AddRatingMutationVariables> {}
 
-export default function Beer({ beer: { id, name, price, ratings } }: BeerProps) {
+export default function Beer({ beer: { id, name, price, ratings, shops } }: BeerProps) {
   return (
     <div className={styles.Beer}>
       <div className={styles.DescriptionTitle}>
@@ -54,6 +65,15 @@ export default function Beer({ beer: { id, name, price, ratings } }: BeerProps) 
           <img src={`/assets/beer/${id}.jpg`} />
         </div>
         <div>
+          <div className={styles.Shops}>
+            <h1>Where to buy:</h1>
+            {shops.map((shop, ix) => (
+              <>
+                <Shop key={shop.id} shop={shop} />
+                {ix < shops.length - 1 ? " | " : null}
+              </>
+            ))}
+          </div>
           <div className={styles.Ratings}>
             <h1>What customers say:</h1>
             {ratings.map(rating => <Rating key={rating.id} rating={rating} />)}
