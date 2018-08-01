@@ -12,6 +12,7 @@ const BEER_PAGE_QUERY = gql`
       price
       ratings {
         id
+        stars
         beer {
           id
         }

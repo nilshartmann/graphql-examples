@@ -17,6 +17,7 @@ export interface BeerPageQueryResult_beer_ratings_author {
 
 export interface BeerPageQueryResult_beer_ratings {
   id: string;                                 // An immutable unique Id
+  stars: number;
   beer: BeerPageQueryResult_beer_ratings_beer;      // The  beer, this rating is written for
   author: BeerPageQueryResult_beer_ratings_author;  // Who has written this rating?
   comment: string;                            // The rating itself

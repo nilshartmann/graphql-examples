@@ -20,6 +20,7 @@ export interface AddRatingMutationResult_addRating {
   beer: AddRatingMutationResult_addRating_beer;      // The  beer, this rating is written for
   author: AddRatingMutationResult_addRating_author;  // Who has written this rating?
   comment: string;                             // The rating itself
+  stars: number;
 }
 
 export interface AddRatingMutationResult {

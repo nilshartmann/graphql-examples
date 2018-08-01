@@ -13,7 +13,8 @@ interface RatingFormState extends NewRating {}
 export default class RatingForm extends React.Component<RatingFormProps, RatingFormState> {
   readonly state: RatingFormState = {
     author: "",
-    comment: ""
+    comment: "",
+    stars: ""
   };
 
   onAuthorChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
@@ -24,22 +25,27 @@ export default class RatingForm extends React.Component<RatingFormProps, RatingF
     this.setState({ comment: e.currentTarget.value });
   };
 
+  onStarsChange = (e: React.SyntheticEvent<HTMLInputElement>) => {
+    this.setState({ stars: e.currentTarget.value });
+  };
+
   onLeaveRatingClick = (e: React.SyntheticEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    const { author, comment } = this.state;
+    const { author, comment, stars } = this.state;
     const { onNewRating } = this.props;
 
-    onNewRating({ author, comment });
+    onNewRating({ author, comment, stars });
     this.setState({
       author: "",
-      comment: ""
+      comment: "",
+      stars: ""
     });
   };
 
   render() {
     const { beerName, beerId } = this.props;
-    const { author, comment } = this.state;
+    const { author, comment, stars } = this.state;
 
     const buttonEnabled = !!author && !!comment;
 
@@ -51,12 +57,14 @@ export default class RatingForm extends React.Component<RatingFormProps, RatingF
         <form>
           <fieldset>
             <div>
-              <label htmlFor={`ratingform-name-${beerId}`}>Your name:</label>{" "}
-              <input type="text" id={`ratingform-name-${beerId}`} value={author} onChange={this.onAuthorChange} />
+              <label>Your name:</label> <input type="text" value={author} onChange={this.onAuthorChange} />
             </div>
             <div>
-              <label htmlFor={`ratingform-comment-${beerId}`}>Your rating:</label>{" "}
-              <input type="text" id={`ratingform-comment-${beerId}`} value={comment} onChange={this.onCommentChange} />
+              <label>Your rating (1-5):</label>{" "}
+              <input type="number" min="1" max="5" value={stars} onChange={this.onStarsChange} />
+            </div>
+            <div>
+              <label>Your comment:</label> <input type="text" value={comment} onChange={this.onCommentChange} />
             </div>
             <div>
               <button disabled={!buttonEnabled} onClick={this.onLeaveRatingClick}>

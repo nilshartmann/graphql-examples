@@ -16,9 +16,12 @@ interface RatingProps {
   rating: BeerRatingData;
 }
 
-const Rating = ({ rating: { id, author, comment } }: RatingProps) => (
+const Rating = ({ rating: { id, author, comment, stars } }: RatingProps) => (
   <div className={styles.Rating}>
-    <span className={styles.Author}>{author.name}</span>: <span className={styles.Comment}>„{comment}“</span>
+    <span className={styles.Author}>{author.name}</span>:{" "}
+    <span className={styles.Comment}>
+      „{comment}“ ({stars}/5)
+    </span>
   </div>
 );
 
@@ -47,6 +50,7 @@ const ADD_RATING_MUTATION = gql`
         name
       }
       comment
+      stars
     }
   }
 `;
@@ -68,10 +72,10 @@ export default function Beer({ beer: { id, name, price, ratings, shops } }: Beer
           <div className={styles.Shops}>
             <h1>Where to buy:</h1>
             {shops.map((shop, ix) => (
-              <>
-                <Shop key={shop.id} shop={shop} />
+              <React.Fragment key={shop.id}>
+                <Shop shop={shop} />
                 {ix < shops.length - 1 ? " | " : null}
-              </>
+              </React.Fragment>
             ))}
           </div>
           <div className={styles.Ratings}>
@@ -115,12 +119,12 @@ export default function Beer({ beer: { id, name, price, ratings, shops } }: Beer
                 <RatingForm
                   beerId={id}
                   beerName={name}
-                  onNewRating={({ comment, author }) => {
+                  onNewRating={({ comment, author, stars }) => {
                     addNewRating({
                       variables: {
                         input: {
                           userId: "U1",
-                          stars: 3,
+                          stars: parseInt(stars),
                           comment,
                           beerId: id
                         }
