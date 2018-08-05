@@ -2,6 +2,11 @@ dependencies {
   runtime('org.postgresql:postgresql')
   runtime('com.h2database:h2')
 
+  // security
+  compile 'io.jsonwebtoken:jjwt-api:0.10.1'
+  runtime 'io.jsonwebtoken:jjwt-impl:0.10.1',
+      'io.jsonwebtoken:jjwt-jackson:0.10.1'
+
   compile 'com.graphql-java:graphql-java-servlet:5.0.1'
 
   // GraphiQL

@@ -1,18 +1,17 @@
 package nh.graphql.beeradvisor.login;
 
-import javax.validation.Valid;
-
+import nh.graphql.beeradvisor.auth.JwtTokenService;
+import nh.graphql.beeradvisor.user.User;
+import nh.graphql.beeradvisor.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import nh.graphql.beeradvisor.user.User;
-import nh.graphql.beeradvisor.user.UserRepository;
+import javax.validation.Valid;
 
 /**
  * LoginController
@@ -24,6 +23,9 @@ public class LoginController {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private JwtTokenService jwtTokenService;
+
   @PostMapping("/api/login")
   @ResponseBody
   public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) {
@@ -34,7 +36,9 @@ public class LoginController {
       throw new IllegalStateException("Unknown UserId");
     }
 
-    return new LoginResponse(user, "AUTH-" + user.getId());
+    final String token = jwtTokenService.createTokenForUser(user);
+
+    return new LoginResponse(token);
   }
 
 }
