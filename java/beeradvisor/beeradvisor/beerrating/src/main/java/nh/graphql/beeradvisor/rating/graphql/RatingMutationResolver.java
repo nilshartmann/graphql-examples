@@ -2,6 +2,9 @@ package nh.graphql.beeradvisor.rating.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import nh.graphql.beeradvisor.rating.*;
+import nh.graphql.beeradvisor.user.User;
+import nh.graphql.beeradvisor.user.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;

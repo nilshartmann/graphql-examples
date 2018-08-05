@@ -8,6 +8,13 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -15,9 +22,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import nh.graphql.beeradvisor.login.DumbAuthenticationFilter;
+
 @SpringBootApplication
 @Configuration
-public class BeeradvisorApplication {
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class BeeradvisorApplication extends WebSecurityConfigurerAdapter {
 
   /**
    * Keeps the session open until the end of a request. Allows us to use
@@ -50,6 +61,18 @@ public class BeeradvisorApplication {
     FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<CorsFilter>(new CorsFilter(source));
     bean.setOrder(0);
     return bean;
+  }
+
+  @Bean
+  public DumbAuthenticationFilter authenticationTokenFilter() throws Exception {
+    return new DumbAuthenticationFilter();
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.csrf().disable().authorizeRequests().antMatchers("/").permitAll();
+    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http.addFilterBefore(authenticationTokenFilter(), BasicAuthenticationFilter.class);
   }
 
   public static void main(String[] args) {

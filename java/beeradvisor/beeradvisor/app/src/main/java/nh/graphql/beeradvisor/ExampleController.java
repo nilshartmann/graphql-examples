@@ -13,6 +13,8 @@ import org.reactivestreams.Subscription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,8 +44,10 @@ public class ExampleController {
    * @return
    */
   @GetMapping("/beers")
+  @PreAuthorize("isAuthenticated()")
   @ResponseBody
   public Map<String, Object> beers() {
+    logger.info("AUTHENTICATION {}", SecurityContextHolder.getContext().getAuthentication());
     Beer b = beerRepository.findAll().get(0);
     Map<String, Object> result = new Hashtable<>();
     result.put("name", b.getName());

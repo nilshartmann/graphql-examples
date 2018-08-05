@@ -2,6 +2,9 @@ package nh.graphql.beeradvisor.rating;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import nh.graphql.beeradvisor.user.User;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +13,7 @@ import java.util.UUID;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Entity
-@Table(name="beer_")
+@Table(name = "beer_")
 public class Beer {
 
   @Id
@@ -26,7 +29,6 @@ public class Beer {
   private List<Rating> ratings = new LinkedList<>();
 
   protected Beer() {
-
 
   }
 
@@ -47,7 +49,6 @@ public class Beer {
     this.ratings.add(rating);
     return rating;
   }
-
 
   public String getId() {
     return id;

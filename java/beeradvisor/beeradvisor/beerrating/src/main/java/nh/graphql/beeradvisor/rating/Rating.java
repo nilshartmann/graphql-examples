@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import nh.graphql.beeradvisor.user.User;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
