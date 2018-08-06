@@ -1,8 +1,10 @@
 package nh.graphql.beeradvisor.user;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -17,14 +19,19 @@ public class User {
   private String id;
 
   @NotNull
+  @Column(unique = true)
+  private String login;
+
+  @NotNull
   private String name;
 
   protected User() {
   }
 
-  public User(String id, String name) {
+  public User(String id, String login, String name) {
     this.id = id;
     this.name = name;
+    this.login = login;
   }
 
   /**
@@ -36,5 +43,12 @@ public class User {
 
   public String getName() {
     return name;
+  }
+
+  /**
+   * @return the login
+   */
+  public String getLogin() {
+    return login;
   }
 }

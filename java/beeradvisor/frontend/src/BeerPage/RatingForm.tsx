@@ -6,6 +6,7 @@ interface RatingFormProps {
   beerName: string;
   beerId: string;
   username: string;
+  error?: string | null;
   onNewRating: (rating: NewRating) => void;
 }
 
@@ -42,16 +43,13 @@ export default class RatingForm extends React.Component<RatingFormProps, RatingF
   };
 
   render() {
-    const { beerName, username } = this.props;
+    const { beerName, username, error } = this.props;
     const { comment, stars } = this.state;
 
     const buttonEnabled = !!stars && !!comment;
 
     return (
       <div className={styles.RatingForm}>
-        <h1>
-          ...and what do <em>you</em> think?
-        </h1>
         <form>
           <fieldset>
             <div>
@@ -69,6 +67,11 @@ export default class RatingForm extends React.Component<RatingFormProps, RatingF
                 Leave rating for {beerName}
               </button>
             </div>
+            {error && (
+              <div>
+                <b>Could not add rating:</b> {error}
+              </div>
+            )}
           </fieldset>
         </form>
       </div>

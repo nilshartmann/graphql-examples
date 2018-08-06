@@ -51,6 +51,9 @@ export default function Beer({ beer: { id, name, price, ratings, shops } }: Beer
             {ratings.map(rating => <Rating key={rating.id} rating={rating} />)}
           </div>
 
+          <h1>
+            ...and what do <em>you</em> think?
+          </h1>
           <AuthContextConsumer>
             {({ auth, login }) => {
               if (auth === null || "error" in auth) {
@@ -59,12 +62,13 @@ export default function Beer({ beer: { id, name, price, ratings, shops } }: Beer
 
               return (
                 <AddRatingMutation beerId={id}>
-                  {addNewRating => {
+                  {(addNewRating, { error }) => {
                     return (
                       <RatingForm
                         beerId={id}
                         username={auth.auth.username}
                         beerName={name}
+                        error={error ? "" + error : null}
                         onNewRating={({ comment, stars }) => {
                           addNewRating({
                             variables: {

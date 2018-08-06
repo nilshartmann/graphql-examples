@@ -7,13 +7,15 @@ import javax.validation.constraints.NotEmpty;
  * LoginResponse
  */
 public class LoginResponse {
-
+  @NotBlank
+  private final String userId;
   @NotBlank
   private final String username;
   @NotBlank
   private final String authToken;
 
-  public LoginResponse(String username, String authToken) {
+  public LoginResponse(String userId, String username, String authToken) {
+    this.userId = userId;
     this.username = username;
     this.authToken = authToken;
   }
@@ -30,6 +32,13 @@ public class LoginResponse {
    */
   public String getUsername() {
     return username;
+  }
+
+  /**
+   * @return the userId
+   */
+  public String getUserId() {
+    return userId;
   }
 
 }

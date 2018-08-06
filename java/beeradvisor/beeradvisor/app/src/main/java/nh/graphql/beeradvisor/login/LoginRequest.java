@@ -8,25 +8,25 @@ import javax.validation.constraints.NotBlank;
 public class LoginRequest {
 
   @NotBlank
-  private String userId;
+  private String login;
 
   /**
-   * @return the userId
+   * @return the login
    */
-  public String getUserId() {
-    return userId;
+  public String getLogin() {
+    return login;
   }
 
   /**
-   * @param userId the userId to set
+   * @param login the login to set
    */
-  public void setUserId(String userId) {
-    this.userId = userId;
+  public void setLogin(String login) {
+    this.login = login;
   }
 
   @Override
   public String toString() {
-    return "[LoginRequest, userId: " + userId + "]";
+    return "[LoginRequest, login: " + login + "]";
   }
 
 }

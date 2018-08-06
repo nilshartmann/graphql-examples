@@ -5,9 +5,19 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 import BeerRatingApp from "./BeerRatingApp";
-import { AuthProvider } from "./AuthContext";
+import { AuthProvider, getAuthToken } from "./AuthContext";
 const client = new ApolloClient({
-  uri: "http://localhost:9000/graphql"
+  uri: "http://localhost:9000/graphql",
+  request: async operation => {
+    const token = getAuthToken();
+    if (token) {
+      operation.setContext({
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      });
+    }
+  }
 });
 
 const theBeerRatingApp = (

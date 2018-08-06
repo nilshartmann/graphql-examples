@@ -36,11 +36,11 @@ export default class LoginForm extends React.Component<LoginFormProps, LoginForm
 
     return (
       <div className={styles.RatingForm}>
-        <h1>Please login first</h1>
+        <b>Please login first</b>
         <form>
           <fieldset>
             <div>
-              <label>Your userId:</label> <input type="text" value={userId} onChange={this.onUserIdChange} />
+              <label>Your login:</label> <input type="text" value={userId} onChange={this.onUserIdChange} />
             </div>
             {error && <div>Could not login: {error}</div>}
             <div>

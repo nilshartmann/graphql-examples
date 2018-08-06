@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { AddRatingMutationResult, AddRatingMutationVariables } from "./__generated__/AddRatingMutation";
-import { gql } from "apollo-boost";
+import { gql, ApolloError } from "apollo-boost";
 import { Mutation, MutationFn, MutationResult } from "react-apollo";
 
 const ADD_RATING_MUTATION = gql`

@@ -33,14 +33,14 @@ public class LoginController {
   public LoginResponse login(@Valid @RequestBody LoginRequest loginRequest) {
     logger.info("Login {}", loginRequest);
 
-    User user = userRepository.getUser(loginRequest.getUserId());
+    User user = userRepository.getUserByLogin(loginRequest.getLogin());
     if (user == null) {
       throw new BadCredentialsException("Unknown UserId");
     }
 
     final String token = jwtTokenService.createTokenForUser(user);
 
-    return new LoginResponse(user.getName(), token);
+    return new LoginResponse(user.getId(), user.getName(), token);
   }
 
 }

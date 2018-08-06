@@ -30,11 +30,11 @@ public class BeerRatingDbImporter {
   public void importDb() {
     logger.info("Importing Database");
 
-    final User U1 = userRepository.newUser("U1", "Waldemar Vasu");
-    final User U2 = userRepository.newUser("U2", "Karl Marx");
-    final User U3 = userRepository.newUser("U3", "Alessa Bradley");
-    final User U4 = userRepository.newUser("U4", "Lauren Jones");
-    final User U5 = userRepository.newUser("U5", "Nils");
+    final User U1 = userRepository.newUser("U1", "waldemar", "Waldemar Vasu");
+    final User U2 = userRepository.newUser("U2", "karl", "Karl Marx");
+    final User U3 = userRepository.newUser("U3", "alessa", "Alessa Bradley");
+    final User U4 = userRepository.newUser("U4", "lauren", "Lauren Jones");
+    final User U5 = userRepository.newUser("U5", "nils", "Nils");
 
     final Beer b1 = new Beer("B1", "Barfüßer", "3,80 EUR") //
         .addRating(U1, "R1", "Exceptional!", 4) //

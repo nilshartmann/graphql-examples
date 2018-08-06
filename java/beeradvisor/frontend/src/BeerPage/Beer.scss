@@ -13,6 +13,16 @@
 
 .Description {
   display: flex;
+
+  h1 {
+    font-family: Anton;
+    line-height: 1;
+    letter-spacing: 3px;
+    font-size: 1.5rem;
+    font-weight: normal;
+    text-transform: lowercase;
+    margin-bottom: 1.5rem;
+  }
 }
 
 .DescriptionTitle {
@@ -38,19 +48,6 @@
     text-transform: uppercase;
 
     margin-left: 1rem;
-  }
-}
-
-.Shops,
-.Ratings {
-  h1 {
-    font-family: Anton;
-    line-height: 1;
-    letter-spacing: 3px;
-    font-size: 1.5rem;
-    font-weight: normal;
-    text-transform: lowercase;
-    margin-bottom: 1.5rem;
   }
 }
 

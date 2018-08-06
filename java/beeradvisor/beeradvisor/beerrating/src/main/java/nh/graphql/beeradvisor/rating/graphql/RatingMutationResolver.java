@@ -7,6 +7,7 @@ import nh.graphql.beeradvisor.user.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class RatingMutationResolver implements GraphQLMutationResolver {
   private BeerRepository beerRepository;
 
   @Transactional
+  @PreAuthorize("isAuthenticated()")
   public Rating addRating(AddRatingInput addRatingInput) {
     User user = userRepository.getUser(addRatingInput.getUserId());
     Beer beer = beerRepository.getBeer(addRatingInput.getBeerId());
