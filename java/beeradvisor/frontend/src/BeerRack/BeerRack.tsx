@@ -1,7 +1,7 @@
 import * as React from "react";
 import { gql } from "apollo-boost";
-import { Mutation, Query } from "react-apollo";
-
+import { Query } from "react-apollo";
+import * as ReactTooltip from "react-tooltip";
 import { BeerRackQueryResult } from "./__generated__/BeerRackQuery";
 
 import * as styles from "./BeerRack.scss";
@@ -14,6 +14,7 @@ const BEER_RACK_QUERY = gql`
   query BeerRackQuery {
     beers {
       id
+      name
     }
   }
 `;
@@ -31,12 +32,16 @@ export default function BeerRack({ currentBeerId, setCurrentBeerId }: BeerRackPr
           }
           const { beers } = data!;
           return beers.map(beer => (
-            <Thumbnail
-              key={beer.id}
-              imgUrl={`/assets/beer/${beer.id}.jpg`}
-              onClick={() => setCurrentBeerId(beer.id)}
-              active={currentBeerId === beer.id}
-            />
+            <>
+              <Thumbnail
+                key={beer.id}
+                name={beer.name}
+                imgUrl={`/assets/beer/${beer.id}.jpg`}
+                onClick={() => setCurrentBeerId(beer.id)}
+                active={currentBeerId === beer.id}
+              />
+              <ReactTooltip />
+            </>
           ));
         }}
       </Query>
@@ -46,14 +51,15 @@ export default function BeerRack({ currentBeerId, setCurrentBeerId }: BeerRackPr
 
 interface ThumbnailProps {
   imgUrl: string;
+  name: string;
   onClick: () => void;
   active?: boolean;
 }
 
-function Thumbnail({ imgUrl, onClick, active }: ThumbnailProps) {
+function Thumbnail({ imgUrl, name, onClick, active }: ThumbnailProps) {
   const borderClassName = active ? `${styles.ThumbnailBorder} ${styles.Active}` : styles.ThumbnailBorder;
   return (
-    <div className={styles.Thumbnail} style={{ backgroundImage: `url(${imgUrl})` }} onClick={onClick}>
+    <div className={styles.Thumbnail} style={{ backgroundImage: `url(${imgUrl})` }} onClick={onClick} data-tip={name}>
       <div className={borderClassName} />
     </div>
   );

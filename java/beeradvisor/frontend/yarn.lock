@@ -114,6 +114,12 @@
     "@types/node" "*"
     "@types/react" "*"
 
+"@types/react-tooltip@^3.3.5":
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/@types/react-tooltip/-/react-tooltip-3.3.5.tgz#7b1b16ce00d76436328106a6ca7c4ad60de525d6"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.3.13":
   version "16.3.14"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.3.14.tgz#f90ac6834de172e13ecca430dcb6814744225d36"
@@ -1696,6 +1702,10 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
+
+classnames@^2.2.5:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
 clean-css@4.1.x:
   version "4.1.11"
@@ -5908,6 +5918,13 @@ react-dom@^16.3.1:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react-tooltip@^3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-3.6.1.tgz#2ca993baa50d7e0271b8d13c6024445a883842eb"
+  dependencies:
+    classnames "^2.2.5"
     prop-types "^15.6.0"
 
 react@^16.3.1:

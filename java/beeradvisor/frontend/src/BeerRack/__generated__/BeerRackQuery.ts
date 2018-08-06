@@ -8,7 +8,8 @@
 // ====================================================
 
 export interface BeerRackQueryResult_beers {
-  id: string;  // Unique, immutable Id, that identifies this Beer
+  id: string;    // Unique, immutable Id, that identifies this Beer
+  name: string;  // The name of the beer
 }
 
 export interface BeerRackQueryResult {
