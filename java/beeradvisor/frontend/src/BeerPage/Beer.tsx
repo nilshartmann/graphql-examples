@@ -3,28 +3,14 @@ import * as styles from "./Beer.scss";
 
 import RatingForm from "./RatingForm";
 
-import {
-  BeerPageQueryResult_beer as BeerData,
-  BeerPageQueryResult_beer_ratings as BeerRatingData,
-  BeerPageQueryResult_beer_shops as ShopData
-} from "./__generated__/BeerPageQuery";
+import { BeerPageQueryResult_beer as BeerData, BeerPageQueryResult_beer_shops as ShopData } from "./__generated__/BeerPageQuery";
 import { AddRatingMutationResult, AddRatingMutationVariables } from "./__generated__/AddRatingMutation";
-import { NewRating } from "../types";
-import { ApolloClient, gql } from "apollo-boost";
+import { gql } from "apollo-boost";
 import { Mutation } from "react-apollo";
-interface RatingProps {
-  rating: BeerRatingData;
-}
-
-const Rating = ({ rating: { id, author, comment, stars } }: RatingProps) => (
-  <div className={styles.Rating}>
-    <span className={styles.Author}>{author.name}</span>:{" "}
-    <span className={styles.Comment}>
-      „{comment}“ ({stars}/5)
-    </span>
-  </div>
-);
-
+import AddRatingMutation from "./AddRatingMutation";
+import Rating from "./Rating";
+import { AuthContextConsumer } from "../AuthContext";
+import LoginForm from "./LoginForm";
 interface ShopProps {
   shop: ShopData;
 }
@@ -38,24 +24,6 @@ const Shop = ({ shop: { id, name } }: ShopProps) => (
 interface BeerProps {
   beer: BeerData;
 }
-
-const ADD_RATING_MUTATION = gql`
-  mutation AddRatingMutation($input: AddRatingInput!) {
-    addRating(ratingInput: $input) {
-      id
-      beer {
-        id
-      }
-      author {
-        name
-      }
-      comment
-      stars
-    }
-  }
-`;
-
-class AddNewRatingMutation extends Mutation<AddRatingMutationResult, AddRatingMutationVariables> {}
 
 export default function Beer({ beer: { id, name, price, ratings, shops } }: BeerProps) {
   return (
@@ -82,59 +50,40 @@ export default function Beer({ beer: { id, name, price, ratings, shops } }: Beer
             <h1>What customers say:</h1>
             {ratings.map(rating => <Rating key={rating.id} rating={rating} />)}
           </div>
-          <AddNewRatingMutation
-            mutation={ADD_RATING_MUTATION}
-            update={(cache, { data }) => {
-              if (!data) {
-                return;
+
+          <AuthContextConsumer>
+            {({ auth, login }) => {
+              if (auth === null || "error" in auth) {
+                return <LoginForm login={login} error={auth && auth.error} />;
               }
 
-              const fragment = gql`
-                fragment ratings on Beer {
-                  id
-                  ratings {
-                    id
-                  }
-                }
-              `;
-
-              const cacheId = `Beer:${id}`;
-
-              const result: any = cache.readFragment({
-                id: cacheId,
-                fragment
-              });
-
-              const newRatings = [...result.ratings, data.addRating];
-              const newData = { ...result, ratings: newRatings };
-              cache.writeFragment({
-                id: cacheId,
-                fragment,
-                data: newData
-              });
-            }}
-          >
-            {addNewRating => {
               return (
-                <RatingForm
-                  beerId={id}
-                  beerName={name}
-                  onNewRating={({ comment, author, stars }) => {
-                    addNewRating({
-                      variables: {
-                        input: {
-                          userId: "U1",
-                          stars: parseInt(stars),
-                          comment,
-                          beerId: id
-                        }
-                      }
-                    });
+                <AddRatingMutation beerId={id}>
+                  {addNewRating => {
+                    return (
+                      <RatingForm
+                        beerId={id}
+                        username={auth.auth.username}
+                        beerName={name}
+                        onNewRating={({ comment, stars }) => {
+                          addNewRating({
+                            variables: {
+                              input: {
+                                userId: auth.auth.userId,
+                                stars: parseInt(stars),
+                                comment,
+                                beerId: id
+                              }
+                            }
+                          });
+                        }}
+                      />
+                    );
                   }}
-                />
+                </AddRatingMutation>
               );
             }}
-          </AddNewRatingMutation>
+          </AuthContextConsumer>
         </div>
       </div>
     </div>

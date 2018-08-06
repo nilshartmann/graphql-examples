@@ -1,10 +1,13 @@
 package nh.graphql.beeradvisor.login;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * LoginRequest
  */
 public class LoginRequest {
 
+  @NotBlank
   private String userId;
 
   /**

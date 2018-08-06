@@ -5,16 +5,16 @@ import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
 
 import BeerRatingApp from "./BeerRatingApp";
-import { UserProvider } from "./UserProvider";
+import { AuthProvider } from "./AuthContext";
 const client = new ApolloClient({
   uri: "http://localhost:9000/graphql"
 });
 
 const theBeerRatingApp = (
   <ApolloProvider client={client}>
-    <UserProvider>
+    <AuthProvider>
       <BeerRatingApp />
-    </UserProvider>
+    </AuthProvider>
   </ApolloProvider>
 );
 
