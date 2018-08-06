@@ -1,44 +1,89 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="utf-8"/>
-    <title>🍺 BEER ADVISOR - GraphiQL</title>
-    <meta name="robots" content="noindex"/>
-    <style>
-      body {
-        height: 100%;
-        margin: 0;
-        width: 100%;
-        overflow: hidden;
-      }
+<head>
+  <meta charset="utf-8" />
+  <title>🍺 BEER ADVISOR - GraphiQL</title>
+  <meta name="robots" content="noindex" />
+  <style>
+    body {
+      height: 100%;
+      margin: 0;
+      width: 100%;
+      overflow: hidden;
+    }
 
-      #graphiql {
-        height: 100vh;
-      }
-    </style>
+    #graphiql {
+      height: 100vh;
+    }
 
-    <script src="/graphiql/es6-promise.auto.min.js"></script>
-    <script src="/graphiql/fetch.min.js"></script>
-    <script src="/graphiql/react.min.js"></script>
-    <script src="/graphiql/react-dom.min.js"></script>
+    #loginForm {
+      padding: 2rem 4rem;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+    }
 
-    <link rel="stylesheet" href="/graphiql/graphiql.min.css"/>
-    <script src="/graphiql/graphiql.min.js"></script>
+    #loginForm input,
+    #loginForm button {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+    }
+  </style>
 
-  </head>
+  <script src="/graphiql/es6-promise.auto.min.js"></script>
+  <script src="/graphiql/fetch.min.js"></script>
+  <script src="/graphiql/react.min.js"></script>
+  <script src="/graphiql/react-dom.min.js"></script>
 
-  <body>
-    <div id="graphiql">Loading...</div>
-    <script>
+  <link rel="stylesheet" href="/graphiql/graphiql.min.css" />
+  <script src="/graphiql/graphiql.min.js"></script>
 
+</head>
+
+<body>
+  <div id="graphiql">
+    <div id="loginForm">
+      <h2>Beer Advisor GraphiQL</h2>
+      <label>Login: </label>
+      <input id="loginInput" type="text" name="login" onkeypress="if (event.keyCode == 13) {doLogin(); return false; }" />
+      <button type="button" onclick="doLogin()">Login</button>
+      <p id="loginError"></p>
+    </div>
+  </div>
+  <script>
+
+    function doLogin() {
+      document.getElementById("loginError").innerHTML = "";
+      const login = document.getElementById("loginInput").value;
+      fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json; charset=utf-8"
+        },
+        body: JSON.stringify({
+          login
+        }
+        )
+      }).then(response => response.json().then(result => {
+        if (response.ok) {
+          document.getElementById("loginForm").remove();
+          runGraphiQL(result.authToken, result.username);
+        } else {
+          document.getElementById("loginError").innerHTML = result.message;
+        }
+      }))
+
+    }
+
+
+    function runGraphiQL(authToken, username) {
       // Parse the search string to get url parameters.
       var search = window.location.search;
       var parameters = {};
-      search.substr(1).split('&').forEach(function(entry) {
+      search.substr(1).split('&').forEach(function (entry) {
         var eq = entry.indexOf('=');
         if (eq >= 0) {
-          parameters[ decodeURIComponent(entry.slice(0, eq)) ] =
+          parameters[decodeURIComponent(entry.slice(0, eq))] =
             decodeURIComponent(entry.slice(eq + 1));
         }
       });
@@ -72,11 +117,11 @@
       }
 
       function updateURL() {
-        var newSearch = '?' + Object.keys(parameters).filter(function(key) {
-          return Boolean(parameters[ key ]);
-        }).map(function(key) {
+        var newSearch = '?' + Object.keys(parameters).filter(function (key) {
+          return Boolean(parameters[key]);
+        }).map(function (key) {
           return encodeURIComponent(key) + '=' +
-            encodeURIComponent(parameters[ key ]);
+            encodeURIComponent(parameters[key]);
         }).join('&');
         history.replaceState(null, null, newSearch);
       }
@@ -88,16 +133,17 @@
         // This example expects a GraphQL server at the path /graphql.
         // Change this to point wherever you host your GraphQL server.
         return fetch('/graphql', {
-          method:      'post',
-          headers:     {
-            'Accept':       'application/json',
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
           },
-          body:        JSON.stringify(graphQLParams),
+          body: JSON.stringify(graphQLParams),
           credentials: 'include',
-        }).then(function(response) {
+        }).then(function (response) {
           return response.text();
-        }).then(function(responseBody) {
+        }).then(function (responseBody) {
           try {
             return JSON.parse(responseBody);
           } catch (error) {
@@ -109,21 +155,22 @@
       // Render <GraphiQL /> into the body.
       ReactDOM.render(
         React.createElement(GraphiQL, {
-          fetcher:             graphQLFetcher,
-          query:               parameters.query,
-          variables:           parameters.variables,
-          operationName:       parameters.operationName,
-          onEditQuery:         onEditQuery,
-          onEditVariables:     onEditVariables,
+          fetcher: graphQLFetcher,
+          query: parameters.query,
+          variables: parameters.variables,
+          operationName: parameters.operationName,
+          onEditQuery: onEditQuery,
+          onEditVariables: onEditVariables,
           onEditOperationName: onEditOperationName
         }, React.createElement(
           GraphiQL.Logo,
           null,
-          "🍺 Beer Advisor 🍺"
+          `🍺 Beer Advisor - ${username} 🍺`
         )),
         document.getElementById('graphiql')
       );
-    </script>
-  </body>
+    }
+  </script>
+</body>
 
 </html>
