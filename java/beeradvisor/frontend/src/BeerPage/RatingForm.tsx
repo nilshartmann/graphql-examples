@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as styles from "./RatingForm.scss";
+import * as styles from "./Form.scss";
 import { NewRating } from "../types";
 
 interface RatingFormProps {
@@ -49,7 +49,7 @@ export default class RatingForm extends React.Component<RatingFormProps, RatingF
     const buttonEnabled = !!stars && !!comment;
 
     return (
-      <div className={styles.RatingForm}>
+      <div className={styles.Form}>
         <form>
           <fieldset>
             <div>

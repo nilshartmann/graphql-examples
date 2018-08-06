@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as styles from "./RatingForm.scss";
+import * as styles from "./Form.scss";
 
 interface LoginFormProps {
   error: string | null;
@@ -35,8 +35,8 @@ export default class LoginForm extends React.Component<LoginFormProps, LoginForm
     const buttonEnabled = !!userId;
 
     return (
-      <div className={styles.RatingForm}>
-        <b>Please login first</b>
+      <div className={styles.Form}>
+        <div className={styles.Hint}>Please login first</div>
         <form>
           <fieldset>
             <div>
