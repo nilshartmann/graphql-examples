@@ -67,7 +67,7 @@
       }).then(response => response.json().then(result => {
         if (response.ok) {
           document.getElementById("loginForm").remove();
-          runGraphiQL(result.authToken, result.username);
+          runGraphiQL(result.authToken, `${result.username} (${result.userId})`);
         } else {
           document.getElementById("loginError").innerHTML = result.message;
         }

@@ -5,9 +5,13 @@ import nh.graphql.beeradvisor.rating.*;
 import nh.graphql.beeradvisor.user.User;
 import nh.graphql.beeradvisor.user.UserRepository;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 public class RatingMutationResolver implements GraphQLMutationResolver {
+  private final Logger logger = LoggerFactory.getLogger(getClass());
 
   @Autowired
   private UserRepository userRepository;
@@ -27,7 +32,11 @@ public class RatingMutationResolver implements GraphQLMutationResolver {
   private BeerRepository beerRepository;
 
   @Transactional
-  @PreAuthorize("isAuthenticated()")
+  // EXAMPLE:
+  // access fields from graphql query in Spring Security: userId must match logged
+  // in user
+  // (checks makes no sense, just for demo!)
+  @PreAuthorize("isAuthenticated() && #addRatingInput.userId == authentication.principal.id")
   public Rating addRating(AddRatingInput addRatingInput) {
     User user = userRepository.getUser(addRatingInput.getUserId());
     Beer beer = beerRepository.getBeer(addRatingInput.getBeerId());
