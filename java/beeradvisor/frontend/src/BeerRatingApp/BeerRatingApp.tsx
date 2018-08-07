@@ -2,8 +2,8 @@ import * as React from "react";
 
 import * as styles from "./BeerRatingApp.scss";
 import Header from "./Header";
-import BeerPage from "./BeerPage";
-import BeerRack from "./BeerRack";
+import BeerPage from "../BeerPage";
+import BeerRack from "../BeerRack";
 import Footer from "./Footer";
 
 interface BeerRatingAppState {

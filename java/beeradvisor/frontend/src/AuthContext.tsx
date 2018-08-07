@@ -81,4 +81,4 @@ class AuthProvider extends React.Component<{}, AuthProviderState> {
   }
 }
 
-export { AuthProvider, AuthContextConsumer, getAuthToken };
+export { AuthProvider, AuthContextConsumer, setAuthToken, getAuthToken };

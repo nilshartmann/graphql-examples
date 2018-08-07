@@ -14,9 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Hashtable;
@@ -37,6 +39,13 @@ public class ExampleController {
 
   @Autowired
   private GraphQLSchema schema;
+
+  @GetMapping("/fuck")
+  @ResponseBody
+  public String fuck() {
+    // throw new BadCredentialsException("UCK");
+    return "HAF";
+  }
 
   /**
    * EXAMPLE: runs n queries in database (beer + ratings)

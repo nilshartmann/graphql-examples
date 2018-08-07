@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -36,6 +37,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
     logger.info(">>>>>>>> FILTER <<<<<<<<< ");
+    try {
+      authenticateIfNeeded(request);
+    } catch (AuthenticationException bed) {
+      logger.error("Could not authenticate: " + bed, bed);
+      SecurityContextHolder.clearContext();
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return;
+    }
+
+    filterChain.doFilter(request, response);
+  }
+
+  private void authenticateIfNeeded(HttpServletRequest request) {
     final String token = getJwtFromRequest(request);
     logger.info(">>>>>>>> token available '{}' <<<<<<<<< ", token != null);
     if (token != null) {
@@ -54,8 +68,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
           ROLE_USER);
       SecurityContextHolder.getContext().setAuthentication(authentication);
     }
-
-    filterChain.doFilter(request, response);
   }
 
   private String getJwtFromRequest(HttpServletRequest request) {
@@ -64,7 +76,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       return null;
     }
     if (!authHeader.startsWith("Bearer ")) {
-      throw new BadCredentialsException("Invalid 'Authorization'-Header. Expected format: 'Authorization: Bearer TOKEN'");
+      throw new BadCredentialsException(
+          "Invalid 'Authorization'-Header. Expected format: 'Authorization: Bearer TOKEN'");
     }
     return authHeader.substring(7, authHeader.length());
   }
