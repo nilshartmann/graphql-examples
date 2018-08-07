@@ -31,18 +31,20 @@ export default function BeerRack({ currentBeerId, setCurrentBeerId }: BeerRackPr
             return <h1>Please stay tuned - Beers are loading . . .</h1>;
           }
           const { beers } = data!;
-          return beers.map(beer => (
+          return (
             <>
-              <Thumbnail
-                key={beer.id}
-                name={beer.name}
-                imgUrl={`/assets/beer/${beer.id}.jpg`}
-                onClick={() => setCurrentBeerId(beer.id)}
-                active={currentBeerId === beer.id}
-              />
+              {beers.map(beer => (
+                <Thumbnail
+                  key={beer.id}
+                  name={beer.name}
+                  imgUrl={`/assets/beer/${beer.id}.jpg`}
+                  onClick={() => setCurrentBeerId(beer.id)}
+                  active={currentBeerId === beer.id}
+                />
+              ))}
               <ReactTooltip />
             </>
-          ));
+          );
         }}
       </Query>
     </div>
