@@ -10,7 +10,7 @@ dependencies {
   compile 'com.graphql-java:graphql-java-servlet:6.1.2'
 
   // GraphiQL
-  compile 'com.graphql-java:graphiql-spring-boot-starter:4.2.0'
+  compile 'com.graphql-java:graphiql-spring-boot-starter:5.0.2'
 
   // BeerAdvisor
   compile project(':user')
