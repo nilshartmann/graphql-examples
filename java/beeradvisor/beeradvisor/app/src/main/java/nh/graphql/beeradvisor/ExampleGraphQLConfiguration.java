@@ -4,7 +4,10 @@ import com.coxautodev.graphql.tools.SchemaParser;
 import graphql.execution.AsyncExecutionStrategy;
 import graphql.execution.SubscriptionExecutionStrategy;
 import graphql.schema.GraphQLSchema;
-import graphql.servlet.*;
+import graphql.servlet.DefaultExecutionStrategyProvider;
+import graphql.servlet.DefaultGraphQLSchemaProvider;
+import graphql.servlet.GraphQLQueryInvoker;
+import graphql.servlet.SimpleGraphQLHttpServlet;
 import nh.graphql.beeradvisor.rating.graphql.RatingMutationResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingQueryResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingSubscriptionResolver;
@@ -54,12 +57,13 @@ public class ExampleGraphQLConfiguration {
   }
 
   @Bean
-  ServletRegistrationBean<SimpleGraphQLServlet> graphQLServletRegistrationBean(GraphQLSchema schema) {
+  ServletRegistrationBean<SimpleGraphQLHttpServlet> graphQLServletRegistrationBean(GraphQLSchema schema) {
     final DefaultGraphQLSchemaProvider schemaProvider = new DefaultGraphQLSchemaProvider(schema);
     final DefaultExecutionStrategyProvider executionStrategyProvider = new DefaultExecutionStrategyProvider(
         new AsyncExecutionStrategy(), new AsyncExecutionStrategy(), new SubscriptionExecutionStrategy());
-    SimpleGraphQLServlet.Builder builder = SimpleGraphQLServlet.builder(schemaProvider)
-        .withExecutionStrategyProvider(executionStrategyProvider);
+    final GraphQLQueryInvoker invoker = GraphQLQueryInvoker.newBuilder().withExecutionStrategyProvider(executionStrategyProvider).build();
+    SimpleGraphQLHttpServlet.Builder builder = SimpleGraphQLHttpServlet.newBuilder(schemaProvider)
+        .withQueryInvoker(invoker);
 
     return new ServletRegistrationBean<>(builder.build(), "/graphql");
   }
