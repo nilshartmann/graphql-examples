@@ -4,20 +4,22 @@ import com.coxautodev.graphql.tools.SchemaParser;
 import graphql.execution.AsyncExecutionStrategy;
 import graphql.execution.SubscriptionExecutionStrategy;
 import graphql.schema.GraphQLSchema;
-import graphql.servlet.DefaultExecutionStrategyProvider;
-import graphql.servlet.DefaultGraphQLSchemaProvider;
-import graphql.servlet.GraphQLQueryInvoker;
-import graphql.servlet.SimpleGraphQLHttpServlet;
+import graphql.servlet.*;
 import nh.graphql.beeradvisor.rating.graphql.RatingMutationResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingQueryResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingSubscriptionResolver;
 import nh.graphql.beeradvisor.shop.graphql.ShopBeerResolver;
 import nh.graphql.beeradvisor.shop.graphql.ShopResolver;
 import nh.graphql.beeradvisor.shop.graphql.ShopRootResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
+import org.springframework.web.socket.server.standard.ServerEndpointRegistration;
 
 /**
  * JUST AN EXAMPLE: HOW TO CONFIGURE GRAPHQL (SCHEMA AND SERVLET) "MANUALLY"
@@ -27,6 +29,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ExampleGraphQLConfiguration {
+  private final Logger logger = LoggerFactory.getLogger(getClass());
+
   @Autowired
   private RatingQueryResolver ratingQueryResolver;
 
@@ -66,6 +70,24 @@ public class ExampleGraphQLConfiguration {
         .withQueryInvoker(invoker);
 
     return new ServletRegistrationBean<>(builder.build(), "/graphql");
+  }
+
+  @Bean
+  public ServerEndpointRegistration serverEndpointRegistration(GraphQLSchema schema) {
+    final DefaultGraphQLSchemaProvider schemaProvider = new DefaultGraphQLSchemaProvider(schema);
+    final DefaultExecutionStrategyProvider executionStrategyProvider = new DefaultExecutionStrategyProvider(
+        new AsyncExecutionStrategy(), new AsyncExecutionStrategy(), new SubscriptionExecutionStrategy());
+    final GraphQLQueryInvoker queryInvoker = GraphQLQueryInvoker.newBuilder().withExecutionStrategyProvider(executionStrategyProvider).build();
+
+    final GraphQLWebsocketServlet websocketServlet = new GraphQLWebsocketServlet(queryInvoker, GraphQLInvocationInputFactory.newBuilder(schemaProvider).build(), GraphQLObjectMapper.newBuilder().build());
+    return new GraphQLWsServerEndpointRegistration("/subscriptions", websocketServlet);
+  }
+
+  @Bean
+  @ConditionalOnMissingBean
+  public ServerEndpointExporter serverEndpointExporter() {
+    logger.info("Register ServerEndpointExporter !!!");
+    return new ServerEndpointExporter();
   }
 
 }

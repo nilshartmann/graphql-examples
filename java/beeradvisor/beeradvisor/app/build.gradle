@@ -7,6 +7,8 @@ dependencies {
   runtime 'io.jsonwebtoken:jjwt-impl:0.10.1',
       'io.jsonwebtoken:jjwt-jackson:0.10.1'
 
+  compile('org.springframework.boot:spring-boot-starter-websocket')
+
   compile 'com.graphql-java:graphql-java-servlet:6.1.2'
 
   // GraphiQL
