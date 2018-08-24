@@ -30,6 +30,6 @@
       "**/.idea/**": true,
       "**/*.iml": true
     },
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "frontend/node_modules/typescript/lib"
   }
 }
