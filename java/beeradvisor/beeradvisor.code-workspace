@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "path": "beeradvisor"
+    },
+    {
+      "path": "docker"
+    },
+    {
+      "path": "frontend"
+    },
+        {
+      "path": "shopservice"
+    }
+
+  ],
+  "settings": {
+    "files.exclude": {
+      "dist/**": true,
+      ".prettier*": true,
+      "yarn.lock": true
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
+  }
+}
