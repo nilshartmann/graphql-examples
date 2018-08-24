@@ -4,9 +4,6 @@ import * as styles from "./Beer.scss";
 import RatingForm from "./RatingForm";
 
 import { BeerPageQueryResult_beer as BeerData, BeerPageQueryResult_beer_shops as ShopData } from "./__generated__/BeerPageQuery";
-import { AddRatingMutationResult, AddRatingMutationVariables } from "./__generated__/AddRatingMutation";
-import { gql } from "apollo-boost";
-import { Mutation } from "react-apollo";
 import AddRatingMutation from "./AddRatingMutation";
 import Rating from "./Rating";
 import { AuthContextConsumer } from "../AuthContext";

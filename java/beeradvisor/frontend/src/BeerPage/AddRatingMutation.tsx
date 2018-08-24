@@ -1,9 +1,8 @@
 import * as React from "react";
 
 import { AddRatingMutationResult, AddRatingMutationVariables } from "./__generated__/AddRatingMutation";
-import { gql, ApolloError } from "apollo-boost";
 import { Mutation, MutationFn, MutationResult } from "react-apollo";
-
+import gql from "graphql-tag";
 const ADD_RATING_MUTATION = gql`
   mutation AddRatingMutation($input: AddRatingInput!) {
     addRating(ratingInput: $input) {

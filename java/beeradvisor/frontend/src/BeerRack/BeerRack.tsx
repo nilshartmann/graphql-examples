@@ -1,5 +1,5 @@
 import * as React from "react";
-import { gql } from "apollo-boost";
+import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import * as ReactTooltip from "react-tooltip";
 import { BeerRackQueryResult } from "./__generated__/BeerRackQuery";
