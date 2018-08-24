@@ -54,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     logger.info(">>>>>>>> token available '{}' <<<<<<<<< ", token != null);
     if (token != null) {
       if (!jwtTokenService.validateToken(token)) {
-        throw new BadCredentialsException("Invalid authorization token");
+        throw new BadCredentialsException("Invalid authorization token (maybe expired?)");
       }
 
       String userId = jwtTokenService.getUserIdFromToken(token);
