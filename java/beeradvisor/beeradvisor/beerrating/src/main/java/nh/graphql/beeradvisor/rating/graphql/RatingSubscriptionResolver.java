@@ -3,6 +3,8 @@ package nh.graphql.beeradvisor.rating.graphql;
 import com.coxautodev.graphql.tools.GraphQLSubscriptionResolver;
 
 import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +15,17 @@ import nh.graphql.beeradvisor.rating.Rating;
  */
 @Component
 public class RatingSubscriptionResolver implements GraphQLSubscriptionResolver {
+  private final Logger logger = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private Publisher<Rating> ratingPublisher;
+  private RatingPublisher ratingPublisher;
 
   public Publisher<Rating> onNewRating() {
-    return this.ratingPublisher;
+    return this.ratingPublisher.getPublisher();
+  }
+
+  public Publisher<Rating> newRatings(String beerId) {
+    logger.info("Subscription for 'newRatings' (" + beerId + ") received");
+    return this.ratingPublisher.getPublisher(beerId);
   }
 }

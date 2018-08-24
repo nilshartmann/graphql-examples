@@ -6,7 +6,6 @@ import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import nh.graphql.beeradvisor.rating.BeerRepository;
 import nh.graphql.beeradvisor.rating.Beer;
-import nh.graphql.beeradvisor.rating.Rating;
 import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
@@ -14,11 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Hashtable;
@@ -26,7 +23,7 @@ import java.util.Map;
 
 /**
  * JUST AN EXAMPLE: RUN GRAPHQL QUERIES VIA API
- * 
+ *
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Controller
@@ -39,13 +36,6 @@ public class ExampleController {
 
   @Autowired
   private GraphQLSchema schema;
-
-  @GetMapping("/fuck")
-  @ResponseBody
-  public String fuck() {
-    // throw new BadCredentialsException("UCK");
-    return "HAF";
-  }
 
   /**
    * EXAMPLE: runs n queries in database (beer + ratings)
@@ -178,9 +168,6 @@ public class ExampleController {
     });
     return "";
   }
-
-  @Autowired
-  private Publisher<Rating> ratingPublisher;
 
   // @GetMapping("/rating/subscribe")
   // @ResponseBody

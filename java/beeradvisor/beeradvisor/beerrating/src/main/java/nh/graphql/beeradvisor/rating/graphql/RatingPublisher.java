@@ -1,7 +1,5 @@
 package nh.graphql.beeradvisor.rating.graphql;
 
-import org.reactivestreams.Publisher;
-import org.reactivestreams.Subscriber;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -18,11 +16,11 @@ import nh.graphql.beeradvisor.rating.Rating;
  * RatingPublisher
  */
 @Component
-public class RatingPublisher implements Publisher<Rating> {
+public class RatingPublisher  {
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
   private ObservableEmitter<Rating> emitter;
-  private final Flowable<Rating> flowable;
+  private final Flowable<Rating> publisher;
 
   public RatingPublisher() {
     Observable<Rating> ratingObservable = Observable.create(emitter -> {
@@ -31,14 +29,7 @@ public class RatingPublisher implements Publisher<Rating> {
     ConnectableObservable<Rating> connectableObservable = ratingObservable.share().publish();
     connectableObservable.connect();
 
-    final Flowable<Rating> flowable = connectableObservable.toFlowable(BackpressureStrategy.BUFFER);
-    this.flowable = flowable;
-  }
-
-  @Override
-  public void subscribe(Subscriber<? super Rating> s) {
-    logger.info("Subscribe from " + s);
-    flowable.subscribe(s);
+    this.publisher = connectableObservable.toFlowable(BackpressureStrategy.BUFFER);
   }
 
   @TransactionalEventListener
@@ -47,6 +38,14 @@ public class RatingPublisher implements Publisher<Rating> {
     if (this.emitter != null) {
       this.emitter.onNext(ratingCreatedEvent.getRating());
     }
+  }
+
+  public Flowable<Rating> getPublisher() {
+    return this.publisher;
+  }
+
+  public Flowable<Rating> getPublisher(String beerId) {
+    return this.publisher.filter(rating -> beerId.equals(rating.getBeer().getId()));
   }
 
 }

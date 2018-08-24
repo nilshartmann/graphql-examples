@@ -1,6 +1,10 @@
 import * as React from "react";
 
-import { AddRatingMutationResult, AddRatingMutationVariables } from "./__generated__/AddRatingMutation";
+import {
+  AddRatingMutationResult,
+  AddRatingMutationVariables,
+  AddRatingMutationResult_addRating
+} from "./__generated__/AddRatingMutation";
 import { Mutation, MutationFn, MutationResult } from "react-apollo";
 import gql from "graphql-tag";
 const ADD_RATING_MUTATION = gql`
@@ -25,6 +29,15 @@ interface AddRatingMutationProps {
     result: MutationResult<AddRatingMutationResult>
   ) => React.ReactNode;
   beerId: string;
+}
+
+function mergeRatings(ratings: AddRatingMutationResult_addRating[], newRating: AddRatingMutationResult_addRating) {
+  if (ratings.find(r => r.id === newRating.id)) {
+    // rating already contained in list
+    return ratings;
+  }
+
+  return [...ratings, newRating];
 }
 
 export default function AddRatingMutation({ beerId, children }: AddRatingMutationProps) {
@@ -52,7 +65,7 @@ export default function AddRatingMutation({ beerId, children }: AddRatingMutatio
           fragment
         });
 
-        const newRatings = [...result.ratings, data.addRating];
+        const newRatings = mergeRatings(result.ratings, data.addRating); //  [...result.ratings, data.addRating];
         const newData = { ...result, ratings: newRatings };
         cache.writeFragment({
           id: cacheId,

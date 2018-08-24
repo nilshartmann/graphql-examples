@@ -77,7 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
     if (!authHeader.startsWith("Bearer ")) {
       throw new BadCredentialsException(
-          "Invalid 'Authorization'-Header. Expected format: 'Authorization: Bearer TOKEN'");
+          "Invalid 'Authorization'-Header ('" + authHeader + "'). Expected format: 'Authorization: Bearer TOKEN'");
     }
     return authHeader.substring(7, authHeader.length());
   }
