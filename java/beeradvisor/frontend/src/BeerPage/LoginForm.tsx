@@ -19,7 +19,7 @@ export default class LoginForm extends React.Component<LoginFormProps, LoginForm
     this.setState({ userId: e.currentTarget.value });
   };
 
-  onLoginClick = (e: React.SyntheticEvent<HTMLButtonElement>) => {
+  onLoginClick = (e: React.SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
 
     const { userId } = this.state;
@@ -40,7 +40,13 @@ export default class LoginForm extends React.Component<LoginFormProps, LoginForm
         <form>
           <fieldset>
             <div>
-              <label>Your login:</label> <input type="text" value={userId} onChange={this.onUserIdChange} />
+              <label>Your login:</label>{" "}
+              <input
+                type="text"
+                value={userId}
+                onChange={this.onUserIdChange}
+                onKeyPress={e => (e.keyCode === 13 ? this.onLoginClick(e) : null)}
+              />
             </div>
             {error && <div>Could not login: {error}</div>}
             <div>
