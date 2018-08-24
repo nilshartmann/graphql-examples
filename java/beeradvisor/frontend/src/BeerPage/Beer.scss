@@ -74,3 +74,33 @@
   font-size: 1.5rem;
   margin-right: 0.5rem;
 }
+
+// https://css-tricks.com/star-ratings/
+.Stars {
+  display: inline-block;
+  unicode-bidi: bidi-override;
+  // direction: rtl;
+
+  span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+    font-size: 75%;
+  }
+
+  .filled:before {
+    content: "\2605";
+    position: absolute;
+  }
+
+  // span:hover:before,
+  // span:hover ~ span:before {
+  //   content: "\2605";
+  //   position: absolute;
+  // }
+
+  // span:hover:before {
+  //   content: "\2605";
+  //   position: absolute;
+  // }
+}
