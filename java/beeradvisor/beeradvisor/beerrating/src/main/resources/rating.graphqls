@@ -1,11 +1,13 @@
 # https://github.com/graphql-java/graphql-java/releases/tag/v9.0
 
+# A User in our system that is allowed to leave Ratings
 type User {
   id: ID!
   login: String!
   name: String!
 }
 
+# A Rating that has been written by an Author for a Beer
 type Rating {
   # An immutable unique Id
   id: ID!

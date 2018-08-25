@@ -1,6 +1,5 @@
-subscription  {
-    onNewRating {
+query {
+    beers {
         id
-        comment
     }
 }
