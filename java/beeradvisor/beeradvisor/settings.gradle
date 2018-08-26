@@ -1,0 +1,5 @@
+rootProject.name = 'beeradvisor'
+include 'user'
+include 'app'
+include 'beerrating'
+include 'shop'

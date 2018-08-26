@@ -1,0 +1,9 @@
+dist/
+dist-dev/
+lib/
+*.min.js
+.vscode/
+package.json
+
+.fonts/fonts.css
+__generated__/

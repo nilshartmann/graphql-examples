@@ -1,0 +1,16 @@
+.Footer {
+  margin-top: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-top: 4px solid var(--color-one);
+  background-color: rgba(0, 0, 0, 0.15);
+  text-align: center;
+
+  a {
+    font-weight: normal;
+    font-size: 1rem;
+    margin-top: 1rem;
+    line-height: 1;
+    color: var(--color-text);
+  }
+}

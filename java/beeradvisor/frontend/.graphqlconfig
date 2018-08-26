@@ -1,0 +1,13 @@
+{
+  "schemaPath": "./beerrating-schema.json",
+  "extensions": {
+    "endpoints": {
+      "dev": {
+        "url": "http://localhost:9000/graphql",
+        "subscription": {
+          "url": "ws://localhost:9000/subscriptions"
+        }
+      }
+    }
+  }
+}

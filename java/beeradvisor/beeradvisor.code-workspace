@@ -1,0 +1,35 @@
+{
+  "folders": [
+    {
+      "path": "beeradvisor"
+    },
+    {
+      "path": "docker"
+    },
+    {
+      "path": "frontend"
+    },
+    {
+      "path": "shopservice"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "dist/**": true,
+      ".prettier*": true,
+      "yarn.lock": true,
+      "**/bin/**": true,
+      "**/out/**": true,
+      "**/build/**": true,
+      "**/gradle/**": true,
+      "**/.gradle/**": true,
+      "**/.classpath": true,
+      "**/.project": true,
+      "**/.settings": true,
+      "node_modules": true,
+      "**/.idea/**": true,
+      "**/*.iml": true
+    },
+    "typescript.tsdk": "frontend/node_modules/typescript/lib"
+  }
+}
