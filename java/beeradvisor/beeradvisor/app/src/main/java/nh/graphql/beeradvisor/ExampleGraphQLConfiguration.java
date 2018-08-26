@@ -5,6 +5,7 @@ import graphql.execution.AsyncExecutionStrategy;
 import graphql.execution.SubscriptionExecutionStrategy;
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;
+import nh.graphql.beeradvisor.rating.graphql.BeerFieldResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingMutationResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingQueryResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingSubscriptionResolver;
@@ -38,6 +39,9 @@ public class ExampleGraphQLConfiguration {
   private RatingMutationResolver ratingMutationResolver;
 
   @Autowired
+  private BeerFieldResolver beerFieldResolver;
+
+  @Autowired
   private RatingSubscriptionResolver ratingSubscriptionResolver;
 
   @Autowired
@@ -53,6 +57,7 @@ public class ExampleGraphQLConfiguration {
   public GraphQLSchema graphQLSchema() {
     final GraphQLSchema graphQLSchema = SchemaParser.newParser().file("rating.graphqls").file("shop.graphqls")
         .resolvers(this.ratingQueryResolver, this.ratingMutationResolver, this.ratingSubscriptionResolver,
+            // this.beerFieldResolver,
             this.shopRootResolver, shopResolver, this.shopBeerResolver)
         .build().makeExecutableSchema();
 

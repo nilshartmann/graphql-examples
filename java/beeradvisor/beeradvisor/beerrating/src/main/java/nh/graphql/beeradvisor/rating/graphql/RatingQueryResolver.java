@@ -1,7 +1,6 @@
 package nh.graphql.beeradvisor.rating.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import graphql.language.Field;
 import graphql.schema.*;
 import nh.graphql.beeradvisor.rating.BeerRepository;
 import nh.graphql.beeradvisor.rating.Beer;
@@ -28,7 +27,7 @@ public class RatingQueryResolver implements GraphQLQueryResolver {
   }
 
   public List<Beer> beers(DataFetchingEnvironment dfe) {
-    final DataFetchingFieldSelectionSet selectionSet = dfe.getSelectionSet();
+   /* final DataFetchingFieldSelectionSet selectionSet = dfe.getSelectionSet();
     final Map<String, List<Field>> selectedFields = selectionSet.get();
 
     // determine all requests entities
@@ -52,7 +51,7 @@ public class RatingQueryResolver implements GraphQLQueryResolver {
 
       logger.info(" field " + fieldPath + " -> unwrapped type: "
           + (type != null ? type.getName() + "(" + type.getClass().getName() + ")" : " no fieldDefinition"));
-    }
+    }*/
 
     // return beerRepository.findAllWithEntityGraph(allRequestedRelations);
 
