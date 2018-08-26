@@ -62,13 +62,7 @@ public class ExampleGraphQLConfiguration {
 
   @Bean
   ServletRegistrationBean<SimpleGraphQLHttpServlet> graphQLServletRegistrationBean(GraphQLSchema schema) {
-    // final DefaultGraphQLSchemaProvider schemaProvider = new DefaultGraphQLSchemaProvider(schema);
-//    final DefaultExecutionStrategyProvider executionStrategyProvider = new DefaultExecutionStrategyProvider(
-//        new AsyncExecutionStrategy(), new AsyncExecutionStrategy(), new SubscriptionExecutionStrategy());
-//    final GraphQLQueryInvoker invoker = GraphQLQueryInvoker.newBuilder().withExecutionStrategyProvider(executionStrategyProvider).build();
     SimpleGraphQLHttpServlet.Builder builder = SimpleGraphQLHttpServlet.newBuilder(schema);
-       // .withQueryInvoker(invoker);
-
     final SimpleGraphQLHttpServlet servlet = builder.build();
     return new ServletRegistrationBean<>(servlet, "/graphql");
   }
