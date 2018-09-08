@@ -61,7 +61,6 @@ public class Rating {
   }
 
   public User getAuthor() {
-    logger.info("Retunring author " + author);
     return author;
   }
 

@@ -1,5 +1,7 @@
 # https://github.com/graphql-java/graphql-java/releases/tag/v9.0
 
+directive @fetch_eager on FIELD_DEFINITION
+
 # A User in our system that is allowed to leave Ratings
 type User {
   id: ID!
@@ -13,10 +15,10 @@ type Rating {
   id: ID!
 
   # The  beer, this rating is written for
-  beer: Beer!
+  beer: Beer! @fetch_eager
 
   # Who has written this rating?
-  author: User!
+  author: User! @fetch_eager
 
   # The rating itself
   comment: String!
@@ -36,10 +38,10 @@ type Beer {
   price: String!
 
   # List of all Ratings for this Beer
-  ratings: [Rating!]!
+  ratings: [Rating!]! @fetch_eager
 
   # List of Ratings that has at exactly 'stars' Stars
-  ratingsWithStars(stars: Int!): [Rating!]!
+  ratingsWithStars(stars: Int!): [Rating!]! @fetch_eager
 }
 
 type Query {

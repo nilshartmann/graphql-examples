@@ -1,5 +1,8 @@
 package nh.graphql.beeradvisor.rating;
 
+import nh.graphql.beeradvisor.rating.graphql.RatingQueryResolver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,11 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.*;
 import java.util.List;
 
+import static java.lang.String.format;
+
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Repository
 public class BeerRepository {
+
+  private final Logger logger = LoggerFactory.getLogger(BeerRepository.class);
 
   @PersistenceContext
   private EntityManager em;
@@ -51,6 +58,11 @@ public class BeerRepository {
 
   public List<Beer> findAllWithEntityGraph(List<String> allRequestedRelations) {
 
+
+
+    logger.info("findAllWithEntityGraph requestedRelations:\n{}",
+        allRequestedRelations.stream().reduce("", (r, x) -> format("%s - %s%n", r, x)));
+
     final EntityGraph entityGraph = allRequestedRelations.size() > 0 ? em.createEntityGraph(Beer.class) : null;
 
     if (allRequestedRelations.size() > 0) {
@@ -77,6 +89,8 @@ public class BeerRepository {
         }
       }
     }
+
+    logger.info("Using fetchgraph {}", entityGraph);
 
     final TypedQuery<Beer> query = em.createQuery("SELECT b FROM Beer b", Beer.class);
     if (entityGraph != null) {
