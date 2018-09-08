@@ -31,6 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable().authorizeRequests().antMatchers("/").permitAll();
+
+    // for h2 explorer
+    http.headers().frameOptions().sameOrigin();
+
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     http.addFilterBefore(authenticationTokenFilter(), BasicAuthenticationFilter.class);
   }

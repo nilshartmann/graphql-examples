@@ -1,5 +1,4 @@
 dependencies {
-  runtime('org.postgresql:postgresql')
   runtime('com.h2database:h2')
 
   // security

@@ -1,19 +1,47 @@
-# Graphql-Java with Spring Boot and JPA Example
+# BeerAdvisor: A graphql-java example with Spring Boot and JPA
 
-_+++ WORK IN PROGRESS +++_
+The application consists of two Spring Boot Apps:
 
-## Run
+1. The `shopservice`. This service manages a list of shops (locations and beers they sell). It provides a REST API to query the shops. For simplicity there is no way to modify shops and the actual data is stored in memory only (no database). The purpose of the shop service is to demo, how to access a rest endpoint from GraphQL.
 
-**Setup and start database**
+2. The `beeradvisor`. This is the backend for our application. It manages Beers, Ratings and Users and provides a GraphQL API for our domain. It also add the Shops from the `shopservice` to our GraphQL API by connecting to that service via REST.
 
-- Either run the `docker/postgres-compose.yaml` file to start a local postgres database
+The third project in this repository is the React-based frontend.
 
-or
+## Configuration
 
-- Modify `app/src/main/resources/application.properties` for an embedded H2 database (see comments there)
+**Ports**
+
+Before starting the services please make sure that the following ports are not in use:
+
+- port **9000** for the `BeerAdvisor` backend
+- port **9010** for the `ShopService`
+- port **9080** for the frontend (webpack dev server)
+
+**Database**
+
+- When you start the `BeerAdvisor` backend an embedded h2 database will be started,
+  that writes it's content to `~/h2/beer-rating`. You can change that in the `application.properties` file.
+
+**Users/Login**
+
+- In order to add Ratings (using GraphQL Mutations) you need to login via the UI. You can simply use any firstname of any author that already has submitted a rating (for example alessa, waldemar, lauren)
+
+## Starting
+
+There are three bash scripts in this folder that helps you starting the application:
+
+1. `01_run_shopservice.sh`
+2. `02_run_beeradvisor.sh`
+3. `03_run_frontend.sh`
+
+When all three apps are running, you can access the web application at
+
+- `http://localhost:9080`
+
+Alternatively you can run the application using gradle or your IDE:
 
 **Run `shopservice`**
-**Note:** please make sure that **port 9010** is not in use. Otherwise set another port in the `application.properties` of the `shopservice` project.
 
 1.  Go to the `shopservice` directory
 2.  `./gradlew bootRun`
@@ -21,35 +49,40 @@ or
 
 **Run `beeradvisor` Application**
 
-**Note:** please make sure that **port 9000** is not in use. Otherwise set another port in the `application.properties` of `beeradvisor` project.
-
 1.  Go to the `beeradvisor` directory
 2.  `./gradlew bootRun`
 3.  - OR - Just run `main` method in `BeerAdvisorApplication` class from your IDE (for example from SpringBoot launcher in IDEA)
+
+**Run the frontend**
+
+1. Go to the `frontend` directory
+2. Run `yarn install` (needed only for the first run)
+3. Run `yarn start`
 
 # GraphiQL
 
 After running the server, the **GraphiQL API Explorer** is available at `http://localhost:9000/graphiql`
 
-# Test Queries
+# GraphQL Features in this application
 
-For "testing" the JPA/hibernate behaviour, there are three HTTP endpoints (all GET):
+- schema definition with SDL: `rating.graphqls`
 
-- `http://localhost:9000/gql`: runs GraphQL query that needs all three domain objects
+- Resolver for root fields (queries): `RatingQueryResolver`
 
-- `http:localhost:9000/gql/ratings`: GraphQL query that only needs beer and ratings, the JPA query is optimized to only fetch those two entities from DB
+- Resolver for mutations: `RatingMutationResolver`
 
-- `http:localhost:9000/gql/beers`: GraphQL query that only needs beer, the JPA query is optimized to only fetch the Beer entity from DB
+- Using the Websocket Servlet for Subscriptions via Websocket: `ExampleGraphQLConfiguration.serverEndpointRegistration` (nearly the same as in the spring-boot-starter, only a little simplified for easier understanding)
 
-- `http:localhost:9000/gql/shops`: GraphQL query that loads the shops (another "domain")
+- Resolver for subscriptions (each new rating is pushed to clients): `RatingSubscriptionResolver`
 
-- `http://localhost:9000/beers`: runs a simple "findAll" JPA Query (without optimizations, i.e. all Relations are LAZY) (n DB Queries needed for all requested objects)
+- Field resolver with arguments: `ShopBeerResolver.ratingsWithStars` (that should be in BeerFieldResolver but does not work due to graphl-java-tools bug: https://github.com/graphql-java/graphql-java-tools/issues/171)
 
-- `http://localhost:9000/fetchbeers`: runs a JPA query with an EntityGraph configured to fetch both Beer and Ratings in ONE query (for that "use case" only those two domain objects are needed)
+- Extending types and root fields in by a second schema (modulariation of schemas): see `shop` subproject:
+  - `shop.graphqls` extends the basic schema from `beerrating`
+  - `ShopResolver` adds a field resolver for the `Beer` type from `beerrating` (field `shops`)
+  - `ShopResolver.address` adds a field resolver for the `Shop` type, as `address` (defined in the schema) does not exist on the `Shop` java class.
 
-- `http://localhost:9000/fetchall`: runs a JPA query with an EntityGraph consisting of all three Domain objects (i.e. ONE database query for whole object model, that is needed in that "use case")
-
-You can see the actual queries that Hibernate runs on the console.
+* Security for mutations using Spring Security: `RatingMutationResolver.addRating`
 
 # Architecture
 
