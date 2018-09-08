@@ -1,10 +1,11 @@
-# Apollo GraphQL Examples
+# GraphQL Examples
 
-This repository contains several Apollo GraphQL examples each using the same example application:
+This repository contains several GraphQL examples each using (almost) the same example application but highlighting different GraphQL aspects and technologies and frameworks:
 
-* [`full-stack`](full-stack/): Backend and frontend app both developed using Apollo [more information](full-stack/README.md)
+* [`full-stack`](full-stack/): Backend and frontend app both developed in JavaScript using Apollo [more information](full-stack/README.md)
 * [`schema-stitching`](schema-stitching/): merge multiple schemas into one  [more information](schema-stitching/README.md)
 * [`local-state`](local-state/): Manage your Client's local state with Apollo GraphQL [more information](local-state/README.md)
+* [`java`](java/beeradvisor): The backend implemented in Java using `graphql-java` and `graphql-java-tools` [more information](java/beeradvisor/README.md)
 
 # Example App
 
