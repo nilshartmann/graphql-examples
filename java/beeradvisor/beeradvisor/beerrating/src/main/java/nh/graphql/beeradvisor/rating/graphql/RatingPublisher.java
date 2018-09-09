@@ -1,22 +1,21 @@
 package nh.graphql.beeradvisor.rating.graphql;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionalEventListener;
-
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.observables.ConnectableObservable;
 import nh.graphql.beeradvisor.rating.Rating;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 /**
  * RatingPublisher
  */
 @Component
-public class RatingPublisher  {
+public class RatingPublisher {
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
   private ObservableEmitter<Rating> emitter;

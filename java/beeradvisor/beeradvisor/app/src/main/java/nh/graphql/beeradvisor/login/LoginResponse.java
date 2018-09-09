@@ -1,7 +1,6 @@
 package nh.graphql.beeradvisor.login;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 /**
  * LoginResponse

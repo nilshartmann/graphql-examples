@@ -1,7 +1,6 @@
 package nh.graphql.beeradvisor.rating;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;

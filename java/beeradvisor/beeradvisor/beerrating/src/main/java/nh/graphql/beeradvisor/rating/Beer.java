@@ -1,10 +1,9 @@
 package nh.graphql.beeradvisor.rating;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import nh.graphql.beeradvisor.user.User;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;

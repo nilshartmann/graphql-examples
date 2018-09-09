@@ -1,17 +1,16 @@
 package nh.graphql.beeradvisor.rating.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import nh.graphql.beeradvisor.rating.*;
+import nh.graphql.beeradvisor.rating.Beer;
+import nh.graphql.beeradvisor.rating.BeerRepository;
+import nh.graphql.beeradvisor.rating.Rating;
 import nh.graphql.beeradvisor.user.User;
 import nh.graphql.beeradvisor.user.UserRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

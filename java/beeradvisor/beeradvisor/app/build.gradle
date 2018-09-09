@@ -20,10 +20,10 @@ dependencies {
 }
 
 bootJar {
-    enabled = true
+  enabled = true
 }
 
 jar {
-    enabled = false
+  enabled = false
 }
 

@@ -23,10 +23,10 @@ public class ShopResolver implements GraphQLResolver<Shop> {
 
   public List<Beer> beers(Shop shop) {
     final List<String> beerIds = shop.getBeers();
-		return beerRepository.findWithIds(beerIds);
+    return beerRepository.findWithIds(beerIds);
   }
 
-	public AddressField address(Shop shop) {
-		return new AddressField(shop);
-	}
+  public AddressField address(Shop shop) {
+    return new AddressField(shop);
+  }
 }

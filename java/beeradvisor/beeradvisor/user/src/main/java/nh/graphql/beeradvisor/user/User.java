@@ -1,12 +1,12 @@
 package nh.graphql.beeradvisor.user;
 
+import org.springframework.security.core.AuthenticatedPrincipal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.springframework.security.core.AuthenticatedPrincipal;
 
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)

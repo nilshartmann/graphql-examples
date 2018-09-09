@@ -1,14 +1,12 @@
 package nh.graphql.beeradvisor.rating.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLSubscriptionResolver;
-
+import nh.graphql.beeradvisor.rating.Rating;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import nh.graphql.beeradvisor.rating.Rating;
 
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)
