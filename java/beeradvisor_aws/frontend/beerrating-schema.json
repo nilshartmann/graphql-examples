@@ -165,10 +165,51 @@
               },
               "isDeprecated": false,
               "deprecationReason": null
+            },
+            {
+              "name": "login",
+              "description": "",
+              "args": [
+                {
+                  "name": "username",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "String",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "LoginResponse",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
             }
           ],
           "inputFields": null,
           "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "SCALAR",
+          "name": "String",
+          "description": "Built-in String",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -308,6 +349,45 @@
               "deprecationReason": null
             },
             {
+              "name": "ratingsWithStars",
+              "description": "List of Ratings that has at exactly 'stars' Stars",
+              "args": [
+                {
+                  "name": "stars",
+                  "description": "",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Int",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "Rating",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "shops",
               "description": "",
               "args": [],
@@ -339,8 +419,8 @@
         },
         {
           "kind": "SCALAR",
-          "name": "String",
-          "description": "Built-in String",
+          "name": "Int",
+          "description": "Built-in Int",
           "fields": null,
           "inputFields": null,
           "interfaces": null,
@@ -433,7 +513,7 @@
         {
           "kind": "OBJECT",
           "name": "Rating",
-          "description": "",
+          "description": "A Rating that has been written by an Author for a Beer",
           "fields": [
             {
               "name": "id",
@@ -522,12 +602,37 @@
           "possibleTypes": null
         },
         {
-          "kind": "SCALAR",
-          "name": "Int",
-          "description": "Built-in Int",
-          "fields": null,
+          "kind": "OBJECT",
+          "name": "LoginResponse",
+          "description": "",
+          "fields": [
+            {
+              "name": "authentication",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Authentication",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "error",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
           "inputFields": null,
-          "interfaces": null,
+          "interfaces": [],
           "enumValues": null,
           "possibleTypes": null
         },
@@ -609,7 +714,7 @@
         {
           "kind": "OBJECT",
           "name": "User",
-          "description": "https://github.com/graphql-java/graphql-java/releases/tag/v9.0",
+          "description": "https://github.com/graphql-java/graphql-java/releases/tag/v9.0\nA User in our system that is allowed to leave Ratings",
           "fields": [
             {
               "name": "id",
@@ -645,6 +750,65 @@
             },
             {
               "name": "name",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "Authentication",
+          "description": "",
+          "fields": [
+            {
+              "name": "userId",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "username",
+              "description": "",
+              "args": [],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "authToken",
               "description": "",
               "args": [],
               "type": {

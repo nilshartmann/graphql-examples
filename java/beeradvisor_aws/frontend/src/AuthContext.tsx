@@ -1,4 +1,7 @@
 import * as React from "react";
+import { withApollo } from "react-apollo";
+import { ApolloClient } from "apollo-client";
+import gql from "graphql-tag";
 
 interface AuthInfoState {
   auth: {
@@ -9,10 +12,6 @@ interface AuthInfoState {
 
 interface AuthErrorState {
   error: string;
-}
-
-interface AuthProviderState {
-  auth: AuthInfoState | AuthErrorState | null;
 }
 
 interface IAuthContext {
@@ -29,39 +28,70 @@ const getAuthToken = () => sessionStorage.getItem("auth-token");
 const setAuthToken = (authToken: string | null) =>
   authToken ? sessionStorage.setItem("auth-token", authToken) : sessionStorage.removeItem("auth-token");
 
-class AuthProvider extends React.Component<{}, AuthProviderState> {
+interface AuthProviderProps {
+  client: ApolloClient<any>;
+}
+
+interface AuthProviderState {
+  auth: AuthInfoState | AuthErrorState | null;
+}
+
+const LoginMutation = gql`
+  mutation LoginMutation($username: String!) {
+    login(username: $username) {
+      authentication {
+        userId
+        username
+        authToken
+      }
+      error
+    }
+  }
+`;
+
+class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState> {
   readonly state: AuthProviderState = {
     auth: null
   };
 
   login = async (loginId: string) => {
+    const { client } = this.props;
     setAuthToken(null);
-    const response = await fetch("http://localhost:9000/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8"
-      },
-      body: JSON.stringify({
-        login: loginId
-      })
+
+    const loginResult = await client.mutate({
+      mutation: LoginMutation,
+      variables: {
+        username: loginId
+      }
     });
-    if (!response.ok) {
+
+    if (!loginResult.data) {
       this.setState({
         auth: {
-          error: `Could not authenticate (${response.status})`
+          error: `Could not authenticate (${loginResult.errors})`
         }
       });
       return;
     }
-    const json = await response.json();
 
-    setAuthToken(json.authToken);
+    const { error, authentication } = loginResult.data.login;
+
+    if (error) {
+      this.setState({
+        auth: {
+          error: `Could not authenticate (${error})`
+        }
+      });
+      return;
+    }
+
+    setAuthToken(authentication.authToken);
 
     this.setState({
       auth: {
         auth: {
-          userId: json.userId,
-          username: json.username
+          userId: authentication.userId,
+          username: authentication.username
         }
       }
     });
@@ -81,4 +111,6 @@ class AuthProvider extends React.Component<{}, AuthProviderState> {
   }
 }
 
-export { AuthProvider, AuthContextConsumer, setAuthToken, getAuthToken };
+const AuthProviderWithGraphQL = withApollo<{}>(AuthProvider);
+
+export { AuthProviderWithGraphQL as AuthProvider, AuthContextConsumer, setAuthToken, getAuthToken };
