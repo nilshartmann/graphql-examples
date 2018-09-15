@@ -55,15 +55,19 @@ public class Shop {
   public String getStreet() {
     return street;
   }
+
   public String getPostalCode() {
     return postalCode;
   }
+
   public String getCity() {
     return city;
   }
+
   public String getCountry() {
     return country;
   }
+
   public List<String> getBeers() {
     return beers;
   }

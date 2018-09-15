@@ -17,9 +17,11 @@ public class Authentication {
   public String getAuthToken() {
     return authToken;
   }
+
   public String getUsername() {
     return username;
   }
+
   public String getUserId() {
     return userId;
   }
