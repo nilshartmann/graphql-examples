@@ -5,6 +5,7 @@ import graphql.execution.AsyncExecutionStrategy;
 import graphql.execution.SubscriptionExecutionStrategy;
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;
+import nh.graphql.beeradvisor.auth.graphql.LoginResolver;
 import nh.graphql.beeradvisor.rating.graphql.BeerFieldResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingMutationResolver;
 import nh.graphql.beeradvisor.rating.graphql.RatingQueryResolver;
@@ -53,10 +54,15 @@ public class ExampleGraphQLConfiguration {
   @Autowired
   private ShopResolver shopResolver;
 
+  @Autowired
+  private LoginResolver loginResolver;
+
   @Bean
   public GraphQLSchema graphQLSchema() {
-    final GraphQLSchema graphQLSchema = SchemaParser.newParser().file("rating.graphqls").file("shop.graphqls")
+    final GraphQLSchema graphQLSchema = SchemaParser.newParser().file("rating.graphqls").file("shop.graphqls").file("auth.graphqls")
         .resolvers(this.ratingQueryResolver, this.ratingMutationResolver, this.ratingSubscriptionResolver,
+            // authentication/login
+            loginResolver, //
             // this.beerFieldResolver,
             this.shopRootResolver, shopResolver, this.shopBeerResolver)
         .build().makeExecutableSchema();
