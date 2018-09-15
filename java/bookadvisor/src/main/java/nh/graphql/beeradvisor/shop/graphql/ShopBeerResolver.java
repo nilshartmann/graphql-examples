@@ -4,8 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nh.graphql.beeradvisor.rating.Beer;
 import nh.graphql.beeradvisor.rating.Rating;
 import nh.graphql.beeradvisor.shop.Shop;
-import nh.graphql.beeradvisor.shop.ShopService;
-import org.springframework.beans.factory.annotation.Autowired;
+import nh.graphql.beeradvisor.shop.ShopRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,14 +16,16 @@ import java.util.stream.Collectors;
 
 @Component
 public class ShopBeerResolver implements GraphQLResolver<Beer> {
+  private final ShopRepository shopRepository;
 
-  @Autowired
-  private ShopService shopService;
+  public ShopBeerResolver(ShopRepository shopRepository) {
+    this.shopRepository = shopRepository;
+  }
 
   public List<Shop> shops(Beer beer) {
     final String beerId = beer.getId();
 
-    return shopService.findShopsForBeer(beerId);
+    return shopRepository.findShopsWithBeer(beerId);
   }
 
   // this should be in BeerFieldResolver but does not work due to graphl-java-tools bug: https://github.com/graphql-java/graphql-java-tools/issues/171
