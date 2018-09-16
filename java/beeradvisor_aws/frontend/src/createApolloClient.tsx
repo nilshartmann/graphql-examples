@@ -9,14 +9,16 @@ import { setAuthToken, getAuthToken } from "./AuthContext";
 import { WebSocketLink } from "apollo-link-ws";
 import { getMainDefinition } from "apollo-utilities";
 
+const isLocalDev = window.location.hostname === "localhost";
+
 export default function createApolloClient() {
   const httpLink = new HttpLink({
-    uri: "http://localhost:9000/graphql",
+    uri: isLocalDev ? "http://localhost:9000/graphql" : "/graphql",
     credentials: "include"
   });
 
   const wsLink = new WebSocketLink({
-    uri: `ws://localhost:9000/subscriptions`,
+    uri: isLocalDev ? "ws://localhost:9000/subscriptions" : `ws://${window.location.host}/subscriptions`,
     options: {
       reconnect: true
     }
