@@ -1,10 +1,10 @@
 package nh.graphql.beeradvisor.graphql.query;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
-import nh.graphql.beeradvisor.beerrating.Beer;
-import nh.graphql.beeradvisor.beerrating.BeerRepository;
-import nh.graphql.beeradvisor.beerrating.Shop;
-import nh.graphql.beeradvisor.beerrating.ShopRepository;
+import nh.graphql.beeradvisor.domain.Beer;
+import nh.graphql.beeradvisor.domain.BeerRepository;
+import nh.graphql.beeradvisor.domain.Shop;
+import nh.graphql.beeradvisor.domain.ShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

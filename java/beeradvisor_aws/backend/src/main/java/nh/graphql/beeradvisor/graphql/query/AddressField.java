@@ -1,6 +1,6 @@
 package nh.graphql.beeradvisor.graphql.query;
 
-import nh.graphql.beeradvisor.beerrating.Shop;
+import nh.graphql.beeradvisor.domain.Shop;
 
 /**
  * @author Nils Hartmann (nils@nilshartmann.net)

@@ -1,7 +1,7 @@
 package nh.graphql.beeradvisor.graphql.subscription;
 
 import com.coxautodev.graphql.tools.GraphQLSubscriptionResolver;
-import nh.graphql.beeradvisor.beerrating.Rating;
+import nh.graphql.beeradvisor.domain.Rating;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

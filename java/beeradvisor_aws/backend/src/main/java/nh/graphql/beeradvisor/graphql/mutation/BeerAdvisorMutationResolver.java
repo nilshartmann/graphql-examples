@@ -1,12 +1,12 @@
 package nh.graphql.beeradvisor.graphql.mutation;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
-import nh.graphql.beeradvisor.beerrating.Beer;
-import nh.graphql.beeradvisor.beerrating.BeerRepository;
-import nh.graphql.beeradvisor.beerrating.Rating;
 import nh.graphql.beeradvisor.auth.User;
 import nh.graphql.beeradvisor.auth.UserRepository;
-import nh.graphql.beeradvisor.beerrating.RatingCreatedEvent;
+import nh.graphql.beeradvisor.domain.Beer;
+import nh.graphql.beeradvisor.domain.BeerRepository;
+import nh.graphql.beeradvisor.domain.Rating;
+import nh.graphql.beeradvisor.domain.RatingCreatedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

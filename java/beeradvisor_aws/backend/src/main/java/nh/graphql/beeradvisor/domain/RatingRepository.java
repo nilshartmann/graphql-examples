@@ -1,4 +1,4 @@
-package nh.graphql.beeradvisor.beerrating;
+package nh.graphql.beeradvisor.domain;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

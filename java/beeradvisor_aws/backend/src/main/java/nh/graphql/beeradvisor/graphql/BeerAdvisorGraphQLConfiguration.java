@@ -53,7 +53,7 @@ public class BeerAdvisorGraphQLConfiguration {
 
   @Bean
   public GraphQLSchema graphQLSchema() {
-  final GraphQLSchema graphQLSchema = SchemaParser.newParser() //
+    final GraphQLSchema graphQLSchema = SchemaParser.newParser() //
         .files("schema/rating.graphqls", "schema/shop.graphqls", "schema/auth.graphqls")
         .resolvers(this.beerAdvisorQueryResolver, this.beerAdvisorMutationResolver, this.beerAdvisorSubscriptionResolver,
             this.beerFieldResolver, shopFieldResolver,

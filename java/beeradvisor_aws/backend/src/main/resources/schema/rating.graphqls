@@ -12,13 +12,13 @@ type Rating {
   # An immutable unique Id
   id: ID!
 
-  # The  beer, this beerrating is written for
+  # The  beer, this domain is written for
   beer: Beer!
 
-  # Who has written this beerrating?
+  # Who has written this domain?
   author: User!
 
-  # The beerrating itself
+  # The domain itself
   comment: String!
 
   stars: Int!

@@ -1,6 +1,4 @@
-package nh.graphql.beeradvisor.beerrating;
-
-import nh.graphql.beeradvisor.beerrating.Rating;
+package nh.graphql.beeradvisor.domain;
 
 /**
  * RatingCreatedEvent
@@ -14,7 +12,7 @@ public class RatingCreatedEvent {
   }
 
   /**
-   * @return the beerrating
+   * @return the domain
    */
   public Rating getRating() {
     return rating;

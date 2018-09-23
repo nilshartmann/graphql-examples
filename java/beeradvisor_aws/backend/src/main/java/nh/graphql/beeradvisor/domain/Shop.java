@@ -1,4 +1,4 @@
-package nh.graphql.beeradvisor.beerrating;
+package nh.graphql.beeradvisor.domain;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
