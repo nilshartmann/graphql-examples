@@ -2,8 +2,8 @@ package nh.graphql.beeradvisor.auth.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import nh.graphql.beeradvisor.auth.JwtTokenService;
-import nh.graphql.beeradvisor.user.User;
-import nh.graphql.beeradvisor.user.UserRepository;
+import nh.graphql.beeradvisor.auth.User;
+import nh.graphql.beeradvisor.auth.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
