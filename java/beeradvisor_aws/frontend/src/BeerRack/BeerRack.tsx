@@ -2,7 +2,7 @@ import * as React from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import * as ReactTooltip from "react-tooltip";
-import { BeerRackQueryResult } from "./__generated__/BeerRackQuery";
+import { BeerRackQuery as BeerRackQueryResult } from "./__generated__/BeerRackQuery";
 
 import * as styles from "./BeerRack.scss";
 interface BeerRackProps {

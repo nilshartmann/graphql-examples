@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { BeerPageQueryResult } from "./__generated__/BeerPageQuery";
+import { BeerPageQuery as BeerPageQueryResult } from "./__generated__/BeerPageQuery";
 import Beer from "../BeerPage/Beer";
-import { RatingSubscriptionResult } from "./__generated__/RatingSubscription";
+import { RatingSubscription as RatingSubscriptionResult } from "./__generated__/RatingSubscription";
 
 const BEER_PAGE_QUERY = gql`
   query BeerPageQuery($beerId: ID!) {

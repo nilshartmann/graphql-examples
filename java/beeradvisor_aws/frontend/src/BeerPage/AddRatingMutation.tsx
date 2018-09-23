@@ -1,9 +1,9 @@
 import * as React from "react";
 
 import {
-  AddRatingMutationResult,
+  AddRatingMutation as AddRatingMutationResult,
   AddRatingMutationVariables,
-  AddRatingMutationResult_addRating
+  AddRatingMutation_addRating
 } from "./__generated__/AddRatingMutation";
 import { Mutation, MutationFn, MutationResult } from "react-apollo";
 import gql from "graphql-tag";
@@ -31,7 +31,7 @@ interface AddRatingMutationProps {
   beerId: string;
 }
 
-function mergeRatings(ratings: AddRatingMutationResult_addRating[], newRating: AddRatingMutationResult_addRating) {
+function mergeRatings(ratings: AddRatingMutation_addRating[], newRating: AddRatingMutation_addRating) {
   if (ratings.find(r => r.id === newRating.id)) {
     // rating already contained in list
     return ratings;

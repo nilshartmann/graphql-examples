@@ -1,51 +1,50 @@
-
-
 /* tslint:disable */
 // This file was automatically generated and should not be edited.
+
+import { AddRatingInput } from "./../../__generated__/query-types";
 
 // ====================================================
 // GraphQL mutation operation: AddRatingMutation
 // ====================================================
 
-export interface AddRatingMutationResult_addRating_beer {
-  id: string;  // Unique, immutable Id, that identifies this Beer
+export interface AddRatingMutation_addRating_beer {
+  /**
+   * Unique, immutable Id, that identifies this Beer
+   */
+  id: string;
 }
 
-export interface AddRatingMutationResult_addRating_author {
+export interface AddRatingMutation_addRating_author {
   name: string;
 }
 
-export interface AddRatingMutationResult_addRating {
-  id: string;                                  // An immutable unique Id
-  beer: AddRatingMutationResult_addRating_beer;      // The  beer, this rating is written for
-  author: AddRatingMutationResult_addRating_author;  // Who has written this rating?
-  comment: string;                             // The rating itself
+export interface AddRatingMutation_addRating {
+  /**
+   * An immutable unique Id
+   */
+  id: string;
+  /**
+   * The  beer, this domain is written for
+   */
+  beer: AddRatingMutation_addRating_beer;
+  /**
+   * Who has written this domain?
+   */
+  author: AddRatingMutation_addRating_author;
+  /**
+   * The domain itself
+   */
+  comment: string;
   stars: number;
 }
 
-export interface AddRatingMutationResult {
-  addRating: AddRatingMutationResult_addRating;  // Add a new Rating to a Beer and returns the new Rating
+export interface AddRatingMutation {
+  /**
+   * Add a new Rating to a Beer and returns the new Rating
+   */
+  addRating: AddRatingMutation_addRating;
 }
 
 export interface AddRatingMutationVariables {
   input: AddRatingInput;
 }
-
-//==============================================================
-// START Enums and Input Objects
-// All enums and input objects are included in every output file
-// for now, but this will be changed soon.
-// TODO: Link to issue to fix this.
-//==============================================================
-
-// 
-interface AddRatingInput {
-  beerId: string;
-  userId: string;
-  comment: string;
-  stars: number;
-}
-
-//==============================================================
-// END Enums and Input Objects
-//==============================================================

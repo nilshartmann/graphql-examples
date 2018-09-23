@@ -3,7 +3,7 @@ import * as styles from "./Beer.scss";
 
 import RatingForm from "./RatingForm";
 
-import { BeerPageQueryResult_beer as BeerData, BeerPageQueryResult_beer_shops as ShopData } from "./__generated__/BeerPageQuery";
+import { BeerPageQuery_beer as BeerData, BeerPageQuery_beer_shops as ShopData } from "./__generated__/BeerPageQuery";
 import AddRatingMutation from "./AddRatingMutation";
 import Rating from "./Rating";
 import { AuthContextConsumer } from "../AuthContext";
