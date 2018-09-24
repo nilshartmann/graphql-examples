@@ -48,9 +48,10 @@ const RATING_SUBSCRIPTION = gql`
 
 interface BeerPageProps {
   beerId: string;
+  onShopClicked: (newCurrentShopId: string) => void;
 }
 
-const BeerPage = ({ beerId }: BeerPageProps) => (
+const BeerPage = ({ beerId, onShopClicked }: BeerPageProps) => (
   <div>
     <Query<BeerPageQueryResult> query={BEER_PAGE_QUERY} variables={{ beerId }} fetchPolicy="cache-and-network">
       {({ loading, error, data, subscribeToMore }) => {
@@ -72,6 +73,7 @@ const BeerPage = ({ beerId }: BeerPageProps) => (
         return (
           <Beer
             beer={beer}
+            onShopClicked={onShopClicked}
             subscribeToNewData={() =>
               console.log(`XXX subscribeToNewData for beer '${beerId}' XXXX `) ||
               subscribeToMore({

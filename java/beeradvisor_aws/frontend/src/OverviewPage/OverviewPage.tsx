@@ -16,7 +16,11 @@ const OVERVIEW_PAGE_QUERY = gql`
   }
 `;
 
-export function OverviewPage() {
+interface OverviewPageProps {
+  onBeerClicked: (newCurrentBeerId: string) => void;
+}
+
+export function OverviewPage({ onBeerClicked }: OverviewPageProps) {
   return (
     <div className={styles.BeerOverview}>
       <Query<OverviewPageQueryResult> query={OVERVIEW_PAGE_QUERY}>
@@ -36,8 +40,7 @@ export function OverviewPage() {
                   name={beer.name}
                   stars={beer.averageStars}
                   imgUrl={`/assets/beer/${beer.id}-256x256-thumb.jpg`}
-                  onClick={() => false}
-                  active={true}
+                  onClick={() => onBeerClicked(beer.id)}
                 />
               ))}
             </>
@@ -56,9 +59,9 @@ interface ThumbnailProps {
   active?: boolean;
 }
 
-function BeerImage({ imgUrl, name, onClick, active, stars }: ThumbnailProps) {
+function BeerImage({ imgUrl, name, onClick, stars }: ThumbnailProps) {
   return (
-    <div className={styles.BeerImage}>
+    <div className={styles.BeerImage} onClick={onClick}>
       <img src={imgUrl} />
       <span className={styles.Label}>
         <h1>{name}</h1>

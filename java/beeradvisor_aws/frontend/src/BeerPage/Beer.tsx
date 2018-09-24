@@ -10,10 +10,11 @@ import { AuthContextConsumer } from "../AuthContext";
 import LoginForm from "./LoginForm";
 interface ShopProps {
   shop: ShopData;
+  onShopClicked: (newCurrentShopId: string) => void;
 }
 
-const Shop = ({ shop: { id, name } }: ShopProps) => (
-  <div className={styles.Shop}>
+const Shop = ({ shop: { id, name }, onShopClicked }: ShopProps) => (
+  <div className={styles.Shop} onClick={() => onShopClicked(id)}>
     <span className={styles.Name}>{name}</span>
   </div>
 );
@@ -22,6 +23,7 @@ export type SubscribeToMoreFnResult = () => void;
 interface BeerProps {
   beer: BeerData;
   subscribeToNewData(): SubscribeToMoreFnResult;
+  onShopClicked: (newCurrentShopId: string) => void;
 }
 
 export default class Beer extends React.Component<BeerProps> {
@@ -44,7 +46,8 @@ export default class Beer extends React.Component<BeerProps> {
 
   render() {
     const {
-      beer: { id, name, price, ratings, shops }
+      beer: { id, name, price, ratings, shops },
+      onShopClicked
     } = this.props;
 
     return (
@@ -62,7 +65,7 @@ export default class Beer extends React.Component<BeerProps> {
               <h1>Where to buy:</h1>
               {shops.map((shop, ix) => (
                 <React.Fragment key={shop.id}>
-                  <Shop shop={shop} />
+                  <Shop shop={shop} onShopClicked={onShopClicked} />
                   {ix < shops.length - 1 ? " | " : null}
                 </React.Fragment>
               ))}

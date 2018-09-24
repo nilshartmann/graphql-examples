@@ -3,33 +3,47 @@ import * as React from "react";
 import * as styles from "./BeerRatingApp.scss";
 import Header from "./Header";
 import BeerPage from "../BeerPage";
-import BeerRack from "../BeerRack";
 import Footer from "./Footer";
 import { OverviewPage } from "../OverviewPage";
+import ShopPage from "../ShopPage";
 
 interface BeerRatingAppState {
-  currentBeerId: string;
+  currentBeerId: string | null;
+  currentShopId: string | null;
 }
 class BeerRatingApp extends React.Component<{}, BeerRatingAppState> {
   readonly state: BeerRatingAppState = {
-    currentBeerId: "B1"
+    currentBeerId: null,
+    currentShopId: null
   };
 
   setCurrentBeerId = (newCurrentBeerId: string) => {
     this.setState({
-      currentBeerId: newCurrentBeerId
+      currentBeerId: newCurrentBeerId,
+      currentShopId: null
+    });
+  };
+
+  setCurrentShopId = (newCurrentShopId: string) => {
+    this.setState({
+      currentBeerId: null,
+      currentShopId: newCurrentShopId
     });
   };
 
   render() {
-    const { currentBeerId } = this.state;
+    const { currentBeerId, currentShopId } = this.state;
     return (
       <div className={styles.BeerRatingApp}>
         <Header />
         <div className={styles.Main}>
-          <OverviewPage />
-          {/* <BeerRack currentBeerId={currentBeerId} setCurrentBeerId={this.setCurrentBeerId} />
-          <BeerPage beerId={currentBeerId} /> */}
+          {currentShopId ? (
+            <ShopPage shopId={currentShopId} onBeerClicked={this.setCurrentBeerId} />
+          ) : currentBeerId ? (
+            <BeerPage beerId={currentBeerId} onShopClicked={this.setCurrentShopId} />
+          ) : (
+            <OverviewPage onBeerClicked={this.setCurrentBeerId} />
+          )}
         </div>
         <Footer />
       </div>

@@ -22,14 +22,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class BeerAdvisorMutationResolver implements GraphQLMutationResolver {
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
-  @Autowired
-  private UserRepository userRepository;
+  private final UserRepository userRepository;
+  private final ApplicationEventPublisher applicationEventPublisher;
+  private final BeerRepository beerRepository;
 
   @Autowired
-  private ApplicationEventPublisher applicationEventPublisher;
-
-  @Autowired
-  private BeerRepository beerRepository;
+  public BeerAdvisorMutationResolver(UserRepository userRepository, ApplicationEventPublisher applicationEventPublisher, BeerRepository beerRepository) {
+    this.userRepository = userRepository;
+    this.applicationEventPublisher = applicationEventPublisher;
+    this.beerRepository = beerRepository;
+  }
 
   @Transactional
   // EXAMPLE:

@@ -15,8 +15,12 @@ import org.springframework.stereotype.Component;
 public class BeerAdvisorSubscriptionResolver implements GraphQLSubscriptionResolver {
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
+  private final RatingPublisher ratingPublisher;
+
   @Autowired
-  private RatingPublisher ratingPublisher;
+  public BeerAdvisorSubscriptionResolver(RatingPublisher ratingPublisher) {
+    this.ratingPublisher = ratingPublisher;
+  }
 
   public Publisher<Rating> onNewRating() {
     return this.ratingPublisher.getPublisher();
