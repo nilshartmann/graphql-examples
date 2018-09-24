@@ -211,6 +211,22 @@
             "deprecationReason": null
           },
           {
+            "name": "averageStars",
+            "description": "Average Rating of this Beer",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ratingsWithStars",
             "description": "List of Ratings that has at exactly 'stars' Stars",
             "args": [

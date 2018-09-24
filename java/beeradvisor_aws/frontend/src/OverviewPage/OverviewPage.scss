@@ -1,0 +1,50 @@
+.BeerOverview {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
+  justify-content: center;
+}
+.BeerImage {
+  margin: 0.5rem;
+  cursor: pointer;
+
+  width: 256px;
+  height: 256px;
+
+  img {
+    position: absolute;
+    border: 3px solid var(--color-background);
+
+    &:hover {
+      border: 3px solid var(--color-one);
+    }
+  }
+}
+
+.Label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  margin-left: 3px;
+  margin-right: -3px;
+  margin-top: 200px;
+  height: 50px;
+
+  padding-top: 15px;
+  padding-bottom: 10px;
+
+  h1 {
+    margin: 0;
+    font-family: Anton;
+    font-size: 1rem;
+    color: var(--color-one);
+    letter-spacing: 4.6px;
+    font-weight: normal;
+    line-height: 1;
+  }
+}

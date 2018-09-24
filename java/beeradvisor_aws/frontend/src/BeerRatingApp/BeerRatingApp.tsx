@@ -5,6 +5,7 @@ import Header from "./Header";
 import BeerPage from "../BeerPage";
 import BeerRack from "../BeerRack";
 import Footer from "./Footer";
+import { OverviewPage } from "../OverviewPage";
 
 interface BeerRatingAppState {
   currentBeerId: string;
@@ -26,8 +27,9 @@ class BeerRatingApp extends React.Component<{}, BeerRatingAppState> {
       <div className={styles.BeerRatingApp}>
         <Header />
         <div className={styles.Main}>
-          <BeerRack currentBeerId={currentBeerId} setCurrentBeerId={this.setCurrentBeerId} />
-          <BeerPage beerId={currentBeerId} />
+          <OverviewPage />
+          {/* <BeerRack currentBeerId={currentBeerId} setCurrentBeerId={this.setCurrentBeerId} />
+          <BeerPage beerId={currentBeerId} /> */}
         </div>
         <Footer />
       </div>

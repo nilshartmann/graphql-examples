@@ -30,6 +30,10 @@ public class BeerFieldResolver implements GraphQLResolver<Beer> {
     return shopRepository.findShopsWithBeer(beerId);
   }
 
+  public int averageStars(Beer beer) {
+    return (int) Math.round(beer.getRatings().stream().mapToDouble(Rating::getStars).average().getAsDouble());
+  }
+
   public List<Rating> ratingsWithStars(Beer beer, int starsInput) {
     logger.info(String.format("Finding Ratings with %s stars in Beer '%s'", starsInput, beer));
     return beer.getRatings().stream().filter(r -> r.getStars() == starsInput).collect(Collectors.toList());

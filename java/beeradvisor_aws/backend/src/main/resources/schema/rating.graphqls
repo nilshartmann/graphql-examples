@@ -38,6 +38,9 @@ type Beer {
   # List of all Ratings for this Beer
   ratings: [Rating!]!
 
+  # Average Rating of this Beer
+  averageStars: Int!
+
   # List of Ratings that has at exactly 'stars' Stars
   ratingsWithStars(stars: Int!): [Rating!]!
 }
