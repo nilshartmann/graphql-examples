@@ -27,5 +27,11 @@
     font-family: Anton;
     text-transform: uppercase;
     line-height: 1;
+
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }

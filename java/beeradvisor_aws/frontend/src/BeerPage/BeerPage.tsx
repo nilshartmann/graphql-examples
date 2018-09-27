@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { BeerPageQuery as BeerPageQueryResult } from "./__generated__/BeerPageQuery";
 import Beer from "../BeerPage/Beer";
 import { RatingSubscription as RatingSubscriptionResult } from "./__generated__/RatingSubscription";
+import { RouteComponentProps } from "react-router";
 
 const BEER_PAGE_QUERY = gql`
   query BeerPageQuery($beerId: ID!) {
@@ -46,14 +47,16 @@ const RATING_SUBSCRIPTION = gql`
   }
 `;
 
-interface BeerPageProps {
-  beerId: string;
-  onShopClicked: (newCurrentShopId: string) => void;
-}
+interface BeerPageProps extends RouteComponentProps<{ beerId: string }> {}
 
-const BeerPage = ({ beerId, onShopClicked }: BeerPageProps) => (
+const BeerPage = ({
+  history,
+  match: {
+    params: { beerId }
+  }
+}: BeerPageProps) => (
   <div>
-    <Query<BeerPageQueryResult> query={BEER_PAGE_QUERY} variables={{ beerId }} fetchPolicy="cache-and-network">
+    <Query<BeerPageQueryResult> query={BEER_PAGE_QUERY} variables={{ beerId: beerId }} fetchPolicy="cache-and-network">
       {({ loading, error, data, subscribeToMore }) => {
         if (loading) {
           return <h1>Loading...</h1>;
@@ -73,7 +76,7 @@ const BeerPage = ({ beerId, onShopClicked }: BeerPageProps) => (
         return (
           <Beer
             beer={beer}
-            onShopClicked={onShopClicked}
+            onShopClicked={newShopId => history.push(`/shop/${newShopId}`)}
             subscribeToNewData={() =>
               console.log(`XXX subscribeToNewData for beer '${beerId}' XXXX `) ||
               subscribeToMore({

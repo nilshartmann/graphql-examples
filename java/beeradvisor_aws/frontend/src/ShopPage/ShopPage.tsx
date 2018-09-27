@@ -4,6 +4,7 @@ import { Query } from "react-apollo";
 import { ShopPageQuery as ShopPageQueryResult, ShopPageQueryVariables } from "./__generated__/ShopPageQuery";
 
 import * as styles from "./ShopPage.scss";
+import { RouteComponentProps } from "react-router";
 const SHOP_PAGE_QUERY = gql`
   query ShopPageQuery($shopId: ID!) {
     shop(shopId: $shopId) {
@@ -23,12 +24,14 @@ const SHOP_PAGE_QUERY = gql`
   }
 `;
 
-interface ShopPageProps {
-  shopId: string;
-  onBeerClicked: (beerId: string) => void;
-}
+interface ShopPageProps extends RouteComponentProps<{ shopId: string }> {}
 
-export default function ShopPage({ shopId, onBeerClicked }: ShopPageProps) {
+export default function ShopPage({
+  match: {
+    params: { shopId }
+  },
+  history
+}: ShopPageProps) {
   return (
     <Query<ShopPageQueryResult, ShopPageQueryVariables>
       query={SHOP_PAGE_QUERY}
@@ -76,7 +79,7 @@ export default function ShopPage({ shopId, onBeerClicked }: ShopPageProps) {
 
                 <div className={styles.Beers}>
                   {theShop.beers.map(b => (
-                    <div key={b.id} className={styles.Beer} onClick={() => onBeerClicked(b.id)}>
+                    <div key={b.id} className={styles.Beer} onClick={() => history.push(`/beer/${b.id}`)}>
                       {b.name}
                     </div>
                   ))}

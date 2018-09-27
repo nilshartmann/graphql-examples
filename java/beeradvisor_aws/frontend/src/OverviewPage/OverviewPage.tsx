@@ -5,6 +5,7 @@ import { OverviewPageQuery as OverviewPageQueryResult } from "./__generated__/Ov
 
 import * as styles from "./OverviewPage.scss";
 import Stars from "../components";
+import { RouteComponentProps } from "react-router";
 
 const OVERVIEW_PAGE_QUERY = gql`
   query OverviewPageQuery {
@@ -16,11 +17,9 @@ const OVERVIEW_PAGE_QUERY = gql`
   }
 `;
 
-interface OverviewPageProps {
-  onBeerClicked: (newCurrentBeerId: string) => void;
-}
+interface OverviewPageProps extends RouteComponentProps {}
 
-export function OverviewPage({ onBeerClicked }: OverviewPageProps) {
+export function OverviewPage({ history }: OverviewPageProps) {
   return (
     <div className={styles.BeerOverview}>
       <Query<OverviewPageQueryResult> query={OVERVIEW_PAGE_QUERY}>
@@ -40,7 +39,7 @@ export function OverviewPage({ onBeerClicked }: OverviewPageProps) {
                   name={beer.name}
                   stars={beer.averageStars}
                   imgUrl={`/assets/beer/${beer.id}-256x256-thumb.jpg`}
-                  onClick={() => onBeerClicked(beer.id)}
+                  onClick={() => history.push(`/beer/${beer.id}`)}
                 />
               ))}
             </>
