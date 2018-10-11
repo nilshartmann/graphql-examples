@@ -20,6 +20,7 @@ sourceCompatibility = 1.8
 
 repositories {
   mavenCentral()
+  jcenter()  
 }
 
 
@@ -30,15 +31,14 @@ dependencies {
   runtime('org.springframework.boot:spring-boot-devtools')
   testCompile('org.springframework.boot:spring-boot-starter-test')
   runtime('com.h2database:h2')
-  compile 'com.graphql-java:graphql-java-tools:5.2.3'
+  compile 'com.graphql-java-kickstart:graphql-java-tools:5.3.3'
+  compile 'com.graphql-java-kickstart:graphql-java-servlet:6.1.4'
   // security
   compile 'io.jsonwebtoken:jjwt-api:0.10.1'
   runtime 'io.jsonwebtoken:jjwt-impl:0.10.1',
       'io.jsonwebtoken:jjwt-jackson:0.10.1'
 
   compile('org.springframework.boot:spring-boot-starter-websocket')
-
-  compile 'com.graphql-java:graphql-java-servlet:6.1.2'
 
   // GraphiQL
   compile 'com.graphql-java:graphiql-spring-boot-starter:5.0.2'
