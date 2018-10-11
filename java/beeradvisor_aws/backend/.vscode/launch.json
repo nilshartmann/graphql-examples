@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - BeerAdvisorApplication",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "nh.graphql.beeradvisor.BeerAdvisorApplication",
+      "args": "",
+      "projectName": "beeradvisor"
+    }
+  ]
+}
