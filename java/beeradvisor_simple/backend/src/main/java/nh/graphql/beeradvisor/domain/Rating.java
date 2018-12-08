@@ -9,6 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
+ * Represents a Rating for a single beer given by a single Author
+ * 
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Entity

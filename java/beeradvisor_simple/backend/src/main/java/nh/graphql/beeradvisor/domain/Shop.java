@@ -31,10 +31,12 @@ public class Shop {
   @ElementCollection
   private List<String> beers;
 
+  // hell
   protected Shop() {
   }
 
-  public Shop(String id, String name, String street, String postalCode, String city, String country, String... beerIds) {
+  public Shop(String id, String name, String street, String postalCode, String city, String country,
+      String... beerIds) {
     this.id = id;
     this.name = name;
     this.street = street;
