@@ -67,6 +67,7 @@ module.exports = {
   devtool: "source-map",
   devServer: {
     historyApiFallback: true,
-    port: 9080
+    port: 9080,
+    stats: "minimal"
   }
 };
