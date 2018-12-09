@@ -1,4 +1,3 @@
-const Stylish = require("webpack-stylish");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
@@ -63,13 +62,11 @@ module.exports = {
       filename: path.resolve("./public/index.html"),
       template: "public/index-template.html"
     }),
-    new HtmlWebpackHarddiskPlugin(),
-    new Stylish()
+    new HtmlWebpackHarddiskPlugin()
   ],
   devtool: "source-map",
   devServer: {
     historyApiFallback: true,
-    port: 9080,
-    stats: "none"
+    port: 9080
   }
 };
