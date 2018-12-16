@@ -81,6 +81,9 @@
     "react-tooltip": "^3.6.1",
     "subscriptions-transport-ws": "^0.9.14"
   },
+  "resolutions": {
+    "graphql": "14.0.2"
+  },
   "apollo": {
     "schemas": {
       "beeradvisorBackend": {
