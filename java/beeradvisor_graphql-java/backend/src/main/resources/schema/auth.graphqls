@@ -1,0 +1,13 @@
+type Authentication {
+  userId: String!
+  username: String!
+  authToken: String!
+}
+type LoginResponse {
+  authentication: Authentication
+  error: String
+}
+
+extend type Mutation {
+  login(username: String!): LoginResponse!
+}

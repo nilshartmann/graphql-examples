@@ -1,0 +1,15 @@
+{
+  "files.exclude": {
+    ".classpath": true,
+    ".gradle": true,
+    ".idea": true,
+    ".project": true,
+    ".settings/**": true,
+    "bin/": true,
+    "build/": true,
+    "gradle/": true,
+    "out/": true
+  },
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "window.title": "BEER ADVISOR - BACKEND${separator}${activeEditorShort}"
+}
