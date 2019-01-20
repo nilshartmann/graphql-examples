@@ -39,7 +39,6 @@ public class BeerAdvisorGraphQLConfiguration {
     @Autowired
     private LoginDataFetchers loginDataFetchers;
 
-
     @Value("classpath:/schema/auth.graphqls")
     private Resource authSchemaResource;
     @Value("classpath:/schema/rating.graphqls")
@@ -62,17 +61,6 @@ public class BeerAdvisorGraphQLConfiguration {
         return schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);
     }
 
-//        SchemaParser p = new SchemaParser();
-//        final TypeDefinitionRegistry parse = p.parse("");
-//        TypeDefinitionRegistry r;
-//        r.add(p);
-//        final GraphQLSchema graphQLSchema = SchemaParser.newParser() //
-//            .files("schema/rating.graphqls", "schema/shop.graphqls", "schema/auth.graphqls")
-//            .resolvers(this.beerAdvisorDataFetcher, this.beerAdvisorMutationResolver, this.beerAdvisorSubscriptionResolver,
-//                this.beerDataFetchers, shopFieldDataFetchers,
-//                this.loginDataFetchers) // authentication/login
-//            .build().makeExecutableSchema();
-
     private RuntimeWiring buildWiring() {
         final RuntimeWiring runtimeWiring = RuntimeWiring.newRuntimeWiring()
             .type(newTypeWiring("Query")
@@ -89,22 +77,22 @@ public class BeerAdvisorGraphQLConfiguration {
                 .dataFetcher("beers", shopFieldDataFetchers.beersFetcher()))
             .type(newTypeWiring("Mutation")
                 .dataFetcher("login", loginDataFetchers.getLoginDataFetcher())
-                .dataFetcher("addRating", beerAdvisorDataFetcher.addRatingFetcher())
+                .dataFetcher("addRating", beerAdvisorDataFetcher.addRatingMutationFetcher())
             )
 //            .type(newTypeWiring("Subscription")
-//                .dataFetcher("onDataChangeEvent", subscriptionWiring.dataChangeEventFetcher))
-//            .type(newTypeWiring("DataChangePayload")
-//                .dataFetcher("after", subscriptionWiring.afterFieldsFetcher))
+//                .dataFetcher("newRatings", beerAdvisorDataFetcher.newRatingsSubscriptionFetcher())
+//                .dataFetcher("onNewRating", beerAdvisorDataFetcher.onNewRatingSubscriptionFetcher())
+//            )
             .build();
 
         return runtimeWiring;
     }
 
-  @Bean
-  public ServletRegistrationBean graphQLServletRegistrationBean(GraphQLSchema schema) {
-      final GraphQLHttpServlet servlet = GraphQLHttpServlet.with(schema);
-      return new ServletRegistrationBean<GraphQLHttpServlet>(servlet, "/graphql");
-  }
+//  @Bean
+//  public ServletRegistrationBean graphQLServletRegistrationBean(GraphQLSchema schema) {
+//      final GraphQLHttpServlet servlet = GraphQLHttpServlet.with(schema);
+//      return new ServletRegistrationBean<>(servlet, "/graphql");
+//  }
 //
 //  @Bean
 //  public ServerEndpointRegistration serverEndpointRegistration(GraphQLSchema schema) {

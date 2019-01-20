@@ -6,6 +6,8 @@ import nh.graphql.beeradvisor.domain.Rating;
 import nh.graphql.beeradvisor.domain.ShopRepository;
 import nh.graphql.beeradvisor.domain.AddRatingInput;
 import nh.graphql.beeradvisor.domain.RatingService;
+import nh.graphql.beeradvisor.graphql.subscription.RatingPublisher;
+import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +25,13 @@ public class BeerAdvisorDataFetcher {
     private final BeerRepository beerRepository;
     private final ShopRepository shopRepository;
     private final RatingService ratingService;
+    private final RatingPublisher ratingPublisher;
 
-    @Autowired
-    public BeerAdvisorDataFetcher(BeerRepository beerRepository, ShopRepository shopRepository, RatingService ratingService) {
+    public BeerAdvisorDataFetcher(BeerRepository beerRepository, ShopRepository shopRepository, RatingService ratingService, RatingPublisher ratingPublisher) {
         this.beerRepository = beerRepository;
         this.shopRepository = shopRepository;
         this.ratingService = ratingService;
+        this.ratingPublisher = ratingPublisher;
     }
 
     public DataFetcher beerFetcher() {
@@ -53,7 +56,7 @@ public class BeerAdvisorDataFetcher {
         return environment -> shopRepository.findAll();
     }
 
-    public DataFetcher<Rating> addRatingFetcher() {
+    public DataFetcher<Rating> addRatingMutationFetcher() {
         return environment -> {
             // Input is always a Map, see: https://github.com/graphql-java/graphql-java/pull/782/files
             final Map<String, Object> ratingInput = environment.getArgument("ratingInput");
@@ -65,6 +68,18 @@ public class BeerAdvisorDataFetcher {
 
             logger.debug("Rating Input", addRatingInput);
             return ratingService.addRating(addRatingInput);
+        };
+    }
+
+    public DataFetcher<Publisher<Rating>> onNewRatingSubscriptionFetcher() {
+        return environment -> this.ratingPublisher.getPublisher();
+    }
+
+    public DataFetcher<Publisher<Rating>> newRatingsSubscriptionFetcher() {
+        return environment -> {
+            String beerId = environment.getArgument("beerId");
+            logger.info("Subscription for 'newRatings' (" + beerId + ") received");
+            return this.ratingPublisher.getPublisher(beerId);
         };
     }
 }
