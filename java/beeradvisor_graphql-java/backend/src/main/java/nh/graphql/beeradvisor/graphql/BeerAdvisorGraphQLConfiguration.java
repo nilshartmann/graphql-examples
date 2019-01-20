@@ -40,14 +40,23 @@ public class BeerAdvisorGraphQLConfiguration {
     private LoginDataFetchers loginDataFetchers;
 
 
-    @Value("classpath:/schema/beeradvisor.graphqls")
-    private Resource beerAdvisorSchemaResource;
+    @Value("classpath:/schema/auth.graphqls")
+    private Resource authSchemaResource;
+    @Value("classpath:/schema/rating.graphqls")
+    private Resource ratingSchemaResource;
+    @Value("classpath:/schema/shop.graphqls")
+    private Resource shopSchemaResource;
 
     @Bean
     public GraphQLSchema graphQLSchema() throws Exception {
 
         SchemaParser schemaParser = new SchemaParser();
-        TypeDefinitionRegistry typeRegistry = schemaParser.parse(new InputStreamReader(beerAdvisorSchemaResource.getInputStream()));
+
+        TypeDefinitionRegistry typeRegistry = new TypeDefinitionRegistry();
+        typeRegistry.merge(schemaParser.parse(new InputStreamReader(authSchemaResource.getInputStream())));
+        typeRegistry.merge(schemaParser.parse(new InputStreamReader(ratingSchemaResource.getInputStream())));
+        typeRegistry.merge(schemaParser.parse(new InputStreamReader(shopSchemaResource.getInputStream())));
+
         RuntimeWiring runtimeWiring = buildWiring();
         SchemaGenerator schemaGenerator = new SchemaGenerator();
         return schemaGenerator.makeExecutableSchema(typeRegistry, runtimeWiring);
