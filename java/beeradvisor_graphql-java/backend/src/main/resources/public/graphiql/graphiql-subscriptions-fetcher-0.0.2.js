@@ -778,7 +778,7 @@ var GraphiQLSubscriptionsFetcher =
      * An input object defines a structured collection of fields which may be
      * supplied to a field argument.
      *
-     * Using `NonNull` will ensure that a value must be provided by the fetchers
+     * Using `NonNull` will ensure that a value must be provided by the query
      *
      * Example:
      *
@@ -1080,7 +1080,7 @@ var GraphiQLSubscriptionsFetcher =
         var directives = join(node.directives, ' ');
         var selectionSet = node.selectionSet;
         // Anonymous queries with no directives or variable definitions can use
-        // the fetchers short form.
+        // the query short form.
         return !name && !directives && !varDefs && op === 'query' ? selectionSet : join([ op, join([ name, varDefs ]), directives, selectionSet ], ' ');
       },
 
@@ -1680,13 +1680,13 @@ var GraphiQLSubscriptionsFetcher =
      * Schema Definition
      *
      * A Schema is created by supplying the root types of each type of operation,
-     * fetchers and mutation (optional). A schema definition is then supplied to the
+     * query and mutation (optional). A schema definition is then supplied to the
      * validator and executor.
      *
      * Example:
      *
      *     const MyAppSchema = new GraphQLSchema({
- *       fetchers: MyAppQueryRootType,
+ *       query: MyAppQueryRootType,
  *       mutation: MyAppMutationRootType,
  *     })
      *
@@ -1710,7 +1710,7 @@ var GraphiQLSubscriptionsFetcher =
 
         (0, _invariant2.default)(typeof config === 'object', 'Must provide configuration object.');
 
-        (0, _invariant2.default)(config.query instanceof _definition.GraphQLObjectType, 'Schema fetchers must be Object Type but got: ' + String(config.query) + '.');
+        (0, _invariant2.default)(config.query instanceof _definition.GraphQLObjectType, 'Schema query must be Object Type but got: ' + String(config.query) + '.');
         this._queryType = config.query;
 
         (0, _invariant2.default)(!config.mutation || config.mutation instanceof _definition.GraphQLObjectType, 'Schema mutation must be Object Type if provided but got: ' + String(config.mutation) + '.');
@@ -2037,7 +2037,7 @@ var GraphiQLSubscriptionsFetcher =
     var __Schema = exports.__Schema = new _definition.GraphQLObjectType({
       name:            '__Schema',
       isIntrospection: true,
-      description:     'A GraphQL Schema defines the capabilities of a GraphQL server. It ' + 'exposes all available types and directives on the server, as well as ' + 'the entry points for fetchers, mutation, and subscription operations.',
+      description:     'A GraphQL Schema defines the capabilities of a GraphQL server. It ' + 'exposes all available types and directives on the server, as well as ' + 'the entry points for query, mutation, and subscription operations.',
       fields:          function fields() {
         return {
           types:            {
@@ -2051,7 +2051,7 @@ var GraphiQLSubscriptionsFetcher =
             }
           },
           queryType:        {
-            description: 'The type that fetchers operations will be rooted at.',
+            description: 'The type that query operations will be rooted at.',
             type:        new _definition.GraphQLNonNull(__Type),
             resolve:     function resolve(schema) {
               return schema.getQueryType();
@@ -2133,7 +2133,7 @@ var GraphiQLSubscriptionsFetcher =
       values:          {
         QUERY:                  {
           value:       _directives.DirectiveLocation.QUERY,
-          description: 'Location adjacent to a fetchers operation.'
+          description: 'Location adjacent to a query operation.'
         },
         MUTATION:               {
           value:       _directives.DirectiveLocation.MUTATION,
@@ -3179,7 +3179,7 @@ var GraphiQLSubscriptionsFetcher =
           return;
         }
         // Note: we're not doing any checking that this variable is correct. We're
-        // assuming that this fetchers has been validated and the variable usage here
+        // assuming that this query has been validated and the variable usage here
         // is of the correct type.
         return variables[ variableName ];
       }
@@ -3458,7 +3458,7 @@ var GraphiQLSubscriptionsFetcher =
     }
 
     /**
-     * OperationType : one of fetchers mutation subscription
+     * OperationType : one of query mutation subscription
      */
     function parseOperationType(lexer) {
       var operationToken = expect(lexer, _lexer.TokenKind.NAME);
@@ -6330,32 +6330,32 @@ var GraphiQLSubscriptionsFetcher =
      *
      * "Definitions" are the generic name for top-level statements in the document.
      * Examples of this include:
-     * 1) Operations (such as a fetchers)
+     * 1) Operations (such as a query)
      * 2) Fragments
      *
      * "Operations" are a generic name for requests in the document.
      * Examples of this include:
-     * 1) fetchers,
+     * 1) query,
      * 2) mutation
      *
      * "Selections" are the definitions that can appear legally and at
-     * single level of the fetchers. These include:
+     * single level of the query. These include:
      * 1) field references e.g "a"
      * 2) fragment "spreads" e.g. "...c"
      * 3) inline fragment "spreads" e.g. "...on Type { a }"
      */
 
     /**
-     * Data that must be available at all points during fetchers execution.
+     * Data that must be available at all points during query execution.
      *
      * Namely, schema of the type system that is currently executing,
-     * and the fragments defined in the fetchers document
+     * and the fragments defined in the query document
      */
 
     /**
      * The result of GraphQL execution.
      *
-     *   - `data` is the result of a successful execution of the fetchers.
+     *   - `data` is the result of a successful execution of the query.
      *   - `errors` is included when any errors occurred as a non-empty array.
      */
 
@@ -6435,7 +6435,7 @@ var GraphiQLSubscriptionsFetcher =
         switch (definition.kind) {
           case Kind.OPERATION_DEFINITION:
             if (!operationName && operation) {
-              throw new _error.GraphQLError('Must provide operation name if fetchers contains multiple operations.');
+              throw new _error.GraphQLError('Must provide operation name if query contains multiple operations.');
             }
             if (!operationName || definition.name && definition.name.value === operationName) {
               operation = definition;
@@ -7055,7 +7055,7 @@ var GraphiQLSubscriptionsFetcher =
      * and __typename. __typename is special because it can always be
      * queried as a field, even in situations where no other fields
      * are allowed, like on a Union. __schema could get automatically
-     * added to the fetchers type, but that would require mutating type
+     * added to the query type, but that would require mutating type
      * definitions, which would cause issues.
      */
     function getFieldDef(schema, parentType, fieldName) {
@@ -7217,7 +7217,7 @@ var GraphiQLSubscriptionsFetcher =
           var variableName = argumentNode.value.name.value;
           if (variableValues && !(0, _isInvalid2.default)(variableValues[ variableName ])) {
             // Note: this does not check that this variable value is correct.
-            // This assumes that this fetchers has been validated and the variable
+            // This assumes that this query has been validated and the variable
             // usage here is of the correct type.
             coercedValues[ name ] = variableValues[ variableName ];
           } else if (!(0, _isInvalid2.default)(defaultValue)) {
@@ -7457,10 +7457,10 @@ var GraphiQLSubscriptionsFetcher =
           var typeName = operationType.type.name.value;
           if (operationType.operation === 'query') {
             if (queryTypeName) {
-              throw new Error('Must provide only one fetchers type in schema.');
+              throw new Error('Must provide only one query type in schema.');
             }
             if (!nodeMap[ typeName ]) {
-              throw new Error('Specified fetchers type "' + typeName + '" not found in document.');
+              throw new Error('Specified query type "' + typeName + '" not found in document.');
             }
             queryTypeName = typeName;
           } else if (operationType.operation === 'mutation') {
@@ -7494,7 +7494,7 @@ var GraphiQLSubscriptionsFetcher =
       }
 
       if (!queryTypeName) {
-        throw new Error('Must provide schema definition with fetchers type or a type named Query.');
+        throw new Error('Must provide schema definition with query type or a type named Query.');
       }
 
       var innerTypeMap = {
@@ -7843,7 +7843,7 @@ var GraphiQLSubscriptionsFetcher =
     /**
      * Given a JavaScript value and a GraphQL type, determine if the value will be
      * accepted for that type. This is primarily useful for validating the
-     * runtime values of fetchers variables.
+     * runtime values of query variables.
      */
 
     /**
@@ -9170,12 +9170,12 @@ var GraphiQLSubscriptionsFetcher =
      * tooling step, and a server runtime step.
      *
      * schema:
-     *    The GraphQL type system to use when validating and executing a fetchers.
+     *    The GraphQL type system to use when validating and executing a query.
      * requestString:
      *    A GraphQL language formatted string representing the requested operation.
      * rootValue:
      *    The value provided as the first argument to resolver functions on the top
-     *    level type (e.g. the fetchers object type).
+     *    level type (e.g. the query object type).
      * variableValues:
      *    A mapping of variable name to runtime value to use for all variables
      *    defined in the requestString.
@@ -9697,9 +9697,9 @@ var GraphiQLSubscriptionsFetcher =
     /**
      * Build a GraphQLSchema for use by client tools.
      *
-     * Given the result of a client running the introspection fetchers, creates and
+     * Given the result of a client running the introspection query, creates and
      * returns a GraphQLSchema instance which can be then used with all graphql-js
-     * tools, but cannot be used to execute a fetchers, as introspection does not
+     * tools, but cannot be used to execute a query, as introspection does not
      * represent the "resolver", "parse" or "serialize" functions or any other
      * server-internal mechanisms.
      */
@@ -9738,14 +9738,14 @@ var GraphiQLSubscriptionsFetcher =
         if (typeRef.kind === _introspection.TypeKind.LIST) {
           var itemRef = typeRef.ofType;
           if (!itemRef) {
-            throw new Error('Decorated type deeper than introspection fetchers.');
+            throw new Error('Decorated type deeper than introspection query.');
           }
           return new _definition.GraphQLList(getType(itemRef));
         }
         if (typeRef.kind === _introspection.TypeKind.NON_NULL) {
           var nullableRef = typeRef.ofType;
           if (!nullableRef) {
-            throw new Error('Decorated type deeper than introspection fetchers.');
+            throw new Error('Decorated type deeper than introspection query.');
           }
           var nullableType = getType(nullableRef);
           (0, _invariant2.default)(!(nullableType instanceof _definition.GraphQLNonNull), 'No nesting nonnull.');
@@ -9760,7 +9760,7 @@ var GraphiQLSubscriptionsFetcher =
         }
         var typeIntrospection = typeIntrospectionMap[ typeName ];
         if (!typeIntrospection) {
-          throw new Error('Invalid or incomplete schema, unknown type: ' + typeName + '. Ensure ' + 'that a full introspection fetchers is used in order to build a ' + 'client schema.');
+          throw new Error('Invalid or incomplete schema, unknown type: ' + typeName + '. Ensure ' + 'that a full introspection query is used in order to build a ' + 'client schema.');
         }
         var typeDef = buildType(typeIntrospection);
         typeDefCache[ typeName ] = typeDef;
@@ -9808,7 +9808,7 @@ var GraphiQLSubscriptionsFetcher =
           case _introspection.TypeKind.INPUT_OBJECT:
             return buildInputObjectDef(type);
           default:
-            throw new Error('Invalid or incomplete schema, unknown kind: ' + type.kind + '. Ensure ' + 'that a full introspection fetchers is used in order to build a ' + 'client schema.');
+            throw new Error('Invalid or incomplete schema, unknown kind: ' + type.kind + '. Ensure ' + 'that a full introspection query is used in order to build a ' + 'client schema.');
         }
       }
 
@@ -11094,7 +11094,7 @@ var GraphiQLSubscriptionsFetcher =
     Object.defineProperty(exports, "__esModule", {
       value: true
     });
-    var introspectionQuery = exports.introspectionQuery = '\n  fetchers IntrospectionQuery {\n    __schema {\n      queryType { name }\n      mutationType { name }\n      subscriptionType { name }\n      types {\n        ...FullType\n      }\n      directives {\n        name\n        description\n        locations\n        args {\n          ...InputValue\n        }\n      }\n    }\n  }\n\n  fragment FullType on __Type {\n    kind\n    name\n    description\n    fields(includeDeprecated: true) {\n      name\n      description\n      args {\n        ...InputValue\n      }\n      type {\n        ...TypeRef\n      }\n      isDeprecated\n      deprecationReason\n    }\n    inputFields {\n      ...InputValue\n    }\n    interfaces {\n      ...TypeRef\n    }\n    enumValues(includeDeprecated: true) {\n      name\n      description\n      isDeprecated\n      deprecationReason\n    }\n    possibleTypes {\n      ...TypeRef\n    }\n  }\n\n  fragment InputValue on __InputValue {\n    name\n    description\n    type { ...TypeRef }\n    defaultValue\n  }\n\n  fragment TypeRef on __Type {\n    kind\n    name\n    ofType {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n';
+    var introspectionQuery = exports.introspectionQuery = '\n  query IntrospectionQuery {\n    __schema {\n      queryType { name }\n      mutationType { name }\n      subscriptionType { name }\n      types {\n        ...FullType\n      }\n      directives {\n        name\n        description\n        locations\n        args {\n          ...InputValue\n        }\n      }\n    }\n  }\n\n  fragment FullType on __Type {\n    kind\n    name\n    description\n    fields(includeDeprecated: true) {\n      name\n      description\n      args {\n        ...InputValue\n      }\n      type {\n        ...TypeRef\n      }\n      isDeprecated\n      deprecationReason\n    }\n    inputFields {\n      ...InputValue\n    }\n    interfaces {\n      ...TypeRef\n    }\n    enumValues(includeDeprecated: true) {\n      name\n      description\n      isDeprecated\n      deprecationReason\n    }\n    possibleTypes {\n      ...TypeRef\n    }\n  }\n\n  fragment InputValue on __InputValue {\n    name\n    description\n    type { ...TypeRef }\n    defaultValue\n  }\n\n  fragment TypeRef on __Type {\n    kind\n    name\n    ofType {\n      kind\n      name\n      ofType {\n        kind\n        name\n        ofType {\n          kind\n          name\n          ofType {\n            kind\n            name\n            ofType {\n              kind\n              name\n              ofType {\n                kind\n                name\n                ofType {\n                  kind\n                  name\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n';
     /**
      *  Copyright (c) 2015, Facebook, Inc.
      *  All rights reserved.
@@ -11202,7 +11202,7 @@ var GraphiQLSubscriptionsFetcher =
 
       var queryType = schema.getQueryType();
       if (queryType) {
-        operationTypes.push('  fetchers: ' + queryType.name);
+        operationTypes.push('  query: ' + queryType.name);
       }
 
       var mutationType = schema.getMutationType();
@@ -11224,7 +11224,7 @@ var GraphiQLSubscriptionsFetcher =
      * a common naming convention:
      *
      *   schema {
- *     fetchers: Query
+ *     query: Query
  *     mutation: Mutation
  *   }
      *
@@ -11676,7 +11676,7 @@ var GraphiQLSubscriptionsFetcher =
     }
 
     function undefinedFieldMessage(fieldName, type, suggestedTypeNames, suggestedFieldNames) {
-      var message = 'Cannot fetchers field "' + fieldName + '" on type "' + type + '".';
+      var message = 'Cannot query field "' + fieldName + '" on type "' + type + '".';
       if (suggestedTypeNames.length !== 0) {
         var suggestions = (0, _quotedOrList2.default)(suggestedTypeNames);
         message += ' Did you mean to use an inline fragment on ' + suggestions + '?';
@@ -12212,7 +12212,7 @@ var GraphiQLSubscriptionsFetcher =
      * Lone anonymous operation
      *
      * A GraphQL document is only valid if when it contains an anonymous operation
-     * (the fetchers short-hand) that it contains only that one operation definition.
+     * (the query short-hand) that it contains only that one operation definition.
      */
 
     /**
@@ -12633,7 +12633,7 @@ var GraphiQLSubscriptionsFetcher =
     /**
      * Algorithm:
      *
-     * Conflicts occur when two fields exist in a fetchers which will produce the same
+     * Conflicts occur when two fields exist in a query which will produce the same
      * response name, but represent differing values, thus creating a conflict.
      * The algorithm below finds all conflicts via making a series of comparisons
      * between fields. In order to compare as few fields as possible, this makes
