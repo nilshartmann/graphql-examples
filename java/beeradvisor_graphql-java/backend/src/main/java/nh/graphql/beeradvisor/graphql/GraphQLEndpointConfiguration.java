@@ -29,7 +29,7 @@ public class GraphQLEndpointConfiguration {
     }
 
     // --- WEB SOCKET (for Subscriptions) ---------------------------------------------------------------------------
-    // @Bean
+    @Bean
     public ServerEndpointRegistration serverEndpointRegistration(GraphQLSchema schema) {
         final DefaultGraphQLSchemaProvider schemaProvider = new DefaultGraphQLSchemaProvider(schema);
         final GraphQLQueryInvoker queryInvoker = GraphQLQueryInvoker.newBuilder().build();
@@ -38,7 +38,7 @@ public class GraphQLEndpointConfiguration {
         return new GraphQLWsServerEndpointRegistration("/subscriptions", websocketServlet);
     }
 
-//    @Bean
+    @Bean
     @ConditionalOnMissingBean
     public ServerEndpointExporter serverEndpointExporter() {
         return new ServerEndpointExporter();

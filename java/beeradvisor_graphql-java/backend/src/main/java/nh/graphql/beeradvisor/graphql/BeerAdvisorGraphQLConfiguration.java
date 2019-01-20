@@ -5,7 +5,6 @@ import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
-import graphql.servlet.GraphQLHttpServlet;
 import nh.graphql.beeradvisor.auth.graphql.LoginDataFetchers;
 import nh.graphql.beeradvisor.graphql.fetchers.BeerAdvisorDataFetcher;
 import nh.graphql.beeradvisor.graphql.fetchers.BeerDataFetchers;
@@ -14,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
@@ -77,12 +75,11 @@ public class BeerAdvisorGraphQLConfiguration {
                 .dataFetcher("beers", shopFieldDataFetchers.beersFetcher()))
             .type(newTypeWiring("Mutation")
                 .dataFetcher("login", loginDataFetchers.getLoginDataFetcher())
-                .dataFetcher("addRating", beerAdvisorDataFetcher.addRatingMutationFetcher())
+                .dataFetcher("addRating", beerAdvisorDataFetcher.addRatingMutationFetcher()))
+            .type(newTypeWiring("Subscription")
+                .dataFetcher("newRatings", beerAdvisorDataFetcher.newRatingsSubscriptionFetcher())
+                .dataFetcher("onNewRating", beerAdvisorDataFetcher.onNewRatingSubscriptionFetcher())
             )
-//            .type(newTypeWiring("Subscription")
-//                .dataFetcher("newRatings", beerAdvisorDataFetcher.newRatingsSubscriptionFetcher())
-//                .dataFetcher("onNewRating", beerAdvisorDataFetcher.onNewRatingSubscriptionFetcher())
-//            )
             .build();
 
         return runtimeWiring;
