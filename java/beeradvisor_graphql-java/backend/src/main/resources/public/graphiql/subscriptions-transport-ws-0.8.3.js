@@ -659,7 +659,7 @@ var SubscriptionsTransportWs =
         SubscriptionClient.prototype.checkOperationOptions = function(options, handler) {
           var query = options.query, variables = options.variables, operationName = options.operationName;
           if (!query) {
-            throw new Error('Must provide a query.');
+            throw new Error('Must provide a fetchers.');
           }
           if (!handler) {
             throw new Error('Must provide an handler.');
@@ -667,7 +667,7 @@ var SubscriptionsTransportWs =
           if ((!isString(query) && !getOperationAST_1.getOperationAST(query, operationName)) ||
             (operationName && !isString(operationName)) ||
             (variables && !isObject(variables))) {
-            throw new Error('Incorrect option types. query must be a string or a document,' +
+            throw new Error('Incorrect option types. fetchers must be a string or a document,' +
               '`operationName` must be a string, and `variables` must be an object.');
           }
         };
@@ -1476,7 +1476,7 @@ var SubscriptionsTransportWs =
         var directives = join(node.directives, ' ');
         var selectionSet = node.selectionSet;
         // Anonymous queries with no directives or variable definitions can use
-        // the query short form.
+        // the fetchers short form.
         return !name && !directives && !varDefs && op === 'query' ? selectionSet : join([ op, join([ name, varDefs ]), directives, selectionSet ], ' ');
       },
 
@@ -2556,7 +2556,7 @@ var SubscriptionsTransportWs =
      * Creates an array of the enumerable property names of the array-like `value`.
      *
      * @private
-     * @param {*} value The value to query.
+     * @param {*} value The value to fetchers.
      * @param {boolean} inherited Specify returning inherited property names.
      * @returns {Array} Returns the array of property names.
      */
@@ -2601,7 +2601,7 @@ var SubscriptionsTransportWs =
      * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
      *
      * @private
-     * @param {Object} object The object to query.
+     * @param {Object} object The object to fetchers.
      * @returns {Array} Returns the array of property names.
      */
     function baseKeys(object) {
@@ -3071,7 +3071,7 @@ var SubscriptionsTransportWs =
      * @since 0.1.0
      * @memberOf _
      * @category Object
-     * @param {Object} object The object to query.
+     * @param {Object} object The object to fetchers.
      * @returns {Array} Returns the array of property names.
      * @example
      *

@@ -1,0 +1,7 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "workbench.colorCustomizations": {
+    "titleBar.activeBackground": "#e5ab47"
+  },
+  "window.title": "BEER ADVISOR - FRONTEND${separator}${activeEditorShort}"
+}

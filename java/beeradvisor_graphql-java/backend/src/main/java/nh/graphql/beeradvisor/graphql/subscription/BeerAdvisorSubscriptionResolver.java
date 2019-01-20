@@ -1,6 +1,5 @@
 package nh.graphql.beeradvisor.graphql.subscription;
 
-import com.coxautodev.graphql.tools.GraphQLSubscriptionResolver;
 import nh.graphql.beeradvisor.domain.Rating;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Component
-public class BeerAdvisorSubscriptionResolver implements GraphQLSubscriptionResolver {
+public class BeerAdvisorSubscriptionResolver {
   private final Logger logger = LoggerFactory.getLogger(getClass());
 
   private final RatingPublisher ratingPublisher;

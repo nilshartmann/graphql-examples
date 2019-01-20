@@ -1,0 +1,123 @@
+type Authentication {
+  userId: String!
+  username: String!
+  authToken: String!
+}
+
+type LoginResponse {
+  authentication: Authentication
+  error: String
+}
+
+# A User in our system that is allowed to leave Ratings
+type User {
+  id: ID!
+  login: String!
+  name: String!
+}
+
+# A Rating that has been written by an Author for a Beer
+type Rating {
+  # An immutable unique Id
+  id: ID!
+
+  # The  beer, this domain is written for
+  beer: Beer!
+
+  # Who has written this domain?
+  author: User!
+
+  # The domain itself
+  comment: String!
+
+  stars: Int!
+}
+
+# Representation of a Beer that has been rated
+type Beer {
+  # Unique, immutable Id, that identifies this Beer
+  id: ID!
+
+  # The name of the beer
+  name: String!
+
+  # The Beer's price
+  price: String!
+
+  # List of all Ratings for this Beer
+  ratings: [Rating!]!
+
+  # Average Rating of this Beer
+  averageStars: Int!
+
+  # List of Ratings that has at exactly 'stars' Stars
+  ratingsWithStars(stars: Int!): [Rating!]!
+
+  # List of Shops that sell this Beer
+  shops: [Shop!]!
+}
+
+input AddRatingInput {
+  beerId: ID!
+  userId: ID!
+  comment: String!
+  stars: Int!
+}
+
+# Represents a postal address, used to find Shops that sell Beer
+type Address {
+  # The street
+  street: String!
+
+  # Postal code
+  postalCode: String!
+
+  # Name of the city
+  city: String!
+
+  # Country of this Address
+  country: String!
+}
+
+# A registered Shop that sells Beer
+type Shop {
+  # Unique ID of this shop
+  id: ID!
+
+  # The name of the shop
+  name: String!
+
+  # Address of the shop
+  address: Address!
+
+  # All Beers this shop sells
+  beers: [Beer!]!
+}
+
+type Query {
+  # Returns a specific beer, identified by its id
+  beer(beerId: ID!): Beer
+
+  # Returns all beers in our system
+  beers: [Beer!]!
+
+  # Return all Shops in our systems
+  shops: [Shop!]!
+
+  # Return the shop with the specified ID or null if it does not exists
+  shop(shopId: ID!): Shop
+}
+
+
+type Mutation {
+  # Login with the specified username
+  login(username: String!): LoginResponse!
+
+  # Add a new Rating to a Beer and returns the new Rating
+  addRating(ratingInput: AddRatingInput): Rating!
+}
+
+type Subscription {
+  onNewRating: Rating!
+  newRatings(beerId: ID!): Rating!
+}

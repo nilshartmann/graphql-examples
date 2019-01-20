@@ -1,0 +1,26 @@
+.Form {
+  font-size: 1.5rem;
+
+  .Hint {
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+  }
+
+  fieldset div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    justify-content: flex-end;
+  }
+
+  label {
+    order: 1;
+    width: 8em;
+    padding-right: 0.5em;
+  }
+
+  input {
+    order: 2;
+    flex: 1 1 auto;
+  }
+}

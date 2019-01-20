@@ -1,0 +1,37 @@
+.UpperHeader {
+  height: 64px;
+
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+
+  padding-right: 1rem;
+}
+
+.MainHeader {
+  height: 8rem;
+  background-color: rgba(0, 0, 0, 0.15);
+  text-align: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: 4px solid var(--color-one);
+  border-bottom: 4px solid var(--color-one);
+
+  h1 {
+    font-size: 4rem;
+    font-weight: normal;
+    color: var(--color-one);
+    letter-spacing: 3.7px;
+    font-family: Anton;
+    text-transform: uppercase;
+    line-height: 1;
+
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
