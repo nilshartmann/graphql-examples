@@ -3,14 +3,13 @@ package nh.graphql.beeradvisor.auth;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 
 /**
@@ -25,10 +24,8 @@ public class JwtTokenService {
 
   private final SecretKey secretKey;
 
-  public JwtTokenService(@Value("${jwt.secret}") String jwtSecret) {
-    final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
-    byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(jwtSecret);
-    secretKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+  public JwtTokenService() {
+      this.secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
   }
 
   public String createTokenForUser(User user) {
