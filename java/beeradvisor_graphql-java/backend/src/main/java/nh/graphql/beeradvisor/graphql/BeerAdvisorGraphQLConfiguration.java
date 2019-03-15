@@ -1,5 +1,8 @@
 package nh.graphql.beeradvisor.graphql;
 
+import graphql.ExecutionInput;
+import graphql.ExecutionResult;
+import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
@@ -17,7 +20,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 
+import javax.annotation.PostConstruct;
 import java.io.InputStreamReader;
+import java.util.Map;
 
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
@@ -84,6 +89,8 @@ public class BeerAdvisorGraphQLConfiguration {
 
         return runtimeWiring;
     }
+
+
 
 //  @Bean
 //  public ServletRegistrationBean graphQLServletRegistrationBean(GraphQLSchema schema) {
