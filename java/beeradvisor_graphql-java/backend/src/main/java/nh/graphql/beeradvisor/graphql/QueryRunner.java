@@ -35,10 +35,8 @@ public class QueryRunner {
 				.query
 					("query { beers { id name ratings { stars } } }").build();
 
-		ExecutionResult executionResult =
-			graphQL.execute(executionInput);
-
-		Map<String, Object> data = executionResult.getData();
+        Map<String, Object> data =
+			graphQL.execute(executionInput).toSpecification();
 
 		logger.info("\n\n\n\n{}\n\n\n\n", data);
 
