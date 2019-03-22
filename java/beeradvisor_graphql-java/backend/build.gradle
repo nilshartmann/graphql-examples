@@ -38,10 +38,10 @@ dependencies {
       'io.jsonwebtoken:jjwt-jackson:0.10.1'
 
   // GraphQL (rxjava for Subscriptions)
-  compile 'com.graphql-java:graphql-java:12.0'
+  compile 'com.graphql-java:graphql-java:11.0'
   compile "io.reactivex.rxjava2:rxjava:2.1.5"
 
   // GraphQL Servlet
-  compile 'com.graphql-java-kickstart:graphql-java-servlet:7.1.1'
+  compile 'com.graphql-java-kickstart:graphql-java-servlet:7.3.0'
 }
 
