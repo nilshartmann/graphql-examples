@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -6,23 +7,24 @@
 // ====================================================
 
 export interface OverviewPageQuery_beers {
+  __typename: "Beer";
   /**
-   * Unique, immutable Id, that identifies this Beer
+   *  Unique, immutable Id, that identifies this Beer
    */
   id: string;
   /**
-   * The name of the beer
+   *  The name of the beer
    */
   name: string;
   /**
-   * Average Rating of this Beer
+   *  Average Rating of this Beer
    */
   averageStars: number;
 }
 
 export interface OverviewPageQuery {
   /**
-   * Returns all beers in our system
+   *  Returns all beers in our system
    */
   beers: OverviewPageQuery_beers[];
 }

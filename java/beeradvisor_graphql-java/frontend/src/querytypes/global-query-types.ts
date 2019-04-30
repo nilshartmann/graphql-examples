@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 //==============================================================
@@ -7,9 +8,9 @@
 
 export interface AddRatingInput {
   beerId: string;
-  userId: string;
   comment: string;
   stars: number;
+  userId: string;
 }
 
 //==============================================================

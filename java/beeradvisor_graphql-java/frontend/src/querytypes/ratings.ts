@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -6,19 +7,21 @@
 // ====================================================
 
 export interface ratings_ratings {
+  __typename: "Rating";
   /**
-   * An immutable unique Id
+   *  An immutable unique Id
    */
   id: string;
 }
 
 export interface ratings {
+  __typename: "Beer";
   /**
-   * Unique, immutable Id, that identifies this Beer
+   *  Unique, immutable Id, that identifies this Beer
    */
   id: string;
   /**
-   * List of all Ratings for this Beer
+   *  List of all Ratings for this Beer
    */
   ratings: ratings_ratings[];
 }

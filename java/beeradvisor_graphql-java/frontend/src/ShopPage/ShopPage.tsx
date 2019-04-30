@@ -1,7 +1,7 @@
 import * as React from "react";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
-import { ShopPageQuery as ShopPageQueryResult, ShopPageQueryVariables } from "./__generated__/ShopPageQuery";
+import { ShopPageQuery as ShopPageQueryResult, ShopPageQueryVariables } from "../querytypes/ShopPageQuery";
 
 import * as styles from "./ShopPage.scss";
 import { RouteComponentProps } from "react-router";

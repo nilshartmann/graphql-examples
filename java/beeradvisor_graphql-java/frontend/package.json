@@ -26,8 +26,8 @@
     "devserver": "webpack-dev-server --content-base public/",
     "prettier": "prettier --print-width 130 --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "gql:clean": "rimraf src/querytypes/",
-    "gql:download-schema": "apollo service:download project-example-schema.json",
-    "gql:codegen": "apollo client:codegen --includes=src/** --localSchemaFile=project-example-schema.json --outputFlat --globalTypesFile=src/querytypes/global-query-types.ts --target=typescript src/querytypes/",
+    "gql:download-schema": "apollo service:download beeradvisor-schema.json",
+    "gql:codegen": "apollo client:codegen --includes=src/** --localSchemaFile=beeradvisor-schema.json --outputFlat --globalTypesFile=src/querytypes/global-query-types.ts --target=typescript src/querytypes/",
     "gql:format": "prettier --write src/querytypes/**",
     "gql": "yarn gql:clean && yarn gql:download-schema && yarn gql:codegen && yarn gql:format"
   },

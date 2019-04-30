@@ -1,4 +1,5 @@
 /* tslint:disable */
+/* eslint-disable */
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -6,50 +7,53 @@
 // ====================================================
 
 export interface ShopPageQuery_shop_address {
+  __typename: "Address";
   /**
-   * The street
+   *  The street
    */
   street: string;
   /**
-   * Postal code
+   *  Postal code
    */
   postalCode: string;
   /**
-   * Name of the city
+   *  Name of the city
    */
   city: string;
   /**
-   * Country of this Address
+   *  Country of this Address
    */
   country: string;
 }
 
 export interface ShopPageQuery_shop_beers {
+  __typename: "Beer";
   /**
-   * Unique, immutable Id, that identifies this Beer
+   *  Unique, immutable Id, that identifies this Beer
    */
   id: string;
   /**
-   * The name of the beer
+   *  The name of the beer
    */
   name: string;
 }
 
 export interface ShopPageQuery_shop {
+  __typename: "Shop";
   /**
-   * Unique ID of this shop
+   *  Unique ID of this shop
    */
   id: string;
   /**
-   * The name of the shop
+   *  The name of the shop
    */
   name: string;
   /**
-   * Address of the shop
+   *  Address of the shop
    */
   address: ShopPageQuery_shop_address;
   /**
-   * All Beers this shop sells
+   *  All Beers this shop sells
    */
   beers: ShopPageQuery_shop_beers[];
 }

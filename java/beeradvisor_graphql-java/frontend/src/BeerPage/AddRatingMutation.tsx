@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import {
-  AddRatingMutation as AddRatingMutationResult,
-  AddRatingMutationVariables,
-  AddRatingMutation_addRating
-} from "./__generated__/AddRatingMutation";
 import { Mutation, MutationFn, MutationResult } from "react-apollo";
 import gql from "graphql-tag";
+import {
+	AddRatingMutation as AddRatingMutationResult,
+	AddRatingMutation_addRating,
+	AddRatingMutationVariables
+} from "../querytypes/AddRatingMutation";
 const ADD_RATING_MUTATION = gql`
   mutation AddRatingMutation($input: AddRatingInput!) {
     addRating(ratingInput: $input) {

@@ -3,7 +3,7 @@ import * as styles from "./Beer.scss";
 
 import RatingForm from "./RatingForm";
 
-import { BeerPageQuery_beer as BeerData, BeerPageQuery_beer_shops as ShopData } from "./__generated__/BeerPageQuery";
+import { BeerPageQuery_beer as BeerData, BeerPageQuery_beer_shops as ShopData } from "../querytypes/BeerPageQuery";
 import AddRatingMutation from "./AddRatingMutation";
 import Rating from "./Rating";
 import { AuthContextConsumer } from "../AuthContext";
@@ -72,7 +72,9 @@ export default class Beer extends React.Component<BeerProps> {
             </div>
             <div className={styles.Ratings}>
               <h1>What customers say:</h1>
-              {ratings.map(rating => <Rating key={rating.id} rating={rating} />)}
+              {ratings.map(rating => (
+                <Rating key={rating.id} rating={rating} />
+              ))}
             </div>
 
             <h1>

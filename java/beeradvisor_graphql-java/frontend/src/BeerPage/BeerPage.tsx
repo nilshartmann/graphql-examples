@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import { BeerPageQuery as BeerPageQueryResult } from "./__generated__/BeerPageQuery";
+import { BeerPageQuery as BeerPageQueryResult } from "../querytypes/BeerPageQuery";
 import Beer from "../BeerPage/Beer";
-import { RatingSubscription as RatingSubscriptionResult } from "./__generated__/RatingSubscription";
+import { RatingSubscription as RatingSubscriptionResult } from "../querytypes/RatingSubscription";
 import { RouteComponentProps } from "react-router";
 
 const BEER_PAGE_QUERY = gql`
@@ -47,8 +47,7 @@ const RATING_SUBSCRIPTION = gql`
   }
 `;
 
-
-interface BeerPageProps extends RouteComponentProps<{ beerId: string }> { }
+interface BeerPageProps extends RouteComponentProps<{ beerId: string }> {}
 
 const BeerPage = ({
   history,
@@ -56,55 +55,55 @@ const BeerPage = ({
     params: { beerId }
   }
 }: BeerPageProps) => (
-    <div>
-      <Query<BeerPageQueryResult> query={BEER_PAGE_QUERY} variables={{ beerId: beerId }} fetchPolicy="cache-and-network">
-        {({ loading, error, data, subscribeToMore }) => {
-          if (loading) {
-            return <h1>Loading...</h1>;
-          }
-          if (error) {
-            console.error(error);
-            return <h1>Error! {error.message}</h1>;
-          }
+  <div>
+    <Query<BeerPageQueryResult> query={BEER_PAGE_QUERY} variables={{ beerId: beerId }} fetchPolicy="cache-and-network">
+      {({ loading, error, data, subscribeToMore }) => {
+        if (loading) {
+          return <h1>Loading...</h1>;
+        }
+        if (error) {
+          console.error(error);
+          return <h1>Error! {error.message}</h1>;
+        }
 
-          const { beer } = data!;
+        const { beer } = data!;
 
-          if (beer === null) {
-            //
-            return <h1>Beer Not found</h1>;
-          }
+        if (beer === null) {
+          //
+          return <h1>Beer Not found</h1>;
+        }
 
-          return (
-            <Beer
-              beer={beer}
-              onShopClicked={newShopId => history.push(`/shop/${newShopId}`)}
-              subscribeToNewData={() =>
-                subscribeToMore({
-                  document: RATING_SUBSCRIPTION,
-                  variables: {
-                    beerId
-                  },
-                  updateQuery: (prev, { subscriptionData }) => {
-                    if (prev.beer === null) {
-                      return prev;
-                    }
-                    // wrong type in Apollo typedefs ...
-                    const newRating: RatingSubscriptionResult = subscriptionData.data as any;
-                    const newRatings = [...prev.beer.ratings, newRating.rating];
-                    return {
-                      beer: {
-                        ...prev.beer,
-                        ratings: newRatings
-                      }
-                    };
+        return (
+          <Beer
+            beer={beer}
+            onShopClicked={newShopId => history.push(`/shop/${newShopId}`)}
+            subscribeToNewData={() =>
+              subscribeToMore({
+                document: RATING_SUBSCRIPTION,
+                variables: {
+                  beerId
+                },
+                updateQuery: (prev, { subscriptionData }) => {
+                  if (prev.beer === null) {
+                    return prev;
                   }
-                })
-              }
-            />
-          );
-        }}
-      </Query>
-    </div>
-  );
+                  // wrong type in Apollo typedefs ...
+                  const newRating: RatingSubscriptionResult = subscriptionData.data as any;
+                  const newRatings = [...prev.beer.ratings, newRating.rating];
+                  return {
+                    beer: {
+                      ...prev.beer,
+                      ratings: newRatings
+                    }
+                  };
+                }
+              })
+            }
+          />
+        );
+      }}
+    </Query>
+  </div>
+);
 
 export default BeerPage;
