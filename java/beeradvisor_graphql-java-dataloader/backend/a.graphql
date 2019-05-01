@@ -1,0 +1,10 @@
+query {
+    beers {
+        id
+        name
+        ratings
+        {
+            comment
+        }
+    }
+}

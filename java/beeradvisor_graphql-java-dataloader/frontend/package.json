@@ -1,0 +1,83 @@
+{
+  "name": "apollo-graphql-schema-stitching-frontend",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "email": "nils@nilshartmann.net",
+    "name": "Nils Hartmann",
+    "url": "https://nilshartmann.net"
+  },
+  "description": "Apollo GraphQL Schema Stitching Example",
+  "keywords": [
+    "react",
+    "javascript",
+    "typescript",
+    "starter-kit"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nilshartmann/apollo-graphql-schema-stitching.git"
+  },
+  "scripts": {
+    "start": "yarn devserver",
+    "clean": "rimraf -rf public/dist/",
+    "dist": "webpack",
+    "webpack": "webpack --watch",
+    "devserver": "webpack-dev-server --content-base public/",
+    "prettier": "prettier --print-width 130 --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "gql:clean": "rimraf src/querytypes/",
+    "gql:download-schema": "apollo service:download beeradvisor-schema.json",
+    "gql:codegen": "apollo client:codegen --includes=src/** --localSchemaFile=beeradvisor-schema.json --outputFlat --globalTypesFile=src/querytypes/global-query-types.ts --target=typescript src/querytypes/",
+    "gql:format": "prettier --write src/querytypes/**",
+    "gql": "yarn gql:clean && yarn gql:download-schema && yarn gql:codegen && yarn gql:format"
+  },
+  "devDependencies": {
+    "@types/webpack-env": "1.13.2",
+    "apollo": "^2.8.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "graphql-tools": "^4.0.0",
+    "html-webpack-harddisk-plugin": "^0.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jscodeshift": "^0.5.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.7.2",
+    "postcss-loader": "^2.1.5",
+    "prettier": "^1.13.5",
+    "rimraf": "2.6.2",
+    "sass-loader": "^7.0.1",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.21.0",
+    "tslint": "5.8.0",
+    "typescript": "^3.4.1",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.4",
+    "@types/graphql": "^14.0.3",
+    "@types/prop-types": "^15.5.7",
+    "@types/react": "^16.8.11",
+    "@types/react-dom": "^16.8.3",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/react-tooltip": "^3.3.5",
+    "@types/ws": "^6.0.0",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link": "^1.2.11",
+    "apollo-link-context": "^1.0.17",
+    "apollo-link-error": "^1.1.10",
+    "apollo-link-http": "^1.5.14",
+    "apollo-link-ws": "^1.0.17",
+    "graphql": "^14.2.1",
+    "graphql-tag": "^2.10.0",
+    "react": "^16.8.6",
+    "react-apollo": "^2.5.3",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^4.3.1",
+    "react-tooltip": "^3.6.1",
+    "subscriptions-transport-ws": "^0.9.14"
+  }
+}

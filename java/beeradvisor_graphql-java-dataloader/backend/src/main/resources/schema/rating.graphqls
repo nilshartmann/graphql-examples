@@ -1,0 +1,71 @@
+# https://github.com/graphql-java/graphql-java/releases/tag/v9.0
+
+# A User in our system that is allowed to leave Ratings
+type User {
+  id: ID!
+  login: String!
+  name: String!
+}
+
+# A Rating that has been written by an Author for a Beer
+type Rating {
+  # An immutable unique Id
+  id: ID!
+
+  # The  beer, this domain is written for
+  beer: Beer!
+
+  # Who has written this domain?
+  author: User!
+
+  # The domain itself
+  comment: String!
+
+  stars: Int!
+}
+
+# Representation of a Beer that has been rated
+type Beer {
+  # Unique, immutable Id, that identifies this Beer
+  id: ID!
+
+  # The name of the beer
+  name: String!
+
+  # The Beer's price
+  price: String!
+
+  # List of all Ratings for this Beer
+  ratings: [Rating!]!
+
+  # Average Rating of this Beer
+  averageStars: Int!
+
+  # List of Ratings that has at exactly 'stars' Stars
+  ratingsWithStars(stars: Int!): [Rating!]!
+}
+
+type Query {
+  # Returns a specific beer, identified by its id
+  beer(beerId: ID!): Beer
+
+  # Returns all beers in our system
+  beers: [Beer!]!
+}
+
+input AddRatingInput {
+  beerId: ID!
+  userId: ID!
+  comment: String!
+  stars: Int!
+}
+
+type Mutation {
+  # Add a new Rating to a Beer and returns the new Rating
+  addRating(ratingInput: AddRatingInput): Rating!
+}
+
+type Subscription {
+  onNewRating: Rating!
+  newRatings(beerId: ID!): Rating!
+}
