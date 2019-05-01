@@ -1,4 +1,4 @@
-package nh.graphql.beeradvisor.shop;
+package nh.graphql.beeradvisor.domain;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

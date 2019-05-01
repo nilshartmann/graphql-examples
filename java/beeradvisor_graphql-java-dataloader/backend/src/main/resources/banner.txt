@@ -1,12 +1,8 @@
-${AnsiStyle.BOLD}${AnsiColor.GREEN} / ___|  _ __    __ _   _ __   | |__    / _ \  | |
-${AnsiStyle.BOLD}${AnsiColor.GREEN}| |  _  | '__|  / _` | | '_ \  | '_ \  | | | | | |
-${AnsiStyle.BOLD}${AnsiColor.GREEN}| |_| | | |    | (_| | | |_) | | | | | | |_| | | |___
-${AnsiStyle.BOLD}${AnsiColor.GREEN}\____| |_|     \__,_| | .__/  |_| |_|  \__\_\ |_____|
-
-
-${AnsiStyle.BOLD}${AnsiColor.YELLOW} ,-----.                             ,---.      ,--. ,--.                                      ${AnsiColor.CYAN}  ,--.                              ,--.                         ,--.
-${AnsiStyle.BOLD}${AnsiColor.YELLOW} |  |) /_   ,---.   ,---.  ,--.--.  /  O  \   ,-|  | `--' ,--.  ,--.  ,---.   ,---.  ,--.--.   ${AnsiColor.CYAN}  `--'  ,--,--. ,--.  ,--.  ,--,--. |  |     ,--,--. ,--,--,   ,-|  |
-${AnsiStyle.BOLD}${AnsiColor.YELLOW} |  .-.  \ | .-. : | .-. : |  .--' |  .-.  | ' .-. | ,--.  \  `'  /  (  .-'  | .-. | |  .--'   ${AnsiColor.CYAN}  ,--. ' ,-.  |  \  `'  /  ' ,-.  | |  |    ' ,-.  | |      \ ' .-. |
-${AnsiStyle.BOLD}${AnsiColor.YELLOW} |  '--' / \   --. \   --. |  |    |  | |  | \ `-' | |  |   \    /   .-'  `) ' '-' ' |  |      ${AnsiColor.CYAN}  |  | \ '-'  |   \    /   \ '-'  | |  '--. \ '-'  | |  ||  | \ `-' |
-${AnsiStyle.BOLD}${AnsiColor.YELLOW} `------'   `----'  `----' `--'    `--' `--'  `---'  `--'    `--'    `----'   `---'  `--'      ${AnsiColor.CYAN}.-'  /  `--`--'    `--'     `--`--' `-----'  `--`--' `--''--'  `---'
-                                                                                               ${AnsiColor.CYAN}'---'
+${AnsiStyle.BOLD}${AnsiColor.GREEN}   _____                 _      ____  _       ${AnsiStyle.BOLD}${AnsiColor.YELLOW}  ____                           _       _
+${AnsiStyle.BOLD}${AnsiColor.GREEN}  / ____|               | |    / __ \| |      ${AnsiStyle.BOLD}${AnsiColor.YELLOW} |  _ \                 /\      | |     (_)
+${AnsiStyle.BOLD}${AnsiColor.GREEN} | |  __ _ __ __ _ _ __ | |__ | |  | | |      ${AnsiStyle.BOLD}${AnsiColor.YELLOW} | |_) | ___  ___ _ __ /  \   __| |_   ___ ___  ___  _ __
+${AnsiStyle.BOLD}${AnsiColor.GREEN} | | |_ | '__/ _` | '_ \| '_ \| |  | | |      ${AnsiStyle.BOLD}${AnsiColor.YELLOW} |  _ < / _ \/ _ \ '__/ /\ \ / _` \ \ / / / __|/ _ \| '__|
+${AnsiStyle.BOLD}${AnsiColor.GREEN} | |__| | | | (_| | |_) | | | | |__| | |____  ${AnsiStyle.BOLD}${AnsiColor.YELLOW} | |_) |  __/  __/ | / ____ \ (_| |\ V /| \__ \ (_) | |
+${AnsiStyle.BOLD}${AnsiColor.GREEN}  \_____|_|  \__,_| .__/|_| |_|\___\_\______| ${AnsiStyle.BOLD}${AnsiColor.YELLOW} |____/ \___|\___|_|/_/    \_\__,_| \_/ |_|___/\___/|_|
+${AnsiStyle.BOLD}${AnsiColor.GREEN}                  | |
+${AnsiStyle.BOLD}${AnsiColor.GREEN}                  |_|

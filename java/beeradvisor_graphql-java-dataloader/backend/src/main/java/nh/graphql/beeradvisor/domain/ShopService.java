@@ -1,4 +1,4 @@
-package nh.graphql.beeradvisor.shop;
+package nh.graphql.beeradvisor.domain;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
