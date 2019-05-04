@@ -45,12 +45,16 @@ type Beer {
   ratingsWithStars(stars: Int!): [Rating!]!
 }
 
+directive @cache on FIELD | FRAGMENT_DEFINITION | FRAGMENT_SPREAD | INLINE_FRAGMENT | QUERY
+
 type Query {
   # Returns a specific beer, identified by its id
   beer(beerId: ID!): Beer
 
   # Returns all beers in our system
   beers: [Beer!]!
+
+  ping(msg: String): String!
 }
 
 input AddRatingInput {

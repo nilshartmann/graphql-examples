@@ -1,5 +1,7 @@
 package nh.graphql.beeradvisor.domain;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -15,12 +17,17 @@ import java.util.List;
 @Service
 public class ShopService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ShopService.class);
+
   private final RestTemplate restTemplate;
   private final String shopApiUrl;
 
   public ShopService(RestTemplate restTemplate, @Value("${beeradivsor.shop.apiUrl}") String shopApiUrl) {
     this.restTemplate = restTemplate;
     this.shopApiUrl = shopApiUrl;
+
+    logger.info("USING SHOP API URL {}", this.shopApiUrl);
+
   }
 
   public Shop findShop(String shopId) {
@@ -37,10 +44,10 @@ public class ShopService {
     return shops;
   }
 
-  public List<Shop> findShopsForBeer(String beerId) {
+  public List<Shop> findShopsForBeer(List<String> beerIds) {
     ResponseEntity<List<Shop>> response = restTemplate.exchange(this.shopApiUrl + "?withBeer={beerId}", HttpMethod.GET,
         null, new ParameterizedTypeReference<List<Shop>>() {
-        }, beerId);
+        }, String.join(",", beerIds));
     List<Shop> shops = response.getBody();
     return shops;
   }

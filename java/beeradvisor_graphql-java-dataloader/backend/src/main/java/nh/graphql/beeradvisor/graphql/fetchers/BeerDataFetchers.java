@@ -1,6 +1,7 @@
 package nh.graphql.beeradvisor.graphql.fetchers;
 
 import graphql.schema.DataFetcher;
+import nh.graphql.beeradvisor.Utils;
 import nh.graphql.beeradvisor.domain.Beer;
 import nh.graphql.beeradvisor.domain.Rating;
 import nh.graphql.beeradvisor.domain.Shop;
@@ -29,7 +30,7 @@ public class BeerDataFetchers {
         return environment -> {
             Beer beer = environment.getSource();
             final String beerId = beer.getId();
-            return shopService.findShopsForBeer(beerId);
+            return shopService.findShopsForBeer(Utils.listOf(beerId));
         };
     }
 

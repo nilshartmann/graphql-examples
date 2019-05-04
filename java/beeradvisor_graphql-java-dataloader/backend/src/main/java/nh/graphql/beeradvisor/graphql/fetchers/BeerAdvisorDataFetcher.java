@@ -62,7 +62,7 @@ public class BeerAdvisorDataFetcher {
             addRatingInput.setStars((Integer)ratingInput.get("stars"));
             addRatingInput.setUserId((String)ratingInput.get("userId"));
 
-            logger.debug("Rating Input", addRatingInput);
+            logger.debug("Rating Input {}", addRatingInput);
             return ratingService.addRating(addRatingInput);
         };
     }
@@ -76,6 +76,17 @@ public class BeerAdvisorDataFetcher {
             String beerId = environment.getArgument("beerId");
             logger.info("Subscription for 'newRatings' (" + beerId + ") received");
             return this.ratingPublisher.getPublisher(beerId);
+        };
+    }
+
+    public DataFetcher<String> pingFetcher() {
+        return environment -> {
+            String msg = environment.getArgument("msg");
+            if (msg == null) {
+                return "HELLO";
+            }
+
+            return "HELLO, " + msg;
         };
     }
 }
