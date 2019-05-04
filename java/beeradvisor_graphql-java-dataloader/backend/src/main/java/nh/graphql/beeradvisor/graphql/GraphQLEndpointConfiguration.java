@@ -3,6 +3,7 @@ package nh.graphql.beeradvisor.graphql;
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.Lifecycle;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,7 @@ import javax.websocket.server.ServerEndpointConfig;
  *
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
+@ConditionalOnWebApplication
 @Configuration
 public class GraphQLEndpointConfiguration {
 
