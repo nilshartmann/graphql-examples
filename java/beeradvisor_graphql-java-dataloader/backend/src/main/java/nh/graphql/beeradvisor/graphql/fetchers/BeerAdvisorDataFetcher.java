@@ -6,6 +6,7 @@ import nh.graphql.beeradvisor.graphql.subscription.RatingPublisher;
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,13 +20,13 @@ public class BeerAdvisorDataFetcher {
     private final Logger logger = LoggerFactory.getLogger(BeerAdvisorDataFetcher.class);
 
     private final BeerRepository beerRepository;
-    private final ShopService shopService;
+    private final ShopRepository shopRepository;
     private final RatingService ratingService;
     private final RatingPublisher ratingPublisher;
 
-    public BeerAdvisorDataFetcher(BeerRepository beerRepository, ShopService shopService, RatingService ratingService, RatingPublisher ratingPublisher) {
+    public BeerAdvisorDataFetcher(BeerRepository beerRepository, ShopRepository shopRepository, RatingService ratingService, RatingPublisher ratingPublisher) {
         this.beerRepository = beerRepository;
-        this.shopService = shopService;
+        this.shopRepository = shopRepository;
         this.ratingService = ratingService;
         this.ratingPublisher = ratingPublisher;
     }
@@ -44,12 +45,12 @@ public class BeerAdvisorDataFetcher {
     public DataFetcher shopFetcher() {
         return environment -> {
             String shopId = environment.getArgument("shopId");
-            return shopService.findShop(shopId);
+            return shopRepository.findShop(shopId);
         };
     }
 
     public DataFetcher shopsFetcher() {
-        return environment -> shopService.getShops();
+        return environment -> shopRepository.findAll();
     }
 
     public DataFetcher<Rating> addRatingMutationFetcher() {

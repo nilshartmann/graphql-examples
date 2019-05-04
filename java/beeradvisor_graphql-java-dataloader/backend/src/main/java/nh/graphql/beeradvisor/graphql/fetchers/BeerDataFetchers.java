@@ -1,11 +1,10 @@
 package nh.graphql.beeradvisor.graphql.fetchers;
 
 import graphql.schema.DataFetcher;
-import nh.graphql.beeradvisor.Utils;
 import nh.graphql.beeradvisor.domain.Beer;
 import nh.graphql.beeradvisor.domain.Rating;
 import nh.graphql.beeradvisor.domain.Shop;
-import nh.graphql.beeradvisor.domain.ShopService;
+import nh.graphql.beeradvisor.domain.ShopRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -20,17 +19,17 @@ import java.util.stream.Collectors;
 public class BeerDataFetchers {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    private final ShopService shopService;
+    private final ShopRepository shopRepository;
 
-    public BeerDataFetchers(ShopService shopService) {
-        this.shopService = shopService;
+    public BeerDataFetchers(ShopRepository shopRepository) {
+        this.shopRepository = shopRepository;
     }
 
     public DataFetcher<List<Shop>> shopsFetcher() {
         return environment -> {
             Beer beer = environment.getSource();
             final String beerId = beer.getId();
-            return shopService.findShopsForBeer(Utils.listOf(beerId));
+            return shopRepository.findShopsWithBeer(beerId);
         };
     }
 

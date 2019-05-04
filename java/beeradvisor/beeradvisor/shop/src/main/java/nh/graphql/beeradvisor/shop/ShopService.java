@@ -1,4 +1,4 @@
-package nh.graphql.beeradvisor.domain;
+package nh.graphql.beeradvisor.shop;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
