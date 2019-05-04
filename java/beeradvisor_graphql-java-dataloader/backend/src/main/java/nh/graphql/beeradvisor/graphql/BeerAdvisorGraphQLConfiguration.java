@@ -8,6 +8,7 @@ import graphql.schema.idl.TypeDefinitionRegistry;
 import nh.graphql.beeradvisor.auth.graphql.LoginDataFetchers;
 import nh.graphql.beeradvisor.graphql.fetchers.BeerAdvisorDataFetcher;
 import nh.graphql.beeradvisor.graphql.fetchers.BeerDataFetchers;
+import nh.graphql.beeradvisor.graphql.fetchers.RatingDataFetchers;
 import nh.graphql.beeradvisor.graphql.fetchers.ShopFieldDataFetchers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,8 @@ public class BeerAdvisorGraphQLConfiguration {
     private ShopFieldDataFetchers shopFieldDataFetchers;
     @Autowired
     private LoginDataFetchers loginDataFetchers;
+    @Autowired
+    private RatingDataFetchers ratingDataFetchers;
 
     @Bean
     public GraphQLSchema graphQLSchema() {
@@ -65,6 +68,8 @@ public class BeerAdvisorGraphQLConfiguration {
             .type(newTypeWiring("Shop")
                 .dataFetcher("address", shopFieldDataFetchers.addressFetcher())
                 .dataFetcher("beers", shopFieldDataFetchers.beersFetcher()))
+            .type(newTypeWiring("Rating")
+                .dataFetcher("author", ratingDataFetchers.authorFetcher()))
             .type(newTypeWiring("Mutation")
                 .dataFetcher("login", loginDataFetchers.getLoginDataFetcher())
                 .dataFetcher("addRating", beerAdvisorDataFetcher.addRatingMutationFetcher()))

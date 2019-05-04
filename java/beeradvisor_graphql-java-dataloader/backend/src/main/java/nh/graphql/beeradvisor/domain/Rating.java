@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  * Represents a Rating for a single beer given by a single Author
- * 
+ *
  * @author Nils Hartmann (nils@nilshartmann.net)
  */
 @Entity
@@ -33,16 +33,15 @@ public class Rating {
   private Beer beer;
 
   @NotNull
-  @ManyToOne(fetch = FetchType.LAZY)
-  private User author;
+  private String userId;
 
   protected Rating() {
 
   }
 
-  public Rating(Beer beer, User user, String id, String comment, int stars) {
+  public Rating(Beer beer, String userId, String id, String comment, int stars) {
     this.beer = beer;
-    this.author = user;
+    this.userId = userId;
     this.id = id;
     this.comment = comment;
     this.stars = stars;
@@ -60,9 +59,9 @@ public class Rating {
     return beer;
   }
 
-  public User getAuthor() {
-    logger.info("Retunring author " + author);
-    return author;
+  public String getUserId() {
+    logger.info("Returning user id as author " + userId);
+    return this.userId;
   }
 
   public int getStars() {

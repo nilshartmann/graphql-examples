@@ -29,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private JwtTokenService jwtTokenService;
 
   @Autowired
-  private UserRepository userRepository;
+  private UserService userService;
 
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -69,7 +69,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       }
 
       String userId = jwtTokenService.getUserIdFromToken(token);
-      User user = userRepository.getUser(userId);
+      User user = userService.getUser(userId);
       if (user == null) {
         throw new BadCredentialsException("Invalid User in Token");
       }

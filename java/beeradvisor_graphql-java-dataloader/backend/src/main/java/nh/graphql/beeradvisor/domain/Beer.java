@@ -37,14 +37,14 @@ public class Beer {
     this.price = price;
   }
 
-  public Beer addRating(User user, String ratingId, String comment, int stars) {
-    Rating rating = new Rating(this, user, ratingId, comment, stars);
+  public Beer addRating(String userId, String ratingId, String comment, int stars) {
+    Rating rating = new Rating(this, userId, ratingId, comment, stars);
     this.ratings.add(rating);
     return this;
   }
 
-  public Rating addRating(User user, String comment, int stars) {
-    Rating rating = new Rating(this, user, UUID.randomUUID().toString(), comment, stars);
+  public Rating addRating(String userId,String comment, int stars) {
+    Rating rating = new Rating(this, userId, UUID.randomUUID().toString(), comment, stars);
     this.ratings.add(rating);
     return rating;
   }

@@ -9,6 +9,8 @@
       <module name="beeradvisor.test" target="1.8" />
       <module name="shop.main" target="11" />
       <module name="shop.test" target="11" />
+      <module name="userservice.main" target="1.8" />
+      <module name="userservice.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
