@@ -45,7 +45,10 @@ type Beer {
   ratingsWithStars(stars: Int!): [Rating!]!
 }
 
-directive @cache on FIELD | FRAGMENT_DEFINITION | FRAGMENT_SPREAD | INLINE_FRAGMENT | QUERY
+# Can be added to 'user' fields to skip using
+# the DataLoader/Caching for user requests
+# (For testing/demo purposes only)
+directive @skipDataLoader on FIELD | FRAGMENT_DEFINITION | FRAGMENT_SPREAD | INLINE_FRAGMENT | QUERY
 
 type Query {
   # Returns a specific beer, identified by its id

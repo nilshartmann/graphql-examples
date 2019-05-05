@@ -38,14 +38,17 @@ public class RatingDataFetchers {
     public DataFetcher authorFetcher() {
         return environment -> {
             Rating rating = environment.getSource();
+            boolean skipDataLoader = environment.getField().getDirective("skipDataLoader") != null;
             final String userId = rating.getUserId();
 
-            logger.info("Reading user (author) with id '{}'", userId);
+            if (skipDataLoader) {
+                logger.info("Reading user (author) with id '{}' WITHOUT DataLoader", userId);
+                return userService.getUser(userId);
+            }
+
+            logger.info("Reading user (author) with id '{}' WITH DataLoader", userId);
             DataLoader<String, User> dataLoader = environment.getDataLoader("user");
             return dataLoader.load(userId);
-//
-//
-//            return userService.getUser(userId);
         };
     }
 }

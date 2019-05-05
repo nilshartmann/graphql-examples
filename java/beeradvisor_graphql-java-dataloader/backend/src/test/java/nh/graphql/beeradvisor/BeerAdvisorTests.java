@@ -5,6 +5,7 @@ import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import nh.graphql.beeradvisor.auth.User;
 import nh.graphql.beeradvisor.auth.UserService;
+import nh.graphql.beeradvisor.graphql.BeerAdvisorDataLoaderConfigurer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -17,12 +18,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static nh.graphql.beeradvisor.Utils.listOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.when;
 
 /**
@@ -35,6 +40,9 @@ public class BeerAdvisorTests {
 
     @Autowired
     GraphQLSchema graphQLSchema;
+
+    @Autowired
+    BeerAdvisorDataLoaderConfigurer dataLoaderConfigurer;
 
     @MockBean
     UserService userService;
@@ -65,16 +73,14 @@ public class BeerAdvisorTests {
         return user;
     }
 
-    @Test
-    @Transactional
-    public void beerRatingsAuthor() {
-
+    private void configureUserServiceMock() {
         when(userService.findUsersWithId(anyList())).thenAnswer(
             new Answer() {
                 public Object answer(InvocationOnMock invocation) {
                     Object[] args = invocation.getArguments();
-                    Object mock = invocation.getMock();
-                    return "called with arguments: " + Arrays.toString(args);
+
+                    List<String> ids = (List<String>) args[0];
+                    return ids.stream().map(BeerAdvisorTests::mockUser).collect(Collectors.toList());
                 }
             });
 
@@ -89,6 +95,13 @@ public class BeerAdvisorTests {
                     // return "called with arguments: " + Arrays.toString(args);
                 }
             });
+    }
+
+    @Test
+    @Transactional
+    public void beerRatingsAuthor_withDataLoader() {
+
+       configureUserServiceMock();
 
         Map<String, Object> result = query("{\n" +
             "  beer(beerId: \"B1\") {\n" +
@@ -105,14 +118,35 @@ public class BeerAdvisorTests {
         assertThat(result).hasSize(1);
         assertThat(result).containsKey("data");
 
+        Mockito.verify(userService, never()).getUser(anyString());
+        Mockito.verify(userService).findUsersWithId(listOf("U1", "U2", "U3"));
+    }
+
+    @Test
+    @Transactional
+    public void beerRatingsAuthor_withoutDataLoader() {
+
+        configureUserServiceMock();
+
+        Map<String, Object> result = query("{\n" +
+            "  beer(beerId: \"B1\") {\n" +
+            "    ratings {\n" +
+            "      author @skipDataLoader {\n" +
+            "        id login name\n" +
+            "      }\n" +
+            "    }\n" +
+            "  }\n" +
+            "}\n");
+
+        System.out.println("result" + result);
+
+        assertThat(result).hasSize(1);
+        assertThat(result).containsKey("data");
+
+        Mockito.verify(userService, never()).findUsersWithId(anyList());
         Mockito.verify(userService).getUser("U1");
         Mockito.verify(userService).getUser("U2");
         Mockito.verify(userService).getUser("U3");
-//        Mockito.verify(shopService).findShopsForBeer(listOf("B2"));
-//        Mockito.verify(shopService).findShopsForBeer(listOf("B3"));
-//        Mockito.verify(shopService).findShopsForBeer(listOf("B4"));
-//        Mockito.verify(shopService).findShopsForBeer(listOf("B5"));
-//        Mockito.verify(shopService).findShopsForBeer(listOf("B6"));
     }
 
     private Map<String, Object> query(String q) {
@@ -120,6 +154,7 @@ public class BeerAdvisorTests {
 
         ExecutionInput executionInput =
             ExecutionInput.newExecutionInput()
+                .dataLoaderRegistry(dataLoaderConfigurer.configureDataLoader(Optional.empty()))
                 .query
                     ("query " + q).build();
 

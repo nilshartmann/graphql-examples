@@ -2,7 +2,6 @@ package nh.graphql.beeradvisor.graphql;
 
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;
-import nh.graphql.beeradvisor.graphql.fetchers.RatingDataFetchers;
 import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -32,18 +31,14 @@ public class GraphQLEndpointConfiguration {
 
     // --- SERVLET --------------------------------------------------------------------------------------------------
     @Bean
-    ServletRegistrationBean<GraphQLHttpServlet> graphQLServletRegistrationBean(GraphQLSchema schema, RatingDataFetchers ratingDataFetchers) {
+    ServletRegistrationBean<GraphQLHttpServlet> graphQLServletRegistrationBean(GraphQLSchema schema, BeerAdvisorDataLoaderConfigurer dataLoaderConfigurer) {
 
         GraphQLConfiguration config = GraphQLConfiguration.with(schema).with(new DefaultGraphQLContextBuilder() {
 
             private GraphQLContext setupDataLoaderRegistry(final GraphQLContext context) {
-                final DataLoaderRegistry dataLoaderRegistry = context.getDataLoaderRegistry().orElse(new DataLoaderRegistry());
-                DataLoader dl = DataLoader.newDataLoader(ratingDataFetchers.userBatchLoader);
-                dataLoaderRegistry.register("user", dl);
+                final DataLoaderRegistry dataLoaderRegistry = dataLoaderConfigurer.configureDataLoader(context.getDataLoaderRegistry());
                 context.setDataLoaderRegistry(dataLoaderRegistry);
-
                 return context;
-
             }
 
 
@@ -56,7 +51,6 @@ public class GraphQLEndpointConfiguration {
             @Override
             public GraphQLContext build(Session session, HandshakeRequest handshakeRequest) {
                 GraphQLContext context = super.build(session, handshakeRequest);
-
                 return setupDataLoaderRegistry(context);
             }
 
