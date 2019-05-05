@@ -2,6 +2,9 @@ package nh.graphql.beeradvisor.graphql;
 
 import graphql.schema.GraphQLSchema;
 import graphql.servlet.*;
+import nh.graphql.beeradvisor.graphql.fetchers.RatingDataFetchers;
+import org.dataloader.DataLoader;
+import org.dataloader.DataLoaderRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -11,7 +14,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 import org.springframework.web.socket.server.standard.ServerEndpointRegistration;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.websocket.HandshakeResponse;
+import javax.websocket.Session;
 import javax.websocket.server.HandshakeRequest;
 import javax.websocket.server.ServerEndpointConfig;
 
@@ -26,8 +32,51 @@ public class GraphQLEndpointConfiguration {
 
     // --- SERVLET --------------------------------------------------------------------------------------------------
     @Bean
-    ServletRegistrationBean<GraphQLHttpServlet> graphQLServletRegistrationBean(GraphQLSchema schema) {
-        return new ServletRegistrationBean<>(GraphQLHttpServlet.with(schema), "/graphql");
+    ServletRegistrationBean<GraphQLHttpServlet> graphQLServletRegistrationBean(GraphQLSchema schema, RatingDataFetchers ratingDataFetchers) {
+
+        GraphQLConfiguration config = GraphQLConfiguration.with(schema).with(new DefaultGraphQLContextBuilder() {
+
+            private GraphQLContext setupDataLoaderRegistry(final GraphQLContext context) {
+                final DataLoaderRegistry dataLoaderRegistry = context.getDataLoaderRegistry().orElse(new DataLoaderRegistry());
+                DataLoader dl = DataLoader.newDataLoader(ratingDataFetchers.userBatchLoader);
+                dataLoaderRegistry.register("user", dl);
+                context.setDataLoaderRegistry(dataLoaderRegistry);
+
+                return context;
+
+            }
+
+
+            @Override
+            public GraphQLContext build(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+                GraphQLContext context = super.build(httpServletRequest, httpServletResponse);
+                return setupDataLoaderRegistry(context);
+            }
+
+            @Override
+            public GraphQLContext build(Session session, HandshakeRequest handshakeRequest) {
+                GraphQLContext context = super.build(session, handshakeRequest);
+
+                return setupDataLoaderRegistry(context);
+            }
+
+            @Override
+            public GraphQLContext build() {
+                GraphQLContext context = super.build();
+                return setupDataLoaderRegistry(context);
+            }
+        }).build();
+
+        return new ServletRegistrationBean<>(GraphQLHttpServlet.with(config), "/graphql");
+
+//        return new ServletRegistrationBean<>(GraphQLHttpServlet.with(
+//            GraphQLConfiguration.with(
+//
+//            ).build()
+//
+//        )with(schema)
+//            .
+//            , "/graphql");
     }
 
     // --- WEB SOCKET (for Subscriptions) ---------------------------------------------------------------------------
