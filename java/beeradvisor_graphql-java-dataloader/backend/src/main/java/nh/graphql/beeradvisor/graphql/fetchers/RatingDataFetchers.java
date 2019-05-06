@@ -28,7 +28,7 @@ public class RatingDataFetchers {
 
     public BatchLoader<String, User> userBatchLoader = new BatchLoader<String, User>() {
         @Override
-        public CompletionStage<List<User>> load(List<String> ids) {
+        public CompletableFuture<List<User>> load(List<String> ids) {
             logger.info("Batch Loading Users with Ids '{}'", ids);
             return CompletableFuture.supplyAsync(() -> userService.findUsersWithId(ids));
         }
