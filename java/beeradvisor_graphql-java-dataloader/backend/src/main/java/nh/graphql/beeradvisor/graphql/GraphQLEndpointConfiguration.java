@@ -29,37 +29,45 @@ import javax.websocket.server.ServerEndpointConfig;
 @Configuration
 public class GraphQLEndpointConfiguration {
 
+    class BeerAdvisorContextBuilder extends DefaultGraphQLContextBuilder {
+
+        private final BeerAdvisorDataLoaderConfigurer dataLoaderConfigurer;
+
+        private BeerAdvisorContextBuilder(BeerAdvisorDataLoaderConfigurer dataLoaderConfigurer) {
+            this.dataLoaderConfigurer = dataLoaderConfigurer;
+        }
+
+        private GraphQLContext setupDataLoaderRegistry(final GraphQLContext context) {
+            final DataLoaderRegistry dataLoaderRegistry = dataLoaderConfigurer.configureDataLoader(context.getDataLoaderRegistry());
+            context.setDataLoaderRegistry(dataLoaderRegistry);
+            return context;
+        }
+
+
+        @Override
+        public GraphQLContext build(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+            GraphQLContext context = super.build(httpServletRequest, httpServletResponse);
+            return setupDataLoaderRegistry(context);
+        }
+
+        @Override
+        public GraphQLContext build(Session session, HandshakeRequest handshakeRequest) {
+            GraphQLContext context = super.build(session, handshakeRequest);
+            return setupDataLoaderRegistry(context);
+        }
+
+        @Override
+        public GraphQLContext build() {
+            GraphQLContext context = super.build();
+            return setupDataLoaderRegistry(context);
+        }
+    }
+
     // --- SERVLET --------------------------------------------------------------------------------------------------
     @Bean
     ServletRegistrationBean<GraphQLHttpServlet> graphQLServletRegistrationBean(GraphQLSchema schema, BeerAdvisorDataLoaderConfigurer dataLoaderConfigurer) {
 
-        GraphQLConfiguration config = GraphQLConfiguration.with(schema).with(new DefaultGraphQLContextBuilder() {
-
-            private GraphQLContext setupDataLoaderRegistry(final GraphQLContext context) {
-                final DataLoaderRegistry dataLoaderRegistry = dataLoaderConfigurer.configureDataLoader(context.getDataLoaderRegistry());
-                context.setDataLoaderRegistry(dataLoaderRegistry);
-                return context;
-            }
-
-
-            @Override
-            public GraphQLContext build(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
-                GraphQLContext context = super.build(httpServletRequest, httpServletResponse);
-                return setupDataLoaderRegistry(context);
-            }
-
-            @Override
-            public GraphQLContext build(Session session, HandshakeRequest handshakeRequest) {
-                GraphQLContext context = super.build(session, handshakeRequest);
-                return setupDataLoaderRegistry(context);
-            }
-
-            @Override
-            public GraphQLContext build() {
-                GraphQLContext context = super.build();
-                return setupDataLoaderRegistry(context);
-            }
-        }).build();
+        GraphQLConfiguration config = GraphQLConfiguration.with(schema).with(new BeerAdvisorContextBuilder(dataLoaderConfigurer)).build();
 
         return new ServletRegistrationBean<>(GraphQLHttpServlet.with(config), "/graphql");
 
@@ -75,11 +83,14 @@ public class GraphQLEndpointConfiguration {
 
     // --- WEB SOCKET (for Subscriptions) ---------------------------------------------------------------------------
     @Bean
-    public ServerEndpointRegistration serverEndpointRegistration(GraphQLSchema schema) {
+    public ServerEndpointRegistration serverEndpointRegistration(GraphQLSchema schema, BeerAdvisorDataLoaderConfigurer dataLoaderConfigurer) {
         final DefaultGraphQLSchemaProvider schemaProvider = new DefaultGraphQLSchemaProvider(schema);
-        final GraphQLQueryInvoker queryInvoker = GraphQLQueryInvoker.newBuilder().build();
+        final GraphQLQueryInvoker queryInvoker = GraphQLQueryInvoker.newBuilder(). build();
 
-        final GraphQLWebsocketServlet websocketServlet = new GraphQLWebsocketServlet(queryInvoker, GraphQLInvocationInputFactory.newBuilder(schemaProvider).build(), GraphQLObjectMapper.newBuilder().build());
+        final GraphQLInvocationInputFactory graphQLInvocationInputFactory = GraphQLInvocationInputFactory.newBuilder(schemaProvider).withGraphQLContextBuilder(new BeerAdvisorContextBuilder(dataLoaderConfigurer)).build();
+
+
+        final GraphQLWebsocketServlet websocketServlet = new GraphQLWebsocketServlet(queryInvoker, graphQLInvocationInputFactory, GraphQLObjectMapper.newBuilder().build());
         return new GraphQLWsServerEndpointRegistration("/subscriptions", websocketServlet);
     }
 
