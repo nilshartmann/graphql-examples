@@ -30,7 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "codegen": "apollo client:codegen --target=typescript --globalTypesFile=src/global-query-types.ts querytypes"
+    "codegen": "apollo client:codegen --target=typescript --globalTypesFile=src/global-query-types.ts querytypes",
+    "codegen:watch": "apollo client:codegen --target=typescript --globalTypesFile=src/global-query-types.ts --watch querytypes"
   },
   "eslintConfig": {
     "extends": "react-app"
