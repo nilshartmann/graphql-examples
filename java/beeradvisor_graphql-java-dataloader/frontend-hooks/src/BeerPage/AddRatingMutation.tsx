@@ -1,12 +1,13 @@
 import * as React from "react";
 
-import { Mutation, MutationFn, MutationResult } from "react-apollo";
+import { MutationFunction, MutationResult } from "@apollo/react-common";
 import gql from "graphql-tag";
 import {
-	AddRatingMutation as AddRatingMutationResult,
-	AddRatingMutation_addRating,
-	AddRatingMutationVariables
+  AddRatingMutation as AddRatingMutationResult,
+  AddRatingMutation_addRating,
+  AddRatingMutationVariables
 } from "../querytypes/AddRatingMutation";
+import { Mutation } from "@apollo/react-components";
 const ADD_RATING_MUTATION = gql`
   mutation AddRatingMutation($input: AddRatingInput!) {
     addRating(ratingInput: $input) {
@@ -25,9 +26,9 @@ const ADD_RATING_MUTATION = gql`
 
 interface AddRatingMutationProps {
   children: (
-    mutateFn: MutationFn<AddRatingMutationResult, AddRatingMutationVariables>,
+    mutateFn: MutationFunction<AddRatingMutationResult, AddRatingMutationVariables>,
     result: MutationResult<AddRatingMutationResult>
-  ) => React.ReactNode;
+  ) => JSX.Element | null;
   beerId: string;
 }
 

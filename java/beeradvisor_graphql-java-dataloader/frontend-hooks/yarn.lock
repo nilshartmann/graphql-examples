@@ -2,6 +2,45 @@
 # yarn lockfile v1
 
 
+"@apollo/react-common@^0.1.0-beta.5":
+  version "0.1.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@apollo/react-common/-/react-common-0.1.0-beta.5.tgz#afa00e4e906ab910de42a6c54178f5d1e4a78fab"
+  integrity sha512-lrWNm0bedg8Jui8yvgPUOt16yXlkIGK0AFOqsRrMzaAbvLWI7kEPU+nMzXDCTABX/aC4dcDuPlARUImIBuPZmg==
+  dependencies:
+    ts-invariant "^0.4.2"
+    tslib "^1.9.3"
+
+"@apollo/react-components@^0.1.0-beta.4":
+  version "0.1.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@apollo/react-components/-/react-components-0.1.0-beta.4.tgz#6e9a002540abff5def75bb2e9dcb95e055bca730"
+  integrity sha512-lHXg4cNP7RSXXxSk/JLthl0h4JW13z56vMAJlcUzA1BK5qJQhfGn59VKzecD1NxYa2Wu35dKiNnf0V1UqFbEKA==
+  dependencies:
+    "@apollo/react-common" "^0.1.0-beta.5"
+    "@apollo/react-hooks" "^0.1.0-beta.7"
+    hoist-non-react-statics "^3.3.0"
+    prop-types "^15.7.2"
+    ts-invariant "^0.4.2"
+    tslib "^1.9.3"
+
+"@apollo/react-hoc@^0.1.0-beta.4":
+  version "0.1.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@apollo/react-hoc/-/react-hoc-0.1.0-beta.4.tgz#c3ca4a8d20a020aae2e81d861754bac92720999c"
+  integrity sha512-5h1MiNEGaoNK4r3X+95ogob8ym2bbDcQNefoc3VeH6201h/uImETbArUWlGEcU+0krDFrjBDJS1Xmo2s9S1R1g==
+  dependencies:
+    "@apollo/react-common" "^0.1.0-beta.5"
+    "@apollo/react-components" "^0.1.0-beta.4"
+    ts-invariant "^0.4.2"
+    tslib "^1.9.3"
+
+"@apollo/react-hooks@^0.1.0-beta.7":
+  version "0.1.0-beta.7"
+  resolved "https://registry.yarnpkg.com/@apollo/react-hooks/-/react-hooks-0.1.0-beta.7.tgz#431e43054f196363ecfb354e03defe39994598fa"
+  integrity sha512-AeFavSE/zoWcdf/Ml4NOtG7v8waK8DirhScGaOCVvQ6u4GaYJOUGVI9Zo3DLqq5RmPwIoe1XMpdfI6uCmuyfFw==
+  dependencies:
+    "@apollo/react-common" "^0.1.0-beta.5"
+    ts-invariant "^0.4.2"
+    tslib "^1.9.3"
+
 "@apollographql/apollo-tools@0.3.7":
   version "0.3.7"
   resolved "https://registry.yarnpkg.com/@apollographql/apollo-tools/-/apollo-tools-0.3.7.tgz#3bc9c35b9fff65febd4ddc0c1fc04677693a3d40"
@@ -7200,11 +7239,6 @@ lodash.identity@3.0.0:
   resolved "https://registry.yarnpkg.com/lodash.identity/-/lodash.identity-3.0.0.tgz#ad7bc6a4e647d79c972e1b80feef7af156267876"
   integrity sha1-rXvGpOZH15yXLhuA/u968VYmeHY=
 
-lodash.isequal@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -9484,18 +9518,6 @@ rc@^1.2.7:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
-
-react-apollo@^2.5.6:
-  version "2.5.6"
-  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.5.6.tgz#98a59d0eea31432ed001e6a033e11a58139ffc31"
-  integrity sha512-WWX5UykTtmW6+awjqEsSWSdvVyZv/vsavUgpdI4ddn4CBdz47INC+iTdJBnYaUFMB24GmqjFFSoSd98gu1xqKA==
-  dependencies:
-    apollo-utilities "^1.3.0"
-    hoist-non-react-statics "^3.3.0"
-    lodash.isequal "^4.5.0"
-    prop-types "^15.7.2"
-    ts-invariant "^0.4.2"
-    tslib "^1.9.3"
 
 react-app-polyfill@^1.0.1:
   version "1.0.1"

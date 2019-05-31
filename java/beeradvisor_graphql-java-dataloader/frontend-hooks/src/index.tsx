@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/react-hooks";
 
 import BeerRatingApp from "./BeerRatingApp";
 import { AuthProvider } from "./AuthContext";
