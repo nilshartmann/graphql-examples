@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import * as React from "react";
+import * as ReactDOM from "react-dom";
 
 import { ApolloProvider } from "react-apollo";
 
@@ -16,5 +16,5 @@ const theBeerRatingApp = (
   </ApolloProvider>
 );
 
-const mountNode = document.getElementById("root");
+const mountNode = document.getElementById("app");
 ReactDOM.render(theBeerRatingApp, mountNode);
