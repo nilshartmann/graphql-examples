@@ -55,8 +55,9 @@ type BeerPageProps = RouteComponentProps<{ beerId: string }>;
 type BeerPageQueryResult = QueryResult<BeerPageQuery, BeerPageQueryVariables>;
 
 export default function BeerPage({ history, match }: BeerPageProps) {
+  const variables = { beerId: match.params.beerId };
   const { loading, error, data, subscribeToMore }: BeerPageQueryResult = useQuery(BEER_PAGE_QUERY, {
-    variables: { beerId: match.params.beerId },
+    variables,
     fetchPolicy: "cache-and-network"
   });
 
@@ -82,9 +83,7 @@ export default function BeerPage({ history, match }: BeerPageProps) {
       subscribeToNewData={() =>
         subscribeToMore({
           document: RATING_SUBSCRIPTION,
-          variables: {
-            beerId: match.params.beerId
-          },
+          variables,
           updateQuery: (prev, { subscriptionData }) => {
             if (prev.beer === null) {
               return prev;
