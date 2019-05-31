@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { AddRatingInput } from "./global-query-types";
+import { AddRatingInput } from "./../../global-query-types";
 
 // ====================================================
 // GraphQL mutation operation: AddRatingMutation

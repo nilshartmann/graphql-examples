@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Query } from "@apollo/react-components";
 import gql from "graphql-tag";
-import { BeerPageQuery as BeerPageQueryResult } from "../querytypes/BeerPageQuery";
+import { BeerPageQuery as BeerPageQueryResult } from "./querytypes/BeerPageQuery";
 import Beer from "../BeerPage/Beer";
-import { RatingSubscription as RatingSubscriptionResult } from "../querytypes/RatingSubscription";
+import { RatingSubscription as RatingSubscriptionResult } from "./querytypes/RatingSubscription";
 import { RouteComponentProps } from "react-router";
 
 const BEER_PAGE_QUERY = gql`

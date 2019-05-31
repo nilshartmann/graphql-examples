@@ -6,7 +6,7 @@ import {
   AddRatingMutation as AddRatingMutationResult,
   AddRatingMutation_addRating,
   AddRatingMutationVariables
-} from "../querytypes/AddRatingMutation";
+} from "./querytypes/AddRatingMutation";
 import { Mutation } from "@apollo/react-components";
 const ADD_RATING_MUTATION = gql`
   mutation AddRatingMutation($input: AddRatingInput!) {

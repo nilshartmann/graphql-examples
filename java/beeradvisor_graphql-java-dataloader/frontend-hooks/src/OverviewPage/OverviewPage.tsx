@@ -1,7 +1,7 @@
 import * as React from "react";
 import gql from "graphql-tag";
 import { Query } from "@apollo/react-components";
-import { OverviewPageQuery as OverviewPageQueryResult } from "../querytypes/OverviewPageQuery";
+import { OverviewPageQuery as OverviewPageQueryResult } from "./querytypes/OverviewPageQuery";
 
 import styles from "./OverviewPage.module.scss";
 import Stars from "../components";

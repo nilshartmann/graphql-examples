@@ -1,7 +1,7 @@
 import * as React from "react";
 import styles from "./Beer.module.scss";
 
-import { BeerPageQuery_beer_ratings as BeerRatingData } from "../querytypes/BeerPageQuery";
+import { BeerPageQuery_beer_ratings as BeerRatingData } from "./querytypes/BeerPageQuery";
 import Stars from "../components";
 
 interface RatingProps {
