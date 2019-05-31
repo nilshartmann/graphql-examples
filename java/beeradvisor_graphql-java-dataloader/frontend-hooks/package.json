@@ -16,7 +16,7 @@
     "apollo-client": "^2.6.0",
     "apollo-link-http": "^1.5.14",
     "apollo-link-ws": "^1.0.17",
-    "graphql": "^14.3.1",
+    "graphql": "14.2",
     "graphql-tag": "^2.10.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -29,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "gql:codegen": "apollo client:codegen --includes=src/** --outputFlat --globalTypesFile=src/querytypes/global-query-types.ts --target=typescript src/querytypes/"
   },
   "eslintConfig": {
     "extends": "react-app"
