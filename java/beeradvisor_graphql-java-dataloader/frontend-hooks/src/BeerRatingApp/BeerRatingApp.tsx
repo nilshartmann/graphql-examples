@@ -4,10 +4,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import styles from "./BeerRatingApp.module.scss";
 import Header from "./Header";
-import BeerPage from "../BeerPage";
+import BeerPage from "BeerPage";
 import Footer from "./Footer";
-import { OverviewPage } from "../OverviewPage";
-import ShopPage from "../ShopPage";
+import { OverviewPage } from "OverviewPage";
+import ShopPage from "ShopPage";
 
 class BeerRatingApp extends React.Component {
   render() {
