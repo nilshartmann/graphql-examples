@@ -10,6 +10,12 @@
     "**/.classpath": true,
     "**/.project": true,
     "**/.settings": true,
-    "**/.factorypath": true
-  }
+    "**/.factorypath": true,
+    "*.iml": true,
+    "yarn-error.log": true,
+    "node_modules": true,
+    "yarn.lock": true,
+    "querytypes": true
+  },
+  "eslint.packageManager": "yarn"
 }
