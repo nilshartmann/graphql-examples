@@ -1,10 +1,13 @@
-import * as React from "react";
-import { Query } from "@apollo/react-components";
+import React from "react";
+import { RouteComponentProps } from "react-router-dom";
+
 import gql from "graphql-tag";
-import { BeerPageQuery as BeerPageQueryResult } from "./querytypes/BeerPageQuery";
-import Beer from "../BeerPage/Beer";
+import { useQuery } from "@apollo/react-hooks";
+import { QueryResult } from "@apollo/react-common";
+
+import Beer from "BeerPage/Beer";
+import { BeerPageQuery, BeerPageQueryVariables } from "./querytypes/BeerPageQuery";
 import { RatingSubscription as RatingSubscriptionResult } from "./querytypes/RatingSubscription";
-import { RouteComponentProps } from "react-router";
 
 const BEER_PAGE_QUERY = gql`
   query BeerPageQuery($beerId: ID!) {
@@ -48,63 +51,56 @@ const RATING_SUBSCRIPTION = gql`
   }
 `;
 
-interface BeerPageProps extends RouteComponentProps<{ beerId: string }> {}
+type BeerPageProps = RouteComponentProps<{ beerId: string }>;
+type BeerPageQueryResult = QueryResult<BeerPageQuery, BeerPageQueryVariables>;
 
-const BeerPage = ({
-  history,
-  match: {
-    params: { beerId }
+export default function BeerPage({ history, match }: BeerPageProps) {
+  const { loading, error, data, subscribeToMore }: BeerPageQueryResult = useQuery(BEER_PAGE_QUERY, {
+    variables: { beerId: match.params.beerId },
+    fetchPolicy: "cache-and-network"
+  });
+
+  if (loading) {
+    return <h1>Loading...</h1>;
   }
-}: BeerPageProps) => (
-  <div>
-    <Query<BeerPageQueryResult> query={BEER_PAGE_QUERY} variables={{ beerId: beerId }} fetchPolicy="cache-and-network">
-      {({ loading, error, data, subscribeToMore }) => {
-        if (loading) {
-          return <h1>Loading...</h1>;
-        }
-        if (error) {
-          console.error(error);
-          return <h1>Error! {error.message}</h1>;
-        }
+  if (error) {
+    console.error(error);
+    return <h1>Error! {error.message}</h1>;
+  }
 
-        const { beer } = data!;
+  const { beer } = data!;
 
-        if (beer === null) {
-          //
-          return <h1>Beer Not found</h1>;
-        }
+  if (beer === null) {
+    //
+    return <h1>Beer Not found</h1>;
+  }
 
-        return (
-          <Beer
-            beer={beer}
-            onShopClicked={newShopId => history.push(`/shop/${newShopId}`)}
-            subscribeToNewData={() =>
-              subscribeToMore({
-                document: RATING_SUBSCRIPTION,
-                variables: {
-                  beerId
-                },
-                updateQuery: (prev, { subscriptionData }) => {
-                  if (prev.beer === null) {
-                    return prev;
-                  }
-                  // wrong type in Apollo typedefs ...
-                  const newRating: RatingSubscriptionResult = subscriptionData.data as any;
-                  const newRatings = [...prev.beer.ratings, newRating.rating];
-                  return {
-                    beer: {
-                      ...prev.beer,
-                      ratings: newRatings
-                    }
-                  };
-                }
-              })
+  return (
+    <Beer
+      beer={beer}
+      onShopClicked={newShopId => history.push(`/shop/${newShopId}`)}
+      subscribeToNewData={() =>
+        subscribeToMore({
+          document: RATING_SUBSCRIPTION,
+          variables: {
+            beerId: match.params.beerId
+          },
+          updateQuery: (prev, { subscriptionData }) => {
+            if (prev.beer === null) {
+              return prev;
             }
-          />
-        );
-      }}
-    </Query>
-  </div>
-);
-
-export default BeerPage;
+            // wrong type in Apollo typedefs imho (you cannot specify own type for 'subscribeToMore' result)...
+            const newRating: RatingSubscriptionResult = subscriptionData.data as any;
+            const newRatings = [...prev.beer.ratings, newRating.rating];
+            return {
+              beer: {
+                ...prev.beer,
+                ratings: newRatings
+              }
+            };
+          }
+        })
+      }
+    />
+  );
+}
