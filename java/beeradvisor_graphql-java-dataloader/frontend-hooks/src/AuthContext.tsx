@@ -19,7 +19,7 @@ interface IAuthContext {
   login(userId: string): void;
 }
 
-const { Provider: AuthContextProvider, Consumer: AuthContextConsumer } = React.createContext<IAuthContext>({
+const AuthContext = React.createContext<IAuthContext>({
   auth: null,
   login() {}
 });
@@ -99,18 +99,23 @@ class AuthProvider extends React.Component<AuthProviderProps, AuthProviderState>
 
   render() {
     return (
-      <AuthContextProvider
+      <AuthContext.Provider
         value={{
           auth: this.state.auth,
           login: this.login
         }}
       >
         {this.props.children}
-      </AuthContextProvider>
+      </AuthContext.Provider>
     );
   }
 }
 
 const AuthProviderWithGraphQL = withApollo<{}>(AuthProvider);
 
-export { AuthProviderWithGraphQL as AuthProvider, AuthContextConsumer, setAuthToken, getAuthToken };
+function useAuthContext() {
+  const authContext = React.useContext(AuthContext);
+  return authContext;
+}
+
+export { AuthProviderWithGraphQL as AuthProvider, useAuthContext, setAuthToken, getAuthToken };

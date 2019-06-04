@@ -72,7 +72,7 @@ type AddRatingMutationProps = {
   beerId: string;
 };
 
-export default function AddRatingMutation({ children }: AddRatingMutationProps) {
+export default function AddRating({ children }: AddRatingMutationProps) {
   return (
     <Mutation<AddRatingMutationResult, AddRatingMutationVariables>
       mutation={ADD_RATING_MUTATION}
