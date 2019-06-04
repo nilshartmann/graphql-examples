@@ -27,15 +27,15 @@ export interface RatingSubscription_rating {
   id: string;
   stars: number;
   /**
-   *  The  beer, this domain is written for
+   *  The  beer, this Rating is written for
    */
   beer: RatingSubscription_rating_beer;
   /**
-   *  Who has written this domain?
+   *  Who has written this Rating?
    */
   author: RatingSubscription_rating_author;
   /**
-   *  The domain itself
+   *  A comment for this beer
    */
   comment: string;
 }

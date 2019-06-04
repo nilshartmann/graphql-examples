@@ -4,9 +4,6 @@
     {
       "type": "npm",
       "script": "codegen:watch",
-      "runOptions": {
-        "runOn": "folderOpen"
-      },
       "problemMatcher": []
     }
   ]

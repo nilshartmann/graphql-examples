@@ -8,6 +8,9 @@ import {
   AddRatingMutationVariables
 } from "./querytypes/AddRatingMutation";
 import { Mutation } from "@apollo/react-components";
+import { DataProxy } from "apollo-cache";
+import { RatingsFragment, RatingsFragment_ratings } from "./querytypes/RatingsFragment";
+
 const ADD_RATING_MUTATION = gql`
   mutation AddRatingMutation($input: AddRatingInput!) {
     addRating(ratingInput: $input) {
@@ -24,15 +27,16 @@ const ADD_RATING_MUTATION = gql`
   }
 `;
 
-interface AddRatingMutationProps {
-  children: (
-    mutateFn: MutationFunction<AddRatingMutationResult, AddRatingMutationVariables>,
-    result: MutationResult<AddRatingMutationResult>
-  ) => JSX.Element | null;
-  beerId: string;
-}
+const BEER_RATINGS_FRAGMENT = gql`
+  fragment RatingsFragment on Beer {
+    id
+    ratings {
+      id
+    }
+  }
+`;
 
-function mergeRatings(ratings: AddRatingMutation_addRating[], newRating: AddRatingMutation_addRating) {
+function mergeRatings(ratings: RatingsFragment_ratings[], newRating: AddRatingMutation_addRating) {
   if (ratings.find(r => r.id === newRating.id)) {
     // rating already contained in list
     return ratings;
@@ -41,39 +45,38 @@ function mergeRatings(ratings: AddRatingMutation_addRating[], newRating: AddRati
   return [...ratings, newRating];
 }
 
-export default function AddRatingMutation({ beerId, children }: AddRatingMutationProps) {
+function updateBeerCacheWithNewRating(cache: DataProxy, data: AddRatingMutationResult | undefined) {
+  if (!data) {
+    return;
+  }
+
+  const cacheId = `Beer:${data.addRating.beer.id}`;
+  const existingBeerInCache = cache.readFragment<RatingsFragment>({
+    id: cacheId,
+    fragment: BEER_RATINGS_FRAGMENT
+  });
+
+  const newRatings = mergeRatings(existingBeerInCache!.ratings, data.addRating);
+  cache.writeFragment({
+    id: cacheId,
+    fragment: BEER_RATINGS_FRAGMENT,
+    data: { ...existingBeerInCache, ratings: newRatings }
+  });
+}
+
+type AddRatingMutationProps = {
+  children: (
+    mutateFn: MutationFunction<AddRatingMutationResult, AddRatingMutationVariables>,
+    result: MutationResult<AddRatingMutationResult>
+  ) => JSX.Element | null;
+  beerId: string;
+};
+
+export default function AddRatingMutation({ children }: AddRatingMutationProps) {
   return (
     <Mutation<AddRatingMutationResult, AddRatingMutationVariables>
       mutation={ADD_RATING_MUTATION}
-      update={(cache, { data }) => {
-        if (!data) {
-          return;
-        }
-
-        const fragment = gql`
-          fragment ratings on Beer {
-            id
-            ratings {
-              id
-            }
-          }
-        `;
-
-        const cacheId = `Beer:${beerId}`;
-
-        const result: any = cache.readFragment({
-          id: cacheId,
-          fragment
-        });
-
-        const newRatings = mergeRatings(result.ratings, data.addRating); //  [...result.ratings, data.addRating];
-        const newData = { ...result, ratings: newRatings };
-        cache.writeFragment({
-          id: cacheId,
-          fragment,
-          data: newData
-        });
-      }}
+      update={(cache, { data }) => updateBeerCacheWithNewRating(cache, data)}
     >
       {children}
     </Mutation>

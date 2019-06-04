@@ -28,15 +28,15 @@ export interface AddRatingMutation_addRating {
    */
   id: string;
   /**
-   *  The  beer, this domain is written for
+   *  The  beer, this Rating is written for
    */
   beer: AddRatingMutation_addRating_beer;
   /**
-   *  Who has written this domain?
+   *  Who has written this Rating?
    */
   author: AddRatingMutation_addRating_author;
   /**
-   *  The domain itself
+   *  A comment for this beer
    */
   comment: string;
   stars: number;

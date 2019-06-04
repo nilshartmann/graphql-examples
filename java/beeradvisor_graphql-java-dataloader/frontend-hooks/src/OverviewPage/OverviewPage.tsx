@@ -17,7 +17,7 @@ const OVERVIEW_PAGE_QUERY = gql`
   }
 `;
 
-interface OverviewPageProps extends RouteComponentProps {}
+type OverviewPageProps = RouteComponentProps;
 
 export function OverviewPage({ history }: OverviewPageProps) {
   return (

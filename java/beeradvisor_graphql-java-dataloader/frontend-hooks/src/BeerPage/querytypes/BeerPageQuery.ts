@@ -27,15 +27,15 @@ export interface BeerPageQuery_beer_ratings {
   id: string;
   stars: number;
   /**
-   *  The  beer, this domain is written for
+   *  The  beer, this Rating is written for
    */
   beer: BeerPageQuery_beer_ratings_beer;
   /**
-   *  Who has written this domain?
+   *  Who has written this Rating?
    */
   author: BeerPageQuery_beer_ratings_author;
   /**
-   *  The domain itself
+   *  A comment for this beer
    */
   comment: string;
 }
