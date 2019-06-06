@@ -71,7 +71,8 @@ type Mutation {
   # Add a new Rating to a Beer and returns the new Rating
   addRating(ratingInput: AddRatingInput): Rating!
 
-  # Change the name of this beer
+  # Change the name of this beer. Note: this is only allowed for admins
+  # (currently user 'U5' / 'nils')
   updateBeerName(beerId: ID!, newName: String!): Beer!
 }
 

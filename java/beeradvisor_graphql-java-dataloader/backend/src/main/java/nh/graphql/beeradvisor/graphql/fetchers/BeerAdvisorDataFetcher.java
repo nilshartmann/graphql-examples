@@ -20,18 +20,20 @@ public class BeerAdvisorDataFetcher {
     private final Logger logger = LoggerFactory.getLogger(BeerAdvisorDataFetcher.class);
 
     private final BeerRepository beerRepository;
+    private final BeerService beerService;
     private final ShopRepository shopRepository;
     private final RatingService ratingService;
     private final RatingPublisher ratingPublisher;
 
-    public BeerAdvisorDataFetcher(BeerRepository beerRepository, ShopRepository shopRepository, RatingService ratingService, RatingPublisher ratingPublisher) {
-        this.beerRepository = beerRepository;
-        this.shopRepository = shopRepository;
-        this.ratingService = ratingService;
-        this.ratingPublisher = ratingPublisher;
-    }
+	public BeerAdvisorDataFetcher(BeerRepository beerRepository, BeerService beerService, ShopRepository shopRepository, RatingService ratingService, RatingPublisher ratingPublisher) {
+		this.beerRepository = beerRepository;
+		this.beerService = beerService;
+		this.shopRepository = shopRepository;
+		this.ratingService = ratingService;
+		this.ratingPublisher = ratingPublisher;
+	}
 
-    public DataFetcher<Beer> beerFetcher() {
+	public DataFetcher<Beer> beerFetcher() {
         return environment -> {
             String beerId = environment.getArgument("beerId");
             return beerRepository.getBeer(beerId);
@@ -47,11 +49,7 @@ public class BeerAdvisorDataFetcher {
 			String beerId = environment.getArgument("beerId");
 			String newName = environment.getArgument("newName");
 
-			final Beer beer = beerRepository.getBeer(beerId);
-			beer.setName(newName);
-
-			beerRepository.saveBeer(beer);
-			return beer;
+			return beerService.updateBeer(beerId, newName);
 		};
 	}
 
