@@ -42,6 +42,19 @@ public class BeerAdvisorDataFetcher {
         return environment -> beerRepository.findAll();
     }
 
+    public DataFetcher<Beer> updateBeerNameFetcher() {
+    	return environment -> {
+			String beerId = environment.getArgument("beerId");
+			String newName = environment.getArgument("newName");
+
+			final Beer beer = beerRepository.getBeer(beerId);
+			beer.setName(newName);
+
+			beerRepository.saveBeer(beer);
+			return beer;
+		};
+	}
+
     public DataFetcher shopFetcher() {
         return environment -> {
             String shopId = environment.getArgument("shopId");

@@ -57,7 +57,11 @@ public class Beer {
     return name;
   }
 
-  public String getPrice() {
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPrice() {
     return price;
   }
 
