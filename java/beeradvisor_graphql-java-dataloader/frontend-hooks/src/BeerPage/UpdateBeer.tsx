@@ -38,7 +38,10 @@ export default function UpdateBeer({ beer }: UpdateBeerProps) {
     return null;
   }
 
+  // we don't care about error handling here
   console.log("error", error);
+
+  // we don't care about the result here => it's just used for demo purposes
   console.log("data", data);
   return <UpdateBeerForm beername={beer.name} onNewBeerName={onBeerNameChange} />;
 }

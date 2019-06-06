@@ -41,7 +41,7 @@ This version uses the stable Apollo React Client:
 3. Start the webpack web server: `yarn start`
 4. The webserver now should listen on http://localhost:9080
 
-Step 2b: Install, build and start the frontend
+Step 2b: Install, build and start the hooks-based frontend
 
 This version uses the stable React Hooks API (16.8) and the **unstable** [Apollo Hooks](https://github.com/apollographql/react-apollo/tree/release-3.0.0/packages/hooks) API.
 
@@ -49,6 +49,8 @@ This version uses the stable React Hooks API (16.8) and the **unstable** [Apollo
 2. Install the npm packages: `yarn install`
 3. Start the webpack web server: `yarn start`
 4. The webserver now should listen on http://localhost:9080
+
+(You can find examples of Apollo Hooks in `BeerPage.tsx`, `ShopPage.tsx` and `UpdateBeer.tsx`)
 
 Now everything runs. You can open in your browser:
 
