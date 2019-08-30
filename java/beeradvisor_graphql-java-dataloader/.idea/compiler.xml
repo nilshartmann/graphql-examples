@@ -7,6 +7,10 @@
     <bytecodeTargetLevel>
       <module name="beeradvisor.main" target="1.8" />
       <module name="beeradvisor.test" target="1.8" />
+      <module name="nh.graphql.beeradvisor.beeradvisor.main" target="1.8" />
+      <module name="nh.graphql.beeradvisor.beeradvisor.test" target="1.8" />
+      <module name="nh.graphql.beeradvisor.userservice.main" target="1.8" />
+      <module name="nh.graphql.beeradvisor.userservice.test" target="1.8" />
       <module name="shop.main" target="11" />
       <module name="shop.test" target="11" />
       <module name="userservice.main" target="1.8" />

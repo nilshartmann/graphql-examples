@@ -19,6 +19,10 @@ export interface UpdateBeerNameMutation_updatedBeer {
 }
 
 export interface UpdateBeerNameMutation {
+  /**
+   * Change the name of this beer. Note: this is only allowed for admins
+   * (currently user 'U5' / 'nils')
+   */
   updatedBeer: UpdateBeerNameMutation_updatedBeer;
 }
 
