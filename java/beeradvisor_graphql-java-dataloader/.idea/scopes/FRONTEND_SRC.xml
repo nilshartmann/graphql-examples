@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="FRONTEND-SRC" pattern="file[frontend]:src//*" />
-</component>

@@ -1,0 +1,115 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+
+" Represents a postal address, used to find Shops that sell Beer"
+type Address {
+  " Name of the city"
+  city: String!
+  " Country of this Address"
+  country: String!
+  " Postal code"
+  postalCode: String!
+  " The street"
+  street: String!
+}
+
+type Authentication {
+  authToken: String!
+  userId: String!
+  username: String!
+}
+
+" Representation of a Beer that has been rated"
+type Beer {
+  " Average Rating of this Beer"
+  averageStars: Int!
+  " Unique, immutable Id, that identifies this Beer"
+  id: ID!
+  " The name of the beer"
+  name: String!
+  " The Beer's price"
+  price: String!
+  " List of all Ratings for this Beer"
+  ratings: [Rating!]!
+  " List of Ratings that has at exactly 'stars' Stars"
+  ratingsWithStars(stars: Int!): [Rating!]!
+  shops: [Shop!]!
+}
+
+type LoginResponse {
+  authentication: Authentication
+  error: String
+}
+
+type Mutation {
+  " Add a new Rating to a Beer and returns the new Rating"
+  addRating(ratingInput: AddRatingInput): Rating!
+  login(username: String!): LoginResponse!
+  """
+  Change the name of this beer. Note: this is only allowed for admins
+  (currently user 'U5' / 'nils')
+  """
+  updateBeerName(beerId: ID!, newName: String!): Beer!
+}
+
+type Query {
+  " Returns a specific beer, identified by its id"
+  beer(beerId: ID!): Beer
+  " Returns all beers in our system"
+  beers: [Beer!]!
+  ping(msg: String): String!
+  shop(shopId: ID!): Shop
+  shops: [Shop!]!
+}
+
+" A Rating that has been written by an Author for a Beer"
+type Rating {
+  " Who has written this Rating?"
+  author: User!
+  " The  beer, this Rating is written for"
+  beer: Beer!
+  " A comment for this beer"
+  comment: String!
+  " An immutable unique Id"
+  id: ID!
+  stars: Int!
+}
+
+" A registered Shop that sells Beer"
+type Shop {
+  " Address of the shop"
+  address: Address!
+  " All Beers this shop sells"
+  beers: [Beer!]!
+  " Unique ID of this shop"
+  id: ID!
+  " The name of the shop"
+  name: String!
+}
+
+type Subscription {
+  newRatings(beerId: ID!): Rating!
+  onNewRating: Rating!
+}
+
+"""
+https://github.com/graphql-java/graphql-java/releases/tag/v9.0
+A User in our system that is allowed to leave Ratings
+"""
+type User {
+  id: ID!
+  login: String!
+  name: String!
+}
+
+input AddRatingInput {
+  beerId: ID!
+  comment: String!
+  stars: Int!
+  userId: ID!
+}

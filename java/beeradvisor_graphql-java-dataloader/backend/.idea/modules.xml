@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/beeradvisor.iml" filepath="$PROJECT_DIR$/beeradvisor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/beeradvisor.main.iml" filepath="$PROJECT_DIR$/.idea/modules/beeradvisor.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/beeradvisor.test.iml" filepath="$PROJECT_DIR$/.idea/modules/beeradvisor.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../frontend-hooks/frontend-hooks.iml" filepath="$PROJECT_DIR$/../frontend-hooks/frontend-hooks.iml" />
+    </modules>
+  </component>
+</project>
