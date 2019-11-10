@@ -30,6 +30,7 @@ dependencies {
   compile('org.springframework.boot:spring-boot-starter-websocket')
   compile('org.springframework.boot:spring-boot-starter-security')
   runtime('com.h2database:h2')
+	runtime('org.postgresql:postgresql')
   testCompile('org.springframework.boot:spring-boot-starter-test')
   testCompile('io.rest-assured:rest-assured:3.3.0')
   testCompile('com.jayway.jsonpath:json-path-assert:2.2.0')
