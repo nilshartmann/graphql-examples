@@ -6,6 +6,7 @@ import { OverviewPageQuery as OverviewPageQueryResult } from "./querytypes/Overv
 import styles from "./OverviewPage.module.scss";
 import Stars from "../components";
 import { RouteComponentProps } from "react-router";
+import { useQuery } from "@apollo/react-hooks";
 
 const OVERVIEW_PAGE_QUERY = gql`
   query OverviewPageQuery {
@@ -20,41 +21,25 @@ const OVERVIEW_PAGE_QUERY = gql`
 type OverviewPageProps = RouteComponentProps;
 
 export function OverviewPage({ history }: OverviewPageProps) {
-  return (
-    <div className={styles.BeerOverview}>
-      <Query<OverviewPageQueryResult> query={OVERVIEW_PAGE_QUERY}>
-        {({ data, error, loading }) => {
-          if (error) {
-            return (
-              <h1>
-                Error while loading Beers{" "}
-                <span role="img" aria-label="panic">
-                  😱
-                </span>
-              </h1>
-            );
-          }
-          if (loading) {
-            return <h1>Please stay tuned - Beers are loading . . .</h1>;
-          }
-          const { beers } = data!;
-          return (
-            <>
-              {beers.map(beer => (
-                <BeerImage
-                  key={beer.id}
-                  name={beer.name}
-                  stars={beer.averageStars}
-                  imgUrl={`/assets/beer/${beer.id}-256x256-thumb.jpg`}
-                  onClick={() => history.push(`/beer/${beer.id}`)}
-                />
-              ))}
-            </>
-          );
-        }}
-      </Query>
-    </div>
-  );
+  const { loading, error, data } = useQuery(OVERVIEW_PAGE_QUERY);
+
+  if (error) {
+    return <h1>Error while loading Beers</h1>;
+  }
+  if (loading) {
+    return <h1>Please stay tuned - Beers are loading . . .</h1>;
+  }
+
+  const { beers } = data!;
+  return beers.map((beer: any) => (
+    <BeerImage
+      key={beer.id}
+      name={beer.name}
+      stars={beer.averageStars}
+      imgUrl={`/assets/beer/${beer.id}-256x256-thumb.jpg`}
+      onClick={() => history.push(`/beer/${beer.id}`)}
+    />
+  ));
 }
 
 interface ThumbnailProps {
