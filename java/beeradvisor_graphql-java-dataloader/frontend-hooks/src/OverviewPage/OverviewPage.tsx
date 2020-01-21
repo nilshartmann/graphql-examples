@@ -31,15 +31,19 @@ export function OverviewPage({ history }: OverviewPageProps) {
   }
 
   const { beers } = data!;
-  return beers.map((beer: any) => (
-    <BeerImage
-      key={beer.id}
-      name={beer.name}
-      stars={beer.averageStars}
-      imgUrl={`/assets/beer/${beer.id}-256x256-thumb.jpg`}
-      onClick={() => history.push(`/beer/${beer.id}`)}
-    />
-  ));
+  return (
+    <div className={styles.BeerOverview}>
+      {beers.map((beer: any) => (
+        <BeerImage
+          key={beer.id}
+          name={beer.name}
+          stars={beer.averageStars}
+          imgUrl={`/assets/beer/${beer.id}-256x256-thumb.jpg`}
+          onClick={() => history.push(`/beer/${beer.id}`)}
+        />
+      ))}
+    </div>
+  );
 }
 
 interface ThumbnailProps {
